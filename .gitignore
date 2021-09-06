@@ -1,0 +1,9 @@
+script/*
+compiled/*
+*.html
+*.mpg
+*.*~
+pict*.png
+*.js
+*.pdf
+*.css
