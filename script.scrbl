@@ -2,7 +2,6 @@
 @(require scribble/eval)
 @(require "marburg-utils.rkt")
 
-   
 @title[#:version ""]{Informatik 1, WS 2021/22 Universität Tübingen}
 @author["Prof. Dr. Klaus Ostermann"]
 mit Beiträgen von Jonathan Brachthäuser, Yufei Cai, Yi Dai und Tillmann Rendel
