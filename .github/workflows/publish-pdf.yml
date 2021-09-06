@@ -18,7 +18,7 @@ jobs:
           variant: 'CS'
           version: 'stable'
       - name: Install TeXlive
-        run: sudo apt-get install texlive texlive-latex-extra latexmk
+        run: sudo apt-get install texlive texlive-latex-extra texlive-fonts-extra latexmk
       - name: Build Scribble PDF Docs
         run: |
           xvfb-run racket -l racket/gui -l- scribble/run ++xref-in setup/xref load-collections-xref --prefix scribble-prefix.tex --pdf script.scrbl
