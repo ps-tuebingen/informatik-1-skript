@@ -1,0 +1,33 @@
+name: Publish PDF Skript
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Racket
+        uses: Bogdanp/setup-racket@v1.5
+        with:
+          architecture: 'x64'
+          distribution: 'full'
+          variant: 'CS'
+          version: 'stable'
+      - name: Build Scribble PDF Docs
+        run: |
+          xvfb-run racket -l racket/gui -l- scribble/run ++xref-in setup/xref load-collections-xref --prefix scribble-prefix.tex --pdf script.scrbl
+      - name: Upload PDF
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          title: "Informatik 1 PDF Skript"
+          files: |
+            script.pdf
+
+
+
