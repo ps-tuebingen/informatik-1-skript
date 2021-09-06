@@ -17,12 +17,9 @@ jobs:
           distribution: 'full'
           variant: 'CS'
           version: 'stable'
-      - name: Install Racket Dependencies
-        run: |
-          raco pkg install --batch --auto racket/gui
       - name: Build Scribble Docs
         run: |
-          racket  -l racket/gui -l-  scribble/run    ++xref-in setup/xref load-collections-xref   --htmls --redirect-main http://docs.racket-lang.org/ script.scrbl
+          racket scribble/run    ++xref-in setup/xref load-collections-xref   --htmls --redirect-main http://docs.racket-lang.org/ script.scrbl
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
