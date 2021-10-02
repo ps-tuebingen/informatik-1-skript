@@ -89,7 +89,7 @@ oder durch Addition mit mehr als zwei Argumenten:
 @ex[(+ 2 3 4)]
 
 Immer wenn Sie in BSL eine Funktion wie @racket[+] oder @racket[sqrt] benutzen möchten,
-schreiben Sie eine öffnende Klammer, gefolgt vom Namen der Funktion, dann einem Lehrzeichen
+schreiben Sie eine öffnende Klammer, gefolgt vom Namen der Funktion, dann einem Leerzeichen
 (oder Zeilenumbruch) und dann die Argumente der Funktion, also in unserem Fall die Zahlen, auf die die
 Funktion angewandt werden soll.
 
@@ -217,7 +217,7 @@ Werten sind zum Beispiel die aussagenlogischen Funktionen:
 (or #true #false)
 (or #false #false)
 (not #false)]
-@margin-note{Kennen Sie den? Frage an die schwangere Informatikern: Wird es ein Junge oder ein Mädchen? Antwort: Ja!}
+@margin-note{Kennen Sie den? Frage an die schwangere Informatikerin: Wird es ein Junge oder ein Mädchen? Antwort: Ja!}
 Boolsche Werte werden auch häufig von Vergleichsfunktionen zurückgegeben:
 
 @ex[(> 10 9)
@@ -356,7 +356,7 @@ Die folgenden Programme sind alle syntaktisch korrekt, allerdings lassen sich ni
  (string->number "asdf")]
 
  
- Nicht jedes syntaktische korrekte Programm hat in BSL eine Bedeutung. @italic{Bedeutung} heißt in diesem
+ Nicht jedes syntaktisch korrekte Programm hat in BSL eine Bedeutung. @italic{Bedeutung} heißt in diesem
  Fall dass das Programm korrekt ausgeführt werden kann und einen Wert zurückliefert.
  Die Menge der BSL Programme, die eine Bedeutung haben, ist nur eine @italic{Teilmenge} der syntaktisch
  korrekten BSL Programme.
@@ -373,8 +373,8 @@ Wenn in BSL ein Laufzeitfehler auftritt, wird die Programmausführung abgebroche
  Ein anderer Fehler, der auftreten kann, ist der, dass die Anzahl der angegebenen Argumente nicht
  zu der Funktion passt (ein @italic{Aritätsfehler}). Im Programm @racket[ (string-length "asdf" "fdsa")] tritt dieser Fehler auf.
 
- Manchmal stimmt zwar der Datentyp des Arguments, aber trotzdem 'passt' der Argument
- in irgendeiner Weise nicht. Im Beispiel @racket[(/ 1 0)] ist es so, dass die Divionsfunktion als Argumente
+ Manchmal stimmt zwar der Datentyp des Arguments, aber trotzdem 'passt' das Argument
+ in irgendeiner Weise nicht. Im Beispiel @racket[(/ 1 0)] ist es so, dass die Divisionsfunktion als Argumente
  Zahlen erwartet. Das zweite Argument ist eine Zahl, trotzdem resultiert die Ausführung in einer
  Fehlermeldung, denn die Division durch Null ist nicht definiert.
 
@@ -422,7 +422,7 @@ ignoriert und nicht ausgewertet.
   )
 
 Im obigen Beispiel würde kein Ergebnis ausgegeben werden, da die
-Berechnungen in einem Kommentar steht. Fehlerhafte Teile eines Programms
+Berechnungen in einem Kommentar stehen. Fehlerhafte Teile eines Programms
 (wie jenes in der zweiten Kommentarzeile), können auskommentiert werden, um den Rest des
 Programms in DrRacket ausführen zu können.
 
@@ -441,11 +441,11 @@ Wir werden später mehr dazu sagen, wo, wie und wie ausführlich Programme komme
 @itemize[
  @item{Zahlen, Strings, Bilder und Wahrheitswerte sind Werte. Wir benutzen im Rest dieser Vorschrift Varianten des Buchstaben @v als Platzhalter für  Ausdrücke die Werte sind und Varianten des Buchstaben @e für beliebige Ausdrücke (Merkhilfe: Wert = @italic{v}alue, Ausdruck = @italic{e}xpression).}
  @item{Ist der Ausdruck bereits ein Wert so ist seine Bedeutung dieser Wert.}
- @item{ Hat der Ausdruck die Form @racket[(f (unsyntax @e1) ... (unsyntax @eN))], wobei @racket[f] ein Funktionsname (der nicht @racket[and] oder @racket[or] ist) und @e1,..., @eN  Ausdrücke sind, so wird dieser Ausdruck
+ @item{ Hat der Ausdruck die Form @racket[(f (unsyntax @e1) ... (unsyntax @eN))], wobei @racket[f] ein Funktionsname (der nicht @racket[and] oder @racket[or] ist) und @e1,...,@eN  Ausdrücke sind, so wird dieser Ausdruck
                                   wie folgt ausgewertet:
    @itemize[
-       @item{Falls @e1,..., @eN  bereits Werte @v1,...,@vN sind und
-                   @racket[f] auf  den  Werten @v1,...,@vN definiert ist, so so ist der Wert des Ausdrucks die Anwendung von @racket[f] auf @v1,...,@vN }
+       @item{Falls @e1,...,@eN  bereits Werte @v1,...,@vN sind und
+                   @racket[f] auf  den  Werten @v1,...,@vN definiert ist, so ist der Wert des Ausdrucks die Anwendung von @racket[f] auf @v1,...,@vN }
        @item{Falls @e1,...,@eN bereits Werte @v1,...,@vN sind aber
                    @racket[f] ist @italic{nicht} auf den  Werten @v1,...,@vN definiert, dann wird die Auswertung mit einer passenden Fehlermeldung abgebrochen.}
        @item{Falls mindestens eines der Argumente noch kein Wert ist, so werden durch Anwendung der gleichen Auswertungsvorschriften
@@ -469,11 +469,11 @@ sagen, dass @e in einem Schritt zu @(prime e) reduziert werden kann. Werte könn
 
 @margin-note{Experimentieren Sie in DrRacket mit dem "Stepper" Knopf: Geben Sie einen komplexen
 Ausdruck in den Definitionsbereich ein, drücken Sie auf "Stepper" und dann auf die "Schritt nach rechts"
-Taste und beobachten was passiert.}
+Taste und beobachten Sie was passiert.}
    @itemize[
        @item{Falls der Ausdruck die Form @racket[(f (unsyntax @v1) ... (unsyntax @vN))] hat (und @racket[f] nicht @racket[and] oder @racket[or] ist) und
-                   die Anwendung von @racket[f] auf   @racket[v1],...,@racket[vN] den Wert @racket[v] ergibt, dann
-                   @racket[(f (unsyntax @v1) ... (unsyntax @vN))]  @step @racket[v].}
+                   die Anwendung von @racket[f] auf @v1,...,@vN den Wert @v ergibt, dann
+                   @racket[(f (unsyntax @v1) ... (unsyntax @vN))]  @step @v.}
        @item{ @racket[(and #false ...)] @step @racket[#false] und  @racket[(and #true ... #true)] @step @racket[#true]. Analog @racket[or].}
        @item{Falls ein Audruck @e1 einen Unterausdruck @e2 in einer @italic{Auswertungsposition} enthält, der reduziert werden kann, also @e2 @step @(prime @e2), dann
        gilt @e1 @step @(prime @e1), wobei @(prime @e1) aus @e1 entsteht indem @e2 durch @(prime @e2) ersetzt wird.}]
@@ -481,7 +481,7 @@ Taste und beobachten was passiert.}
 Die letzte Regel nennen wir die @italic{Kongruenzregel}. In dem Teil der Sprache, den Sie bereits kennengelernt haben,
 sind @italic{alle} Positionen von Unterausdrücken Auswertungspositionen - außer bei den boolschen Funktionen @racket[and] und @racket[or];
 bei diesen ist nur der am weitesten links stehende Unterausdruck, der noch kein Wert ist, in Auswertungsposition.
-Für Funktionsaufrufe (ungleich @racket[and] und @racket[or]) gilt in diesem Fall folgender Spezialfall der Kongruenzregel: Fall @eI @step @(prime @eI),
+Für Funktionsaufrufe (ungleich @racket[and] und @racket[or]) gilt in diesem Fall folgender Spezialfall der Kongruenzregel: Falls @eI @step @(prime @eI),
 dann @racket[(f (unsyntax @e1) ... (unsyntax @eN))] @step @racket[(f (unsyntax @e1) ... (unsyntax @eI-1) (unsyntax @(prime @eI)) (unsyntax @eI+1) ...)].
 
 Wir benutzen folgende Konventionen:
