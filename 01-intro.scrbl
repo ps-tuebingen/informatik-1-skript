@@ -472,8 +472,8 @@ Ausdruck in den Definitionsbereich ein, drücken Sie auf "Stepper" und dann auf 
 Taste und beobachten Sie was passiert.}
    @itemize[
        @item{Falls der Ausdruck die Form @racket[(f (unsyntax @v1) ... (unsyntax @vN))] hat (und @racket[f] nicht @racket[and] oder @racket[or] ist) und
-                   die Anwendung von @racket[f] auf @v1,...,@vN den Wert @v ergibt, dann
-                   @racket[(f (unsyntax @v1) ... (unsyntax @vN))]  @step @v.}
+                   die Anwendung von @racket[f] auf @v1,...,@vN den Wert @racket[v] ergibt, dann
+                   @racket[(f (unsyntax @v1) ... (unsyntax @vN))]  @step @racket[v].}
        @item{ @racket[(and #false ...)] @step @racket[#false] und  @racket[(and #true ... #true)] @step @racket[#true]. Analog @racket[or].}
        @item{Falls ein Audruck @e1 einen Unterausdruck @e2 in einer @italic{Auswertungsposition} enthält, der reduziert werden kann, also @e2 @step @(prime @e2), dann
        gilt @e1 @step @(prime @e1), wobei @(prime @e1) aus @e1 entsteht indem @e2 durch @(prime @e2) ersetzt wird.}]
