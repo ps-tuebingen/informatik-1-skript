@@ -20,7 +20,7 @@ fix.
 Eine echte Programmiersprache unterscheidet sich von einem Taschenrechner dadurch,
 dass Sie selber, auf Basis der bereits bestehenden Funktionen, neue Funktionen definieren können
 und diese danach in Ausdrücken und Definitionen neuer Funktionen benutzen können. Im Allgemeinen können
-Sie @italic{Namen} definieren und damit das Vokabular, welches Ihnen (und, bei Veröffentlichung ihrer Programme auch anderen)
+Sie @italic{Namen} definieren und damit das Vokabular, welches Ihnen (und, bei Veröffentlichung ihrer Programme, auch anderen)
 zur Verfügung steht, selber erweitern. Ein Programm ist also mehr als eine Menge von Maschineninstruktionen - 
 es definiert auch eine @italic{Sprache} für die Domäne des Programms.
 Sie werden sehen, dass die Möglichkeit, neue Namen zu definieren, das
@@ -62,7 +62,7 @@ können in Funktionsdefinitionen (und anderen Formen der Abstraktion die sie noc
 gekapselt und wiederverwendet werden.
 
 
-Im Allgemeinen Fall haben Funktionsdefinitionen diese Form:
+Im allgemeinen Fall haben Funktionsdefinitionen diese Form:
 
 @racketblock[(define (FunctionName InputName1 InputName2 ...) BodyExpression)]
 
@@ -85,7 +85,7 @@ Funktionsaufrufe haben die Form:
 
 @racketblock[(FunctionName ArgumentExpression1 ArgumentExpression1 ...)]
 
-Ein Funktionsaufruf einer mit @racket[define] definierten (@italic{benutzerdefinierte})
+Ein Funktionsaufruf einer mit @racket[define] definierten (@italic{benutzerdefinierten})
 Funktion sieht also genau so aus wie
 das Benutzen einer fest eingebauten (@italic{primitiven}) Funktion. 
 Dies ist kein Zufall. Dadurch, dass man nicht sehen kann, ob man gerade eine primitive Funktion
@@ -132,7 +132,7 @@ Sie können den Höhenparameter auch als Zeitparameter auffassen; die Funktion b
 Solche Funktionen können wir auch als Film oder Animation auffassen, denn ein Film ist dadurch charakterisiert, dass es zu jedem Zeitpunkt ein
 dazugehöriges Bild gibt.
 
-@margin-note{Ein Teachpack ist eine Bibliothek mit Funktionen die sie in ihrem Programm verwenden können. Sie können ein Teachpack aktivieren, indem Sie @racket[(require 2htdp/universe)] an den Anfang Ihrer Datei hinzufügen.} 
+@margin-note{Ein Teachpack ist eine Bibliothek mit Funktionen, die sie in ihrem Programm verwenden können. Sie können ein Teachpack aktivieren, indem Sie @racket[(require 2htdp/universe)] an den Anfang Ihrer Datei hinzufügen.}
 Im Teachpack @racket[universe]  gibt es eine Funktion, die den Film, der zu einer solchen Funktion korrespondiert, auf dem Bildschirm vorführt. Diese Funktion
 heißt @racket[animate]. Die Auswertung des Ausdrucks 
 
@@ -350,7 +350,7 @@ Zweige nicht anwendbar sind. In diesem Fall kann man statt der Kondition das Sch
     [else 6]))
 ] 
 
-Die @racket[else] Klausel allerdings darf nur im letzten Zweig eines @racket[cond] Ausdrucks verwendet werden:
+Die @racket[else] Klausel darf allerdings nur im letzten Zweig eines @racket[cond] Ausdrucks verwendet werden:
 
 @interaction[#:eval (bsl-eval) 
 (cond [(> 3 2) 5]
@@ -358,7 +358,7 @@ Die @racket[else] Klausel allerdings darf nur im letzten Zweig eines @racket[con
       [(< 2 1) 13])]
 
       
-Der @racket[else] Zwei ist äquivalent zu einem Zweig mit der immer erfüllten Bedingung @racket[#true], daher ist im Allgemeinen Fall
+Der @racket[else] Zweig ist äquivalent zu einem Zweig mit der immer erfüllten Bedingung @racket[#true], daher ist im allgemeinen Fall
 die Bedeutung von
 
 @racketblock[
@@ -376,7 +376,7 @@ definiert als die Bedeutung von
       [#true (unsyntax @eN)])]
  
 Wir geben also in diesem Fall keine Reduktionsregeln für dieses Sprachkonstrukt an, sondern stattdessen eine Transformation, die
-die Bedeutung transformiert. Wenn Sprachkonstrukte "nichts neues" hinzufügen sondern lediglich eine Abkürzung für eine bestimmte
+die Bedeutung transformiert. Wenn Sprachkonstrukte "nichts Neues" hinzufügen sondern lediglich eine Abkürzung für eine bestimmte
 Benutzung bestehender Sprachkonstrukte sind, so nennt man solche Sprachkonstrukte auch @italic{syntaktischen Zucker}. 
 
 Ein anderer Spezialfall konditionaler Ausdrücke ist der, dass es nur eine Bedingung gibt, die überprüft werden soll, und je nachdem ob diese Bedingung wahr oder falsch ist soll ein anderer Ausdruck ausgewählt werden. Für diesen Fall gibt es das @racket[if] Konstrukt.
@@ -408,7 +408,7 @@ Ausdruck durch einen geschachtelten @racket[if] Ausdruck ersetzen. Beispielsweis
 (define (note punkte) 
   (if (>= punkte 90) 
       1
-     (if (>= punkte 80) 
+      (if (>= punkte 80)
          2
          (if (>= punkte 70) 
              3
