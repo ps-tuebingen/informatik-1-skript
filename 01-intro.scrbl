@@ -505,7 +505,7 @@ Beispiele:
 
 @item{@racket[(+ (* 2 (+ 1 2)) (* 4 5))] @step @racket[(+ (* 2 3) (* 4 5))].}
 
-@item{@racket[(and #true (or #true #true))] @step @racket[#true], aber nicht @racket[(and #true (or #true #true))] @step @racket[(and #true #true)].}
+@item{@racket[(or #true (and #true #true))] @step @racket[#true], aber nicht @racket[(or #true (and #true #true))] @step @racket[(or #true #true)].}
 
 @item{@racket[(+ (* 2 3) (* 4 5))] @multistep @racket[26] aber nicht @racket[(+ (* 2 3) (* 4 5))] @step @racket[26].}
 
