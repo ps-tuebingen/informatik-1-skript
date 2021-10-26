@@ -336,10 +336,18 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
  Die Grammatik von dem Teil von BSL, den sie bereits kennen, ist sehr einfach:
 @itemize[
  @item{Ein BSL Programm ist eine Sequenz von Ausdrücken.}
- @item{Ein Ausdruck ist eine Zahl, ein Bild, ein Boolscher Wert, ein String, oder ein Funktionsaufruf.}
- @item{Ein Funktionsaufruf hat die Form @racket[(f a1 a2 ...)] wobei @racket[f] der name einer Funktion ist und
-        die Argumente @racket[a1],@racket[a2],... Ausdrücke sind.}
+ @item{Ein Ausdruck ist eine Zahlenliteral (wie @racket[123]), ein Bildliteral, @racket[#true] oder @racket[#false], ein Stringliteral (wie @racket["asdf"]), oder ein Funktionsaufruf.}
+ @item{Ein Funktionsaufruf hat die Form @racket[(f e1 e2 ...)] wobei @racket[f] ein Name ist und
+        @racket[e1],@racket[e2],... Ausdrücke sind.}
  ]
+
+Bei dem Namen @racket[f] im letzten Teil ist es für die Beurteilung der syntaktischen Korrektheit
+nicht relevant, ob @racket[f] der Name einer existierenden Funktion ist. Ebenso ist es nicht relevant,
+ob die korrekte Anzahl von Argumenten übergeben wurde. Dies sind auch Fehler, aber keine Syntaxfehler.
+In Programmiersprachen ist syntaktische Korrektheit eine sogenannte @italic{kontextfreie} Eigenschaft.
+Dies bedeutet, dass syntaktische Korrektheit immer "lokal", ohne Berücksichtigung des Kontextes, entschieden
+werden kann. Wir werden dies später in der Form sogenannter kontextfreien Grammatiken noch präzisieren.
+
 
 In BSL werden Syntaxfehler immer @italic{vor} der Programmausführung erkannt.
  Auch einige andere Fehler, wie das Aufrufen einer Funktion, die nicht definiert ist, werden vor der
