@@ -37,7 +37,7 @@ zur Erstellung etwas plumper "Nigerian-Scam" Briefe:
    "Herr Gadafi aus Libyen ist gestorben und hat Sie, "
    fst
    ", in seinem Testament als Alleinerben eingesetzt.\n"
-   "Lieber " fst lst ", gegen eine kleine Bearbeitungsgebühr überweise ich das Vermögen."))
+   "Lieber " fst " " lst ", gegen eine kleine Bearbeitungsgebühr überweise ich das Vermögen."))
  
 (define (closing signature-name)
   (string-append
@@ -53,7 +53,7 @@ Das Ergebnis ist ein langer String. Das \n in dem String steht für einen Zeilen
 Sobald dieser String zum Beispiel in eine Datei geschrieben wird, 
 wird aus dem \n ein echter Zeilenumbruch.
 
-Im Allgemeinen sollte ein Programm so gestaltet sein, daß es eine Funktion pro Aufgabe
+Im Allgemeinen sollte ein Programm so gestaltet sein, dass es eine Funktion pro Aufgabe
 gibt, die das Programm erledigen soll. Aufgaben sollten hierbei hierarchisch angeordnet sein:
 Auf der obersten Ebene gibt es die Gesamtaufgabe des Programms (wie das Anfertigen
 eines Serienbriefs); diese große Aufgabe wird in kleinere Aufgaben wie das Anfertigen
@@ -181,7 +181,7 @@ Hier ist eine alternative Version des gleichen Programms, welches nur aus einer 
 
 Überprüfen Sie, dass diese Definition tatsächlich die gleichen Ergebnisse wie das Programm oben produziert.
 Wir benötigen also prinzipiell nur eine Funktion für dieses Programm; dennoch ist es offensichtlich, dass
-die erste Version oben deutlich lesbarer ist. Sie ist auch besser wartbar: Überlegen Sie sich 
+die erste Version oben deutlich lesbarer ist. Sie ist auch besser wartbar: Überlegen Sie sich
 beispielsweise, welche Änderungen im Programmtext erforderlich sind, wenn die festen Kosten entfallen und stattdessen
 pro Zuschauer Kosten in Höhe von $1,50 anfallen. Probieren Sie in beiden Versionen, diese Änderung zu implementieren.
 Vergleichen Sie.
@@ -189,7 +189,7 @@ Vergleichen Sie.
 @section{Systematischer Entwurf mit Entwurfsrezepten}
 
 Das meiste, was sie bisher über das Programmieren gelernt haben, dreht sich darum, wie die Programmiersprache, die sie verwenden, funktioniert
-und was ihre Konstrukte bedeutet. Wir haben einige wichtige Sprachkonstrukte kennengelernt (Funktionsdefinitionen, Konstantendefinitionen, Ausdrücke)
+und was ihre Konstrukte bedeuten. Wir haben einige wichtige Sprachkonstrukte kennengelernt (Funktionsdefinitionen, Konstantendefinitionen, Ausdrücke)
 und etwas Erfahrung damit gesammelt, wie man diese Konstrukte einsetzen kann.
 
 Diese Kenntnisse sind jedoch nicht ausreichend, um systematisch aus einer Problembeschreibung ein Programm zu konstruieren. Hierzu müssen
@@ -203,7 +203,7 @@ Gute Programme haben eine kurze Beschreibung dessen, was sie tun, welche Eingabe
 Am besten wird gleichzeitig dokumentiert, dass das Programm tatsächlich funktioniert. Nebenbei sollten Programme auch noch so strukturiert
 sein, dass eine kleine Änderung in der Problembeschreibung auch nur eine kleine Änderung am Programm bedeutet.
 
-Diese ganze Arbeit ist notwendig, weil Programmierer nur selten für sich selbst Programme schreiben. 
+Diese ganze Arbeit ist notwendig, weil Programmierer nur selten für sich selbst Programme schreiben.
 Programmierer schreiben Programme, die andere Programmierer verstehen und weiterentwickeln müssen.
 Große Programme werden über lange Zeiträume von großen Teams entwickelt. Neue Programmierer stoßen
 während dieses Zeitraums hinzu, andere gehen. Kunden ändern ständig ihre Anforderungen an das
@@ -216,8 +216,8 @@ Programme eine Lebenszeit von vielen Jahrzehnten haben und daher die ursprüngli
 das weiterentwickelt oder gewartet werden soll, vielleicht schon im Ruhestand oder verstorben sind.
 @margin-note{Recherchieren Sie, was das "Jahr 2000 Problem" ist.}
 Die gleichen Probleme treten übrigens selbst dann auf, wenn es nur einen einzigen Programmierer gibt, denn
-auch dieser vergißt nach einiger Zeit, was er vor sich einmal bei einem Programm gedacht hat, und profitiert
-dann genau so von einem sinnvollen Entwurf als wenn ein anderer Programmierer seinen Code lesen würde.
+auch dieser vergisst nach einiger Zeit, was er sich einmal bei einem Programm gedacht hat, und profitiert
+dann genauso von einem sinnvollen Entwurf wie wenn ein anderer Programmierer seinen Code lesen würde.
 
 Aus diesen Gründen werden wir Ihnen systematische Anleitungen an die Hand geben, mit denen unterschiedliche Entwurfsaufgaben
 Schritt für Schritt gelöst werden können. Diese Anleitungen nennen wir @italic{Entwurfsrezepte}.
@@ -282,8 +282,8 @@ Ein Programm kann jedoch solche Informationen nicht direkt verarbeiten. Wir müs
 Diese Daten können wiederum als Information @italic{interpretiert} werden. Beispielsweise könnten wir die erste Information oben 
 als Zahl mit dem Wert @racket[5] und die zweite Information als String mit dem Wert @racket["Müller"] repräsentieren.
 
-Eine Datum wie die Zahl @racket[5] wiederum kann auf vielfältige Weise interpretiert werden. Beispielsweise können, wie im
-Beispiel oben, die Länge eines Autos in Metern gemeint sein. Genau so kann sie aber als Temperatur in Grad Celsius, als
+Ein Datum wie die Zahl @racket[5] wiederum kann auf vielfältige Weise interpretiert werden. Beispielsweise kann, wie im
+Beispiel oben, die Länge eines Autos in Metern gemeint sein. Genauso kann sie aber auch als Temperatur in Grad Celsius, als
 Geldbetrag in Euro, oder als Endnote Ihrer Klausur in dieser Veranstaltung interpretiert werden (hoffentlich nicht :-).
 
 Da diese Beziehung zwischen Information und Daten so wichtig ist, werden wir Sie von nun an in Form spezieller Kommentare, die wir @italic{Datendefinitionen} 
@@ -475,25 +475,25 @@ und das Refactoring des Programms.
 Die meisten Programme bestehen nicht aus einer sondern aus vielen Funktionen. Diese Funktionen
 sind häufig voneinander abhängig, da eine Funktion eine andere Funktion aufrufen kann.
 
-Sie haben oben ein Entwurfsrezept für den Entwurf einzelner Funktionen gesehen. Dieses sollten beim
+Sie haben oben ein Entwurfsrezept für den Entwurf einzelner Funktionen gesehen. Dieses sollten Sie beim
 Entwurf jeder einzelnen Funktion verwenden. Wenn Sie viele Funktionen und globale Konstanten (Variablen)
 definiert haben, so sollten Sie im Funktionstemplate die Funktionen und Konstanten aufführen, von
 denen Sie glauben, dass sie im endgültigen Funktionsbody benötigt werden.
 
-Da sie nicht alle Funktionen auf einmal programmieren können, stellt sich die Frage, in welcher Reihenfolge
+Da Sie nicht alle Funktionen auf einmal programmieren können, stellt sich die Frage, in welcher Reihenfolge
 sie vorgehen. Ein häufiger Ansatz ist der @italic{Top-Down Entwurf}, bei dem man zuerst die Hauptfunktion(en)
 der Anwendung programmiert. Diese Funktionen werden zweckmäßigerweise in weitere Hilfsfunktionen zerlegt, die
 während des Programmierens der Funktion noch gar nicht existieren. Deshalb bietet es sich an, stets eine
 "Wunschliste" der Funktionen, die noch programmiert werden müssen, zu führen. Ein Eintrag auf der Wunschliste
 besteht aus einem sinnvollen Funktionsnamen, einer Signatur und einer Aufgabenbeschreibung. Am Anfang steht auf dieser Liste
 nur die Hauptfunktion. Stellen Sie beim Programmieren einer Funktion fest, dass Sie eine neue Funktion benötigen, fügen
-Sie der Wunschliste einen entsprechenden Eintrag hinzu. Sind sie mit einer Funktion fertig, suchen Sie sich die nächste 
+Sie der Wunschliste einen entsprechenden Eintrag hinzu. Sind Sie mit einer Funktion fertig, suchen Sie sich die nächste
 Funktion von der Liste, die
-sie implementieren möchten.@margin-note{Recherchieren Sie was die Abkürzungen FIFO und LIFO bedeuten. Diskutieren
+Sie implementieren möchten.@margin-note{Recherchieren Sie was die Abkürzungen FIFO und LIFO bedeuten. Diskutieren
 Sie, ob FIFO oder LIFO für die Wunschliste geeignet sind und was für Konsequenzen dies hat.}
-Ist die Liste leer, sind sie fertig.
+Ist die Liste leer, sind Sie fertig.
 
-Ein Vorteil von Top-Down Entwurf ist, dass Sie Schritt für Schritt ihr großes Entwurfsproblem in immer kleinere
+Ein Vorteil des Top-Down Entwurfs ist, dass Sie Schritt für Schritt ihr großes Entwurfsproblem in immer kleinere
 Probleme zerlegen können, bis die Probleme so klein werden, dass Sie sie direkt lösen können (im Fall von
 Funktionsdefinitionen sind dies Funktionen, die nur noch eingebaute Funktionen oder Bibliotheksfunktionen verwenden).
 
@@ -503,9 +503,9 @@ Umständen einen großen Teil ihrer Arbeit wieder in den virtuellen Papierkorb w
 ist der, dass Sie erst sehr spät ihre Funktionen testen können, nämlich erst wenn alle Hilfsfunktionen vollständig implementiert
 wurden. Eine Möglichkeit, dieses Problem zu umgehen, ist, eine Hilfsfunktion erstmal durch einen @italic{Test Stub}
 zu ersetzen. Ein Test Stub ist eine Dummy-Funktionsdefinition, die eine vordefinierte Antwort zurückliefert, wie sie im Kontext
-eines Tests erwartet wird. Nehmen Sie beispielsweise an, sie möchten eine @racket[area-of-cube] Funktion definieren, die
-die eine noch nicht programmierte @racket[area-of-square] Funktion benutzt. Um @racket[area-of-cube] trotzdem testen
-zu können, können Sie @racket[area-of-square] zunächst provisorisch durch einen Test Stub wie in diesem Beispiel zu implementieren.
+eines Tests erwartet wird. Nehmen Sie beispielsweise an, Sie möchten eine @racket[area-of-cube] Funktion definieren, die
+eine noch nicht programmierte @racket[area-of-square] Funktion benutzt. Um @racket[area-of-cube] trotzdem testen
+zu können, können Sie @racket[area-of-square] zunächst provisorisch durch einen Test Stub wie in diesem Beispiel implementieren.
 Wenn Sie sich später dafür entscheiden, diese Funktion zu implementieren, ersetzen Sie den Test Stub durch die 
 richtige Funktionsdefinition.
 
@@ -563,7 +563,7 @@ Hier ist die Definition mit einer möglichen Spezifikation:
 )
 
 Ein Beispiel für einen Aufrufer, der sich nicht an die Spezifikation hält und unzulässig an 
-die Implementation der koppelt wäre einer, der Folgetext für den Brief definiert, der sich
+die Implementation koppelt, wäre einer, der Folgetext für den Brief definiert, der sich
 auf Details des Textes wie Namen und Orte bezieht, die nicht in der Spezifikation gennant werden.
 
 Halten sich jedoch alle Aufrufer an das Geheimnisprinzip, so ist sichergestellt, dass sich
