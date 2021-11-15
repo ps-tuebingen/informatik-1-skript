@@ -112,7 +112,7 @@ Klaus Ostermann
 }|
 
 Dieses Batchprogramm können Sie nun auch mit anderen Kommandozeilenprogrammen verknüpfen; beispielsweise 
-können Sie es mit dem @italic{wc} Programm verknüpfen um die die Anzahl der Wörter in dem generierten Text zu bestimmen:
+können Sie es mit dem @italic{wc} Programm verknüpfen um die Anzahl der Wörter in dem generierten Text zu bestimmen:
 
 @verbatim|{
 $ racket letter.rkt Tillmann Rendel Klaus | wc -w
@@ -127,7 +127,7 @@ auf jedem Rechner mit dem passenden Betriebssystem ausgeführt werden kann.
 Wenn Sie in Ihren BSL Programmen Dateien lesen oder schreiben möchten, können Sie hierzu das Teachpack @racket[2htdp/batch-io]
 verwenden.
 
-Zusammenfassend läßt sich sagen, dass die Stärke von Batchprogrammen ist, dass sie sich leicht und auf vielfältige
+Zusammenfassend lässt sich sagen, dass die Stärke von Batchprogrammen ist, dass sie sich leicht und auf vielfältige
 Weise mit anderen Batchprogrammen kombinieren lassen, entweder auf der Kommandozeile oder auch automatisiert 
 innerhalb von Batch-Files oder Shell-Skripten. Batchprogramme sind definitionsgemäß nicht
 für Interaktionen mit dem Benutzer geeignet. Sie sind jedoch sehr häufig Bausteine für interaktive Programme.
@@ -136,7 +136,7 @@ für Interaktionen mit dem Benutzer geeignet. Sie sind jedoch sehr häufig Baust
 
 Interaktive Programme bestehen aus mehreren Hauptfunktionen sowie einem Ausdruck, der den Computer
 informiert, welche dieser Funktionen welche Art von Eingaben verarbeitet und welche der Funktionen
-Ausgaben produziert. Jeder dieser Hauptfunktionen kann natürlich wieder Hilfsfunktionen verwenden.
+Ausgaben produziert. Jede dieser Hauptfunktionen kann natürlich wieder Hilfsfunktionen verwenden.
 Wir werden zur Konstruktion interaktiver Programme das Universe Teachpack verwenden.
 
 @subsection[#:tag "universeteachpack"]{Das Universe Teachpack}

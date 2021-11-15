@@ -137,7 +137,7 @@ es unpraktisch wäre, hierfür einen Aufzählungstypen zu definieren).
 
 Daher verwenden wir @italic{Intervalle}, um zusätzliche Struktur auf geordneten Datentypen wie Zahlen oder Strings zu definieren. 
 Im folgenden konzentrieren wir uns auf (ganzzahlige oder nicht-ganzzahlige) Zahlen. Ein Intervall wird durch seine @italic{Grenzen}
-definiert. Ein Intervall hat entweder eine unter und obere Grenze, oder es hat nur eine dieser Grenzen und ist zur anderen Seite offen.
+definiert. Ein Intervall hat entweder eine untere und obere Grenze, oder es hat nur eine dieser Grenzen und ist zur anderen Seite offen.
 
 In unserem Beispiel können wir die Datendefinition für den WorldState als Intervall ausdrücken, um eine Datendefinition zu
 haben, die die Intention der Problemstellung besser erfasst.
@@ -165,7 +165,7 @@ Funktionen, die jedoch die zusätzliche Struktur des Intervalls benötigen, enth
 @#reader scribble/comment-reader
 (racketblock
 ; WorldState -> Image
-; add a status line to the scene create by render  
+; add a status line to the scene created by render
 (define (render/status y)
   (cond
     [(<= 0 y CLOSE) (above (text "descending" 12 "black") (render y))]
@@ -175,14 +175,14 @@ Funktionen, die jedoch die zusätzliche Struktur des Intervalls benötigen, enth
 
 Es empfiehlt sich, diesen @racket[cond] Ausdruck im Rahmen der Templatekonstruktion aus dem Entwurfsrezept direkt in das Template mit
 aufzunehmen. Allerdings findet die Fallunterscheidung nicht notwendigerweise als erstes statt sondern kann auch tiefer
-im Funktionsbody stattfinden. Dies bietet sich in unserem Beispiel an, denn wir haben gegen das DRY Prinzip verstossen (Wenn wir
+im Funktionsbody stattfinden. Dies bietet sich in unserem Beispiel an, denn wir haben gegen das DRY Prinzip verstoßen (Wenn wir
 die Farbe des Textes beispielsweise auf "red" ändern möchten, müssten wir drei Zeilen ändern). Deshalb ist es vorteilhaft,
 den konditionalen Ausdruck nach innen zu ziehen:
 
 @#reader scribble/comment-reader
 (racketblock
 ; WorldState -> Image
-; add a status line to the scene create by render  
+; add a status line to the scene created by render
 (define (render/status y)
   (above
    (text 
@@ -266,7 +266,7 @@ Hier ein Beispiel:
         [else #false]))
 )        
         
-Funktionen mit Summentypen entscheiden sich in ihrer Entwurfsmethodik etwas von den Funktionen, die
+Funktionen mit Summentypen unterscheiden sich in ihrer Entwurfsmethodik etwas von den Funktionen, die
 wir bisher kennengelernt haben. Deswegen gehen wir nochmal durch unser Entwurfsrezept (@secref{entwurfsrezept}) und beschreiben,
 wie sich der Entwurf von Funktionen mit Summentypen vom allgemeinen Entwurfsrezept unterscheidet.
 
@@ -322,7 +322,7 @@ Das Entwurfsrezept für den Entwurf von Funktionen ergänzen wir wie folgt:
              einem @racket[cond] Ausdruck startet, der die unterschiedlichen Fälle
              des Summentypen unterscheidet.
 
-@margin-note{Wieso ist es in diesem Beispiel die Reihenfolge der Zweige des @racket[cond]
+@margin-note{Wieso ist in diesem Beispiel die Reihenfolge der Zweige des @racket[cond]
                                                                             Ausdrucks wichtig?}             
 @#reader scribble/comment-reader
 (racketblock
