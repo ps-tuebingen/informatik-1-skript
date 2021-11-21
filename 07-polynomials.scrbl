@@ -21,7 +21,7 @@ Kombinationen von Summen- und Produkttypen nennen wir @italic{algebraische Daten
 
 @section{Beispiel: Kollisionen zwischen Shapes}
 
-Nehmen Sie an, sie möchten ein Computerspiel programmieren, in dem Spielfiguren in unterschiedlichen
+Nehmen Sie an, Sie möchten ein Computerspiel programmieren, in dem Spielfiguren in unterschiedlichen
 geometrischen Formen vorkommen, zum Beispiel Kreise und Rechtecke. Diese können wir beispielsweise
 so modellieren: @margin-note{Wir wählen den Namen @racket[gcircle] (für @italic{geometric} circle) um
 keinen Namenskonflikt mit der @racket[circle] Funktion aus dem image.ss Teachpack zu haben.}
@@ -196,7 +196,7 @@ Das Entwurfsrezept aus Abschnitt @secref{entwurfsrezept} ergänzen wir wie folgt
              kann. Die Feldtypen der Produkte, die man definiert, können also selber wieder
              einen ADT haben. Wenn also ein Produkttyp sehr viele Felder hat, oder ein
              Summentyp sehr viele Alternativen, so deutet dies darauf hin, dass Sie 
-             eine tiefere Hierarchie (durch Verschachtelung von ADTs) verwendensollten.}
+             eine tiefere Hierarchie (durch Verschachtelung von ADTs) verwenden sollten.}
        @item{Im zweiten Schritt, der Definition der Funktionssignatur und der Aufgabenbeschreibung,
              ändert sich nichts --- allerdings können und sollten Sie nun natürlich die Namen
              der definierten ADTs verwenden.}
@@ -220,7 +220,7 @@ Das Entwurfsrezept aus Abschnitt @secref{entwurfsrezept} ergänzen wir wie folgt
              in das Template mit aufgenommen werden.
              
              Allerdings gibt es einen wichtigen Fall, in dem sie @italic{keinen} @racket[cond] Ausdruck
-             zur Unterscheidung der Alternativen ins Template aufnehme sollte, nämlich dann, wenn es möglich
+             zur Unterscheidung der Alternativen ins Template aufnehmen sollten, nämlich dann, wenn es möglich
              ist, die Funktion abstrakt zu formulieren --- sie also die Fälle nicht unterscheiden, sondern
              lediglich bereits existierende Funktionen aufrufen, die auch auf Basis des ADTs implementiert
              wurden. Als Beispiel haben wir die @racket[overlap/3] Funktion gesehen.}
@@ -268,7 +268,7 @@ Beispiel: Betrachten Sie die folgenden drei Definitionen für einen Datentyp @it
 )
 
 
-Jede der drei Repräsentationen kann die gleichen Informationen darstellen. Programme, die einen dieser Typen verwenden können so refactored werden, dass sie einen der beiden anderen verwenden.
+Jede der drei Repräsentationen kann die gleichen Informationen darstellen. Programme, die einen dieser Typen verwenden, können so refactored werden, dass sie einen der beiden anderen verwenden.
 Was wir an @italic{Student1} und @italic{Student2} sehen, ist, dass Produkttypen, die sich nur in der Reihenfolge der Komponenten unterscheiden, isomorph sind: Wir könnten zwischen den Datentypen
 hin- und herkonvertieren,
 @#reader scribble/comment-reader
@@ -286,7 +286,7 @@ und wir können Programme, die @italic{Student1} verwenden, so refactoren, dass 
 
 Das dritte Beispiel, @italic{Student3}, zeigt, dass wir Daten gruppieren und in separate Datentypen auslagern können. Auch hier gibt es eine Bijektion und ein offensichtliches Refactoring des Programms.
 
-Wenn wir im Allgemeinen Fall solche Typisomorphien betrachten, spielen offensichtlich die verwendeten Namen für die Struktur und die Komponenten keine Rolle. 
+Wenn wir im allgemeinen Fall solche Typisomorphien betrachten, spielen offensichtlich die verwendeten Namen für die Struktur und die Komponenten keine Rolle.
 Wir könnten für diesen Zweck Produkttypen so schreiben:
 
 @#reader scribble/comment-reader

@@ -39,7 +39,7 @@ Mengen bezeichnet. In manchen Sprachen werden Strukturen auch @italic{Records} g
 @section{Die @racket[posn] Struktur}
 
 Eine Position in einem Bild wird durch zwei Zahlen eindeutig identifiziert: Die
-Distanz vom linken Rand und die Distanz vom oberen Rand. Die erse Zahl nennt man die x-Koordinate
+Distanz vom linken Rand und die Distanz vom oberen Rand. Die erste Zahl nennt man die x-Koordinate
 und die zweite die y-Koordinate.
 
 In BSL werden solche Positionen mit Hilfe der @racket[posn] Struktur repräsentiert. 
@@ -137,7 +137,7 @@ ganzen Satz an Funktionen, und zwar wie folgt:
        @item{Pro Feld der Struktur einen @italic{Selektor} --- eine Funktion, die den Wert eines Feldes aus
              einer Instanz der Struktur ausliest. Im Falle von @racket[posn] heißen diese Funktionen @racket[posn-x] 
              und @racket[posn-y]; im Allgemeinen heißen Sie @racket[StructureName-FieldName], wobei @racket[StructureName]
-             der Name der Struktur und @racket[FielName] der Name des Feldes ist.}
+             der Name der Struktur und @racket[FieldName] der Name des Feldes ist.}
        @item{Ein @italic{Strukturprädikat} --- eine boolsche Funktion, die berechnet, ob ein Wert eine Instanz
                  dieser Struktur ist. Im Falle von @racket[posn] heißt dieses Prädikat @racket[posn?]; 
                  im Allgemeinen heißt es @racket[StructureName?], wobei @racket[StructureName] der Name der Struktur ist.}]
@@ -399,7 +399,7 @@ wieso es wichtig ist, immer die Extremfälle (im Englischen: @italic{@bold{Corne
 
 
 @section[#:tag "tagging-maybe"]{Tagged Unions und Maybe}
-Wie bereits im Abschnitt @secref{disjoint} bemerkt wurde ist es für Summentypen wichtig, dass die
+Wie bereits im Abschnitt @secref{disjoint} bemerkt wurde, ist es für Summentypen wichtig, dass die
 einzelnen Alternativen unterscheidbar sind. Nehmen wir zum Beispiel den Datentyp @racket[MaybeNumber]
 aus Abschnitt @secref{sums}:
 
