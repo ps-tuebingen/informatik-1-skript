@@ -82,7 +82,7 @@ Erstmal ist nicht ganz klar, was das bedeuten soll. Vor allen Dingen ist aber au
 klar, wie wir einen Stammbaum erzeugen sollen. Wenn wir versuchen, einen zu erzeugen,
 bekommen wir ein Problem:
 
-@racket[(make-person "Heinz" (make-person "Horst" (make-person "Joe" ...)))]
+@racket[(make-person "Bob" (make-person "Horst" (make-person "Joe" ...)))]
 
 Wir können überhaupt gar keinen Stammbaum erzeugen, weil wir zur Erzeugung bereits einen
 Stammbaum haben müssen. Ein Ausdruck, der einen Stammbaum erzeugt, wäre also unendlich groß.
@@ -108,9 +108,9 @@ Dieser neue, nicht-rekursive Basisfall erlaubt es uns nun, Werte dieses Typen zu
 Hier ist ein Beispiel:
 
 @racketblock[
-(define HEINZ 
-  (make-person "Heinz" 
-               (make-person "Elke" #false #false)
+(define Bob 
+  (make-person "Bob" 
+               (make-person "Alice" #false #false)
                (make-person "Horst" 
                             (make-person "Joe" 
                                          #false
@@ -129,7 +129,7 @@ Sei @${ft_0} die leere Menge, @${ft_1} die Menge @${\{ \mathtt{\# false} \}}, @$
 aus  @${\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name false false)] für alle 
 Strings @racket[name]. Im Allgemeinen sei ft@subscript{i+1} die Vereinigung aus  @${\{ \mathtt{\# false} \}} und der
 Menge der @racket[(make-person name p1 p2)] für alle Strings @racket[name] sowie für alle @racket[p1] und
-alle @racket[p2] aus ft@subscript{i}. Beispielsweise ist @racket[HEINZ] ein Element von ft@subscript{5} (und 
+alle @racket[p2] aus ft@subscript{i}. Beispielsweise ist @racket[Bob] ein Element von ft@subscript{5} (und 
 damit auch ft@subscript{6}, ft@subscript{7} usw.) aber nicht von ft@subscript{4}.
 
 Dann ist die Bedeutung von @racket[FamilyTree], @${\mathit{ft}}, die Vereinigung aller dieser Mengen, also ft@subscript{0}
@@ -140,7 +140,7 @@ In mathematischer Schreibweise können wir die Konstruktion so zusammenfassen:
 @${
 \begin{aligned}
   \mathit{ft}_0 & = \emptyset  \\
-  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make-person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
+  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make-person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ |  
                  \mathit{n} \in \mathit{String}, \mathit{p}_1 \in \mathit{ft}_{i},  \mathit{p}_2 \in \mathit{ft}_{i} \} \\
   \mathit{ft} & = \bigcup_{i \in \mathbb{N}}{\mathit{ft}_i} 
 \end{aligned}         
@@ -160,9 +160,9 @@ bei der neben dem Namen auch noch das Vermögen angegeben wird, so wäre
 
 @$${
 \begin{aligned}
-  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make-person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
+  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make-person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ |  
                  \mathit{n} \in \mathit{String}, \mathit{p}_1 \in \mathit{ft}_{i},  \mathit{p}_2 \in \mathit{ft}_{i} \} \\
-     & \cup \{ \mathtt{(make-celebrity}\ \mathit{n}\ \mathit{w}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
+     & \cup \{ \mathtt{(make-celebrity}\ \mathit{n}\ \mathit{w}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ |  
                  \mathit{n} \in \mathit{String}, \mathit{w} \in \mathit{Number}, \mathit{p}_1 \in \mathit{ft}_{i},  \mathit{p}_2 \in \mathit{ft}_{i} \} 
 \end{aligned}         
 }           
@@ -183,8 +183,8 @@ Eine Signatur, Aufgabenbeschreibung und Tests sind dazu schnell definiert:
 (racketblock
 ; FamilyTree String -> Boolean
 ; determines whether person p has an ancestor a
-(check-expect (person-has-ancestor HEINZ "Joe") #true)
-(check-expect (person-has-ancestor HEINZ "Emil") #false)
+(check-expect (person-has-ancestor Bob "Joe") #true)
+(check-expect (person-has-ancestor Bob "Emil") #false)
 (define (person-has-ancestor p a) ...)
 )
 
@@ -269,8 +269,8 @@ den Anfang der Programmierung der Funktion, diesmal mit anderem Namen:
 (racketblock
 ; FamilyTree -> Boolean
 ; determines whether person p has an ancestor a
-(check-expect (person-has-ancestor-stupid HEINZ "Joe") #true)
-(check-expect (person-has-ancestor-stupid HEINZ "Emil") #false)
+(check-expect (person-has-ancestor-stupid Bob "Joe") #true)
+(check-expect (person-has-ancestor-stupid Bob "Emil") #false)
 (define (person-has-ancestor-stupid p a) ...)
 )
 
@@ -282,8 +282,8 @@ zu programmieren. Also rufen wir doch einfach diese Funktion auf:
 (racketblock
 ; FamilyTree -> Boolean
 ; determines whether person p has an ancestor a
-(check-expect (person-has-ancestor-stupid HEINZ "Joe") #true)
-(check-expect (person-has-ancestor-stupid HEINZ "Emil") #false)
+(check-expect (person-has-ancestor-stupid Bob "Joe") #true)
+(check-expect (person-has-ancestor-stupid Bob "Emil") #false)
 (define (person-has-ancestor-stupid p a) 
   (person-has-ancestor-stupid p a))
 )
@@ -295,21 +295,21 @@ wir müssen sie durch Drücken auf die "Stop" Taste abbrechen.
 Wieso funktioniert @racket[person-has-ancestor] aber nicht @racket[person-has-ancestor-stupid]?
 
 Zunächst einmal können wir die Programme operationell miteinander vergleichen. Wenn wir den
-Ausdruck @racket[(person-has-ancestor-stupid HEINZ "Joe")] betrachten, so sagt unsere
+Ausdruck @racket[(person-has-ancestor-stupid Bob "Joe")] betrachten, so sagt unsere
 Reduktionssemantik:
 
-@racket[(person-has-ancestor-stupid HEINZ "Joe")] @step @racket[(person-has-ancestor-stupid HEINZ "Joe")]
+@racket[(person-has-ancestor-stupid Bob "Joe")] @step @racket[(person-has-ancestor-stupid Bob "Joe")]
 
 Es gibt also keinerlei Fortschritt bei der Auswertung. Dies erklärt, wieso die Ausführung nicht stoppt.
 
-Dies ist anders bei @racket[(person-has-ancestor HEINZ "Joe")]. Die rekursiven Aufrufe rufen 
+Dies ist anders bei @racket[(person-has-ancestor Bob "Joe")]. Die rekursiven Aufrufe rufen 
 @racket[person-has-ancestor] stets auf Vorfahren der Person auf. Da der Stammbaum nur eine endliche
 Tiefe hat, muss irgendwann @racket[(person-has-ancestor #false "Joe")] aufgerufen werden, und wir
 landen im zweiten Fall des konditionalen Ausdrucks, der keine rekursiven Ausdrücke mehr enthält.
 
 Wir können das Programm auch aus Sicht der Bedeutung der rekursiven Datentypdefinition betrachten. 
 Für jede Eingabe @racket[p] gibt es ein minimales i so dass @racket[p] in ft@subscript{i} ist.
-Für @racket[HEINZ] ist dieses i=5. Da die Werte der @racket[mother] und @racket[father] Felder von @racket[p] damit 
+Für @racket[Bob] ist dieses i=5. Da die Werte der @racket[mother] und @racket[father] Felder von @racket[p] damit 
 in @${ft_{i-1}} sind, ist klar, dass der @racket[p] Parameter bei allen rekursiven Aufrufe in @${ft_{i-1}} ist.
 Da das Programm offensichtlich für Werte aus @${ft_0} (im Beispiel die Menge {#false}) terminiert, ist
 klar, dass dann auch alle Aufrufe mit Werten aus @${ft_1} terminieren müssen, damit dann aber auch
@@ -343,10 +343,10 @@ Hier ist die Signatur, Aufgabenbeschreibung und ein Test für diese Funktion:
 ; FamilyTree -> FamilyTree
 ; prefixes all members of a family tree p with title t
 (check-expect 
- (promote HEINZ "Dr. ")
+ (promote Bob "Dr. ")
  (make-person 
-  "Dr. Heinz" 
-  (make-person "Dr. Elke" #false #false) 
+  "Dr. Bob" 
+  (make-person "Dr. Alice" #false #false) 
   (make-person 
    "Dr. Horst" 
    (make-person "Dr. Joe" #false 
@@ -819,7 +819,7 @@ Betrachten Sie die folgenden beiden Funktionen:
 (racketblock
 ; FamilyTree -> Number
 ; computes the number of known ancestors of p
-(check-expect (numKnownAncestors HEINZ) 5)
+(check-expect (numKnownAncestors Bob) 5)
 (define (numKnownAncestors p)
   (cond [(person? p) (+ 1
                         (numKnownAncestors (person-father p))
@@ -828,7 +828,7 @@ Betrachten Sie die folgenden beiden Funktionen:
 
 ; FamilyTree -> Number
 ; computes the number of unknown ancestors of p
-(check-expect (numUnknownAncestors HEINZ) 6)
+(check-expect (numUnknownAncestors Bob) 6)
 (define (numUnknownAncestors p)
   (cond [(person? p) (+ (numUnknownAncestors (person-father p))
                         (numUnknownAncestors (person-mother p)))]
