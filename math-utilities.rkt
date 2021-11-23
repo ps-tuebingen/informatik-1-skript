@@ -8,7 +8,8 @@
 (provide setup-math math-in math-disp $ $$)
 
 (define mathjax-source
-  "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+  "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"
+  ;"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
   ; "http://c328740.r40.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=default"
   ;"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-HTML"
   )
