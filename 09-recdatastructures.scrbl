@@ -6,9 +6,10 @@
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label 2htdp/universe))
 @(require scriblib/footnote)
-@(require "math-utilities.rkt")
+@require[scribble-math]
+@; (require "math-utilities.rkt")
 
-@setup-math
+@;setup-math
 
 @title[#:version ""]{Daten beliebiger Größe}
 
@@ -124,28 +125,28 @@ als Mengen von Werten aus dem Datenuniversum interpretiert, und dies ist auch
 weiterhin möglich, nur die Konstruktion der Menge, die der Typ repräsentiert, ist nun
 etwas aufwendiger:
 
-Sei ft@subscript{0} die leere Menge, ft@subscript{1} die Menge @math-in{\{ \mathtt{\# false} \}}, ft@subscript{2} die Vereinigung
-aus  @math-in{\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name false false)] für alle 
-Strings @racket[name]. Im Allgemeinen sei ft@subscript{i+1} die Vereinigung aus  @math-in{\{ \mathtt{\# false} \}} und der
+Sei @${ft_0} die leere Menge, @${ft_1} die Menge @${\{ \mathtt{\# false} \}}, @${ft_2} die Vereinigung
+aus  @${\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name false false)] für alle 
+Strings @racket[name]. Im Allgemeinen sei ft@subscript{i+1} die Vereinigung aus  @${\{ \mathtt{\# false} \}} und der
 Menge der @racket[(make-person name p1 p2)] für alle Strings @racket[name] sowie für alle @racket[p1] und
 alle @racket[p2] aus ft@subscript{i}. Beispielsweise ist @racket[HEINZ] ein Element von ft@subscript{5} (und 
 damit auch ft@subscript{6}, ft@subscript{7} usw.) aber nicht von ft@subscript{4}.
 
-Dann ist die Bedeutung von @racket[FamilyTree], @math-in{\mathit{ft}}, die Vereinigung aller dieser Mengen, also ft@subscript{0}
-vereinigt mit ft@subscript{1} vereinigt mit ft@subscript{2} vereinigt mit ft@subscript{3} vereinigt mit ... .
+Dann ist die Bedeutung von @racket[FamilyTree], @${\mathit{ft}}, die Vereinigung aller dieser Mengen, also ft@subscript{0}
+vereinigt mit @${ft_1} vereinigt mit @${ft_2} vereinigt mit @${ft_3} vereinigt mit ... .
 
 In mathematischer Schreibweise können wir die Konstruktion so zusammenfassen:
 
-@math-disp{
+@${
 \begin{aligned}
   \mathit{ft}_0 & = \emptyset  \\
-  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make\mbox{-}person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
+  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make-person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
                  \mathit{n} \in \mathit{String}, \mathit{p}_1 \in \mathit{ft}_{i},  \mathit{p}_2 \in \mathit{ft}_{i} \} \\
   \mathit{ft} & = \bigcup_{i \in \mathbb{N}}{\mathit{ft}_i} 
 \end{aligned}         
 }           
 
-Es ist nicht schwer zu sehen, dass stets @math-in{\mathit{ft}_i \subseteq \mathit{ft}_{i+1}}; die nächste Menge umfasst
+Es ist nicht schwer zu sehen, dass stets @${\mathit{ft}_i \subseteq \mathit{ft}_{i+1}}; die nächste Menge umfasst
 also stets die vorherige.
 
 Aus dieser Mengenkonstruktion wird klar, wieso rekursive Datentypen es ermöglichen, Daten beliebiger
@@ -157,11 +158,11 @@ Alternativen gibt, so ist die i-te Menge die Vereinigung der i-ten Mengen für j
 beispielsweise noch eine zusätzliche @racket[FamilyTree] Alternative @racket[(make-celebrity String Number FamilyTree FamilyTree)]
 bei der neben dem Namen auch noch das Vermögen angegeben wird, so wäre
 
-@math-disp{
+@$${
 \begin{aligned}
-  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make\mbox{-}person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
+  \mathit{ft}_{i+1} & = \{ \mathtt{\# false} \} \cup \{ \mathtt{(make-person}\ \mathit{n}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
                  \mathit{n} \in \mathit{String}, \mathit{p}_1 \in \mathit{ft}_{i},  \mathit{p}_2 \in \mathit{ft}_{i} \} \\
-     & \cup \{ \mathtt{(make\mbox{-}celebrity}\ \mathit{n}\ \mathit{w}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
+     & \cup \{ \mathtt{(make-celebrity}\ \mathit{n}\ \mathit{w}\ \mathit{p}_1\ \mathit{p}_2 \mathtt{)} \ | \ 
                  \mathit{n} \in \mathit{String}, \mathit{w} \in \mathit{Number}, \mathit{p}_1 \in \mathit{ft}_{i},  \mathit{p}_2 \in \mathit{ft}_{i} \} 
 \end{aligned}         
 }           
@@ -309,18 +310,18 @@ landen im zweiten Fall des konditionalen Ausdrucks, der keine rekursiven Ausdrü
 Wir können das Programm auch aus Sicht der Bedeutung der rekursiven Datentypdefinition betrachten. 
 Für jede Eingabe @racket[p] gibt es ein minimales i so dass @racket[p] in ft@subscript{i} ist.
 Für @racket[HEINZ] ist dieses i=5. Da die Werte der @racket[mother] und @racket[father] Felder von @racket[p] damit 
-in ft@subscript{i-1} sind, ist klar, dass der @racket[p] Parameter bei allen rekursiven Aufrufe in ft@subscript{i-1} ist.
-Da das Programm offensichtlich für Werte aus ft@subscript{0} (im Beispiel die Menge {#false}) terminiert, ist
-klar, dass dann auch alle Aufrufe mit Werten aus ft@subscript{1} terminieren müssen, damit dann aber auch
-die Aufrufe mit Werten aus ft@subscript{2} und so weiter. Damit haben wir gezeigt, dass die Funktion
-für alle Werte aus ft@subscript{i} für ein beliebiges i wohldefiniert ist --- mit anderen Worten:
+in @${ft_{i-1}} sind, ist klar, dass der @racket[p] Parameter bei allen rekursiven Aufrufe in @${ft_{i-1}} ist.
+Da das Programm offensichtlich für Werte aus @${ft_0} (im Beispiel die Menge {#false}) terminiert, ist
+klar, dass dann auch alle Aufrufe mit Werten aus @${ft_1} terminieren müssen, damit dann aber auch
+die Aufrufe mit Werten aus @${ft_2} und so weiter. Damit haben wir gezeigt, dass die Funktion
+für alle Werte aus @${ft_i} für ein beliebiges i wohldefiniert ist --- mit anderen Worten:
 für alle Werte aus @racket[FamilyTree].
 
 Dieses informell vorgetragene Argument aus dem vorherigen Absatz ist mathematisch gesehen ein
 Induktionsbeweis.
 
 Bei @racket[person-has-ancestor-stupid] ist die Lage anders, da im rekursiven Aufruf das Argument 
-eben nicht aus ft@subscript{i-1} ist.
+eben nicht aus @${ft_{i-1}} ist.
 
 Die Schlussfolgerung aus diesen Überlegungen ist, dass Rekursion in Funktionen unproblematisch
 und wohldefiniert ist, solange sie der Struktur der Daten folgt. Da Werte rekursiver
