@@ -279,7 +279,7 @@ hin- und herkonvertieren,
 
 ; Student2 -> Student1
 (define (student2->student1 s)
-  (make-student1 (student1-lastname s) (student1-firstname s) (student1-matnr s)))              
+  (make-student1 (student2-lastname s) (student2-firstname s) (student2-matnr s)))              
 )
 
 und wir können Programme, die @italic{Student1} verwenden, so refactoren, dass sie stattdessen @italic{Student2} verwenden, nämlich indem die entsprechenden Konstruktoren und Selektoren angepasst werden.
