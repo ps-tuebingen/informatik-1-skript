@@ -11,12 +11,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Racket
-        uses: Bogdanp/setup-racket@v1.5
+        uses: Bogdanp/setup-racket@v1.7
         with:
           architecture: 'x64'
           distribution: 'full'
           variant: 'CS'
           version: 'stable'
+      - run: raco pkg install --deps search-auto scribble-math
       - name: Install TeXlive
         run: sudo apt-get install texlive texlive-latex-extra texlive-fonts-extra latexmk
       - name: Build Scribble PDF Docs
@@ -31,6 +32,3 @@ jobs:
           title: "Informatik 1 PDF Skript"
           files: |
             script.pdf
-
-
-

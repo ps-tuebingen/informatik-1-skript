@@ -11,12 +11,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install Racket
-        uses: Bogdanp/setup-racket@v1.5
+        uses: Bogdanp/setup-racket@v1.7
         with:
           architecture: 'x64'
           distribution: 'full'
           variant: 'CS'
           version: 'stable'
+      - run: raco pkg install --deps search-auto scribble-math
       - name: Build Scribble Docs
         run: |
           xvfb-run racket -l racket/gui -l- scribble/run    ++xref-in setup/xref load-collections-xref   --htmls --redirect-main http://docs.racket-lang.org/ script.scrbl
