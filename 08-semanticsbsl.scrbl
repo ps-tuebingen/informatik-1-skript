@@ -20,7 +20,7 @@ In diesem Kapitel werden wir die Bedeutung (fast) aller Sprachkonstrukte von BSL
 Dies geschieht in zwei Schritten: Wir werden zunächst die @italic{Syntax} der Sprache definieren. 
 Die Syntax definiert, welche Texte BSL-Programme sind. Die Syntax wird in Form einer @italic{Grammatik}
 definiert. Die Grammatik sagt nicht nur, welche Texte BSL-Programme sind, sondern zerlegt ein BSL-Programm in 
-seine Teile, genau so wie eine Grammatik für natürliche Sprache einen Satz in Teile wie Subjekt, Prädikat und Objekt zerlegt.
+seine Teile, genauso wie eine Grammatik für natürliche Sprachen einen Satz in Teile wie Subjekt, Prädikat und Objekt zerlegt.
 
 Im zweiten Schritt definieren wir für die grammatikalisch korrekten BSL-Programme, was diese bedeuten. 
 Die Bedeutung legen wir durch die Definition von Reduktionsschritten fest, mit denen BSL Programme zu Werten
@@ -32,7 +32,7 @@ diese Reduktionsschritte für die meisten Sprachkonstrukte definiert. Wir werden
 anhand der formalen Syntaxdefinition nochmal präzisieren. Außerdem werden wir nun auch definieren, welche Bedeutung
 Strukturen haben.
 
-Es gibt verschiedene Möglichkeiten, die Bedeutung eine Programmiersprache zu definieren; die, die wir benutzen,
+Es gibt verschiedene Möglichkeiten, die Bedeutung einer Programmiersprache zu definieren; die, die wir benutzen,
 nennt man @italic{Reduktionssemantik} oder @italic{strukturelle operationelle Semantik} oder @italic{Plotkin Semantik} 
 (nach Gordon Plotkin). Für die Formalisierung der Auswertungspositionen, von denen wir in den vorherigen Kapiteln
 gesprochen haben,  verwenden wir sogenannte @italic{Auswertungskontexte}, 
@@ -49,11 +49,11 @@ wird, bis es "läuft". Ein Programm durch Ausführen und Tests zu validieren ist
 nicht den gedanklichen Prozess ersetzen, wie ein Programm ablaufen muss, damit zu jeder Eingabe die korrekte Ausgabe 
 produziert wird. Dazu ist es unumgänglich, dass Sie genau verstehen, was der Code bedeutet, den Sie gerade programmiert haben.
 
-Wir möchten, dass Sie prinzipiell in der Lage sind, ihre Programme auf einem Blatt Papier auszuführen und exakt vorherzusagen, 
+Wir möchten, dass Sie prinzipiell in der Lage sind, Ihre Programme auf einem Blatt Papier auszuführen und exakt vorherzusagen,
 was ihr Code bewirkt. Auch wenn Ihnen der Umgang mit den eher theoretischen Konzepten dieses Kapitels vielleicht am Anfang
 schwerfällt, glauben wir, dass Ihnen dieses Kapitel helfen kann, ein besserer und effektiverer Programmierer zu werden.
 
-Davon abgesehen werden Sie sehen, dass die theoretischen Konzepte, die sie in diesem Kapitel kennenlernen, eine Eleganz haben, die 
+Davon abgesehen werden Sie sehen, dass die theoretischen Konzepte, die Sie in diesem Kapitel kennenlernen, eine Eleganz haben, die
 es allein aus diesem Grund wert macht, sie zu studieren.
 
 @section{Kontextfreie Grammatiken}
@@ -261,7 +261,7 @@ Wenn man die Bedeutung einer Sprache definiert, möchte man normalerweise, dass 
 kann ein Benutzer sie leicht verstehen und Schlussfolgerungen ziehen.
 
 Aus diesem Grund identifizieren wir eine Untersprache der BSL, die bereits ausreichend ist, um alle Programme zu schreiben,
-die man auch in BSL schreiben kann. Der einzige Unterschied ist, dass man an einigen Stellen vielleicht etwas umständlicheres
+die man auch in BSL schreiben kann. Der einzige Unterschied ist, dass man an einigen Stellen vielleicht etwas Umständlicheres
 schreiben muss. 
 
 Wir haben bereits ein intellektuelles Werkzeug kennengelernt, um Kernsprachenelemente von eher unwichtigem Beiwerk zu unterscheiden,
@@ -286,7 +286,7 @@ das in DrRacket implementierte Verhalten, wie folgendes Beispiel illustriert:
 Allerdings können wir auch dieses Verhalten kodieren. Mit Hilfe der Funktion
 @racketblock[
 (define (asBool b)
-  (if (boolan? b) b (error "question result is not true or false: " b)))]
+  (if (boolean? b) b (error "question result is not true or false: " b)))]
 
 können wir nun @racket[(and e-1 e-2)] kodieren als @racket[(cond [e-1 (asBool e-2)] [else #false])] und @racket[(or e-1 e-2)] als
  @racket[(cond [e-1 #true] [else (asBool e-2)])]. Mehr als zwei Parameter von @racket[and] und @racket[or] kodieren wir durch
@@ -660,7 +660,7 @@ Wir hatten in Abschnitt @secref{semanticsofexpressions} vorgestellt, wie man auf
 eine Äquivalenzrelation auf Ausdrücken definieren kann. 
 Diese Äquivalenzen können zum Refactoring von Programmen verwendet
 werden - also Programmänderungen, die nicht die Bedeutung verändern aber die Struktur des Programms verbessern.
-Außerdem können sie verwendet werden, um Eigenschaften seines Programmes herzuleiten, zum Beispiel
+Außerdem können sie verwendet werden, um Eigenschaften eines Programmes herzuleiten, zum Beispiel
 dass die Funktion @racket[overlaps-circle] aus dem vorherigen Kapitel kommutativ ist, also 
 @racket[(overlaps-circle c1 c2)] @equiv @racket[(overlaps-circle c2 c1)].
 
@@ -746,7 +746,7 @@ Beispiel: Betrachten Sie folgendes Programm:
 Da @racket[(f 1)] @step @racket[(f 1)], terminiert die Berechnung des Arguments für @racket[g] nicht, und gemäß der Kongruenzregel
 gilt damit @racket[(g (f 1))] @step @racket[(g (f 1))], daher terminiert die Berechnung des Ausdrucks @racket[(g (f 1))] @step @racket[(g (f 1))] nicht.
 Auf der anderen Seite gilt jedoch gemäß @italic{(EFUN)} @racket[(g (f 1))] @equiv 42. Man muss daher bei der Verwendung der Äquivalenzregeln
-berücksichtigen, dass die Äquivalenz nur unter der Voraussetzung gilt, dass die Terme auf beiden Seiten terminieren..
+berücksichtigen, dass die Äquivalenz nur unter der Voraussetzung gilt, dass die Terme auf beiden Seiten terminieren.
 
 Es gilt jedoch folgende etwas schwächere Eigenschaft, die wir ohne Beweis aufführen:
 

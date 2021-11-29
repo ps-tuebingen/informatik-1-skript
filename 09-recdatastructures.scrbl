@@ -126,7 +126,7 @@ weiterhin möglich, nur die Konstruktion der Menge, die der Typ repräsentiert, 
 etwas aufwendiger:
 
 Sei @${ft_0} die leere Menge, @${ft_1} die Menge @${\{ \mathtt{\# false} \}}, @${ft_2} die Vereinigung
-aus  @${\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name false false)] für alle 
+aus  @${\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name #false #false)] für alle
 Strings @racket[name]. Im Allgemeinen sei ft@subscript{i+1} die Vereinigung aus  @${\{ \mathtt{\# false} \}} und der
 Menge der @racket[(make-person name p1 p2)] für alle Strings @racket[name] sowie für alle @racket[p1] und
 alle @racket[p2] aus ft@subscript{i}. Beispielsweise ist @racket[Bob] ein Element von ft@subscript{5} (und 
@@ -371,7 +371,7 @@ Datentyp rekursiv ist:
 )
 
 Nun ist es recht einfach, die Funktion zu vervollständigen. Um Werte vom Typ @racket[FamilyTree]
-zu produzieren, bauen wir die Resultate der rekursiven Aufrufe in einen Aufrufe
+zu produzieren, bauen wir die Resultate der rekursiven Aufrufe in einen Aufruf
 des @racket[make-person] Konstruktors ein:
 
 
@@ -538,7 +538,7 @@ für rekursive Datentypen auch auf Listen anwendbar.
 
 Wir haben oben eine Datendefinition @racket[List-of-Numbers] gesehen. Sollen wir auch für @racket[List-of-Strings]
 oder @racket[List-of-Booleans] eigene Datendefinitionen schreiben? Sollen diese die gleiche Struktur benutzen, oder
-sollen wir separate Strukturen für jede dieser Datentypen haben?
+sollen wir separate Strukturen für jeden dieser Datentypen haben?
 
 Es ist sinnvoll, dass alle diese Datentypen die gleiche Struktur benutzen, nämlich in Form der eingebauten 
 Listenfunktionen. Hierfür gibt es zwei Gründe: Erstens wären all diese Strukturen sehr ähnlich und wir würden damit
@@ -553,7 +553,7 @@ Listen arbeiten, zum Beispiel eine Funktion @racket[second], die das zweite List
 
 Diese Funktion (die übrigens schon vordefiniert ist, genau wie @racket[third], @racket[fourth] und so weiter)
 funktioniert für beliebige Listen, unabhängig von der Art der gespeicherten Daten. Solche Funktionen könnten wir
-nicht schreiben, wenn wir für je nach Typ der Listenelemente andere Strukturen verwenden würden.
+nicht schreiben, wenn wir je nach Typ der Listenelemente andere Strukturen verwenden würden.
 
 Der häufigste Anwendungsfall von Listen ist der, dass die Listen @italic{homogen} sind. Das bedeutet, dass 
 alle Listenelemente einen gemeinsamen Typ haben. Dies ist keine sehr große Einschränkung, denn dieser
@@ -569,7 +569,7 @@ verwenden wir Datendefinitionen mit @italic{Typparametern}, und zwar so:
 
 Diese Datendefinitionen benutzen wir, indem wir einen Typ für den Typparameter angeben. Hierzu
 verwenden wir die Syntax für Funktionsanwendung; wir schreiben also @racket[(List-of String)], @racket[(List-of Boolean)], 
-@racket[(List-of (List-of String))] oder @racket[(List-of FamilyTree)] verwenden und meinen damit implizit
+@racket[(List-of (List-of String))] oder @racket[(List-of FamilyTree)] und meinen damit implizit
 die oben angeführte Datendefinition.
 
 Was aber ist ein geeigneter Datentyp für die Signatur von @racket[second] oben, also im Allgemeinen
@@ -586,7 +586,7 @@ dies in der Signatur explizit. Im Beispiel der Funktion @racket[second] sieht da
 Das [X] am Anfang der Signatur sagt, dass diese Funktion die nachfolgende Signatur für jeden Typ X hat,
 also (List-of X) -> X für jede mögliche Ersetzung von X durch einen Typen.
 Man nennt Variablen wie @racket[X]  @italic{Typvariablen}.
-Also hat @racket[second] zum Beispiel den Typ (List-of Number) -> Number oder(List-of (List-of String) -> (List-of String).
+Also hat @racket[second] zum Beispiel den Typ (List-of Number) -> Number oder (List-of (List-of String)) -> (List-of String).
 
 Allerdings werden wir im Moment nur im Ausnahmefall Funktionen wie @racket[second] selber programmieren. 
 Die meisten Funktionen, die wir im Moment programmieren wollen, verarbeiten Listen mit einem konkreten Elementtyp.
@@ -691,7 +691,7 @@ Dieses Template zu vervollständigen ist nun nur noch ein kleiner Schritt:
 @section{Mehrere rekursive Datentypen gleichzeitig}
 Ein schwierigerer Fall ist es, wenn mehrere Parameter einer Funktion einen rekursiven Datentyp haben. In diesem Fall ist es meist
 sinnvoll, einen dieser Parameter zu bevorzugen und zu ignorieren, dass andere Parameter ebenfalls rekursiv sind. Welcher
-Parameter bevorzugt werden sollte, ergibt sich aus der Fragestellung, wie sie die Eingabe der Funktion am sinnvollsten zerlegen
+Parameter bevorzugt werden sollte, ergibt sich aus der Fragestellung, wie Sie die Eingabe der Funktion am sinnvollsten zerlegen
 können, so dass Sie aus dem Ergebnis des rekursiven Aufrufs und den anderen Parametern am einfachsten das Gesamtergebnis
 berechnen können.
 
@@ -958,4 +958,4 @@ Damit haben wir (unter Nutzung von @italic{ETRANS}) die Äquivalenz bewiesen. Di
 Wenn Sie geübter im Nutzen von Programmäquivalenzen sind, werden ihre Beweise großschrittiger und damit
 auch kompakter.
 
-Die gleiche Beweismethodik läßt sich für alle rekursiven Datentypen anwenden. Insbesondere läßt sie sich auch für Listen anwenden.
+Die gleiche Beweismethodik lässt sich für alle rekursiven Datentypen anwenden. Insbesondere lässt sie sich auch für Listen anwenden.
