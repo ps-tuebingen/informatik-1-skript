@@ -5,11 +5,13 @@
 @(require (for-label (except-in lang/htdp-beginner e)))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label teachpack/2htdp/abstraction))
-@(require "math-utilities.rkt")
+@require[scribble-math]
+
+@;(require "math-utilities.rkt")
 
 @(require scribble/bnf)
 
-@setup-math
+@;setup-math
 
 @title[#:version "" #:tag "patternmatching"]{Pattern Matching}
 
@@ -154,20 +156,20 @@ man Pattern Matching verstehen als die Aufgabe, ein minimales @racket[i] zu find
 
 Wir können Matching als eine Funktion definieren, die ein Pattern und einen Wert als Eingabe
 erhält und entweder "no match" oder eine @italic{Substitution} zurückgibt.
-Eine Substitution ist ein Mapping @math-in{ \left[ x_1 := v_1, \ldots, x_n := v_n \right] } von Namen auf Werte.
+Eine Substitution ist ein Mapping @${ \left[ x_1 := v_1, \ldots, x_n := v_n \right] } von Namen auf Werte.
 Eine Substitution kann auf einen Ausdruck angewendet werden. Dies bedeutet, dass alle Namen in dem
 Ausdruck, die in der Substitution auf einen Wert abgebildet werden, durch diesen Wert ersetzt werden.
-Wenn @math-in{e} ein Ausdruck ist und @math-in{\sigma} eine Substitution, so schreiben wir @math-in{e \sigma}
-für die Anwendung von @math-in{\sigma} auf @math-in{e}. Beispielsweise für @math-in{\sigma = \left[ x := 1, y := 2 \right] }
-und @math-in{e = \mathtt{(+\ x\ y\ z)}}, ist
+Wenn @${e} ein Ausdruck ist und @${\sigma} eine Substitution, so schreiben wir @${e \sigma}
+für die Anwendung von @${\sigma} auf @${e}. Beispielsweise für @${\sigma = \left[ x := 1, y := 2 \right] }
+und @${e = \mathtt{(+\ x\ y\ z)}}, ist
 
-@math-disp{
+@$${
   e \sigma = \mathtt{(+\ x\ y\ z)}\left[ x := 1, y := 2 \right] = \mathtt{(+\ 1\ 2\ z)}
 }
 
 Das Matching eines Werts auf ein Pattern ist nun wie folgt definiert:
 
-@math-disp{
+@$${
 \begin{aligned} 
 \mathit{match}(v,v) & = \left[ \right] \\
 \mathit{match}( \mathit{(name}\ p_1 \ldots p_n\mathtt{)}, \mathtt{<}\mathtt{make}\mathit{-name}\ v_1 \ldots v_n\mathtt{>}) & = \mathit{match}(p_1,v_1) \oplus \ldots \oplus \mathit{match}(p_n,v_n) \\
@@ -182,11 +184,11 @@ Das Matching eines Werts auf ein Pattern ist nun wie folgt definiert:
 
 
 
-Hierbei ist @math-in{\oplus} ein Operator, der Substitutionen kombiniert. Das Ergebnis von @math-in{\sigma_1 \oplus \sigma_2} ist
-"no match", falls @math-in{\sigma_1} oder  @math-in{\sigma_2} "no match" sind oder  @math-in{\sigma_1} und  @math-in{\sigma_2} beide ein Mapping für den gleichen Namen definieren  aber
+Hierbei ist @${\oplus} ein Operator, der Substitutionen kombiniert. Das Ergebnis von @${\sigma_1 \oplus \sigma_2} ist
+"no match", falls @${\sigma_1} oder  @${\sigma_2} "no match" sind oder  @${\sigma_1} und  @${\sigma_2} beide ein Mapping für den gleichen Namen definieren  aber
 diese auf unterschiedliche Werte abgebildet werden.
 
-@math-disp{
+@$${
 \begin{aligned}            
     \left[ x_1 := v_1, \ldots, x_k := v_k \right] \oplus \left[ x_{k+1} := v_{k+1}, \ldots, x_n := v_n \right]  =
     \left[ x_1 := v_1, \ldots, x_n := v_n \right] \\ \ \ \text{ falls für alle } i,j \text{ gilt:} x_i = x_j \Rightarrow v_i = v_j.
@@ -194,35 +196,35 @@ diese auf unterschiedliche Werte abgebildet werden.
 }
 
 Beispiele:
-@math-disp{
+@$${
 \begin{aligned}
 \mathit{match}(\mathtt{(posn\ x\ y)},\mathtt{<make-posn\ 3\ 4>}) = \left[ x := 3, y := 4 \right] \\
 \end{aligned}
 }
-@math-disp{
+@$${
 \begin{aligned}
 \mathit{match}(\mathtt{(posn\ 3\ y)},\mathtt{<make-posn\ 3\ 4>}) = \left[y := 4 \right] \\
 \end{aligned}
 }
-@math-disp{
+@$${
 \begin{aligned}
 \mathit{match}(\mathtt{x},\mathtt{<make-posn\ 3\ 4>}) = \left[x := \mathtt{<make-posn\ 3\ 4>} \right] \\
 \end{aligned}
 }
 
-@math-disp{
+@$${
 \begin{aligned}
  \mathit{match}(\mathtt{(cons\ (posn\ x\ 3)\ y)},\mathtt{<cons\ <make-posn\ 3\ 3>\ empty>}) = \left[x := \mathtt{3}, y := empty \right] \\
 \end{aligned}
 }
 
-@math-disp{
+@$${
 \begin{aligned}
  \mathit{match}(\mathtt{(cons\ (posn\ x\ x)\ y)},\mathtt{<cons\ <make-posn\ 3\ 4>\ empty>}) = \mathit{no\ match\ } \\
 \end{aligned}
 }
 
-Beim Vergleich auf unterschiedliche Werte durch  @math-in{\oplus} werden tatsächlich jedoch nicht die Werte direkt verglichen sondern 
+Beim Vergleich auf unterschiedliche Werte durch  @${\oplus} werden tatsächlich jedoch nicht die Werte direkt verglichen sondern 
 die Funktion @racket[equal?] zum Vergleich verwendet. Im derzeitigen Sprachlevel ist dieser Unterschied nicht relevant, doch wenn 
 wir später Funktionen als Werte betrachten, so kann dies zu überraschenden Ergebnissen führen, da eigentlich gleiche Funktionen 
 bezüglich der @racket[equal?] Funktion nicht umbedingt gleich sind. Da das Vergleichen von Funktionen eine komplizierte Angelegenheit
@@ -239,14 +241,14 @@ reduziert werden kann. Alle anderen Unterausdrücke des @racket[match] Ausdrucks
       @BNF-seq[@litchar{(} @litchar{match} @nonterm{E} @kleeneplus[@BNF-group[@litchar{[}@nonterm{pattern} @nonterm{e} @litchar{]}]] @litchar{)}])]
 
 
-In der Reduktionsrelation verwenden wir nun die @math-in{\mathit{match}} Funktion von oben um zu entscheiden,
+In der Reduktionsrelation verwenden wir nun die @${\mathit{match}} Funktion von oben um zu entscheiden,
 ob ein Pattern matcht und um ggf. die durch das Pattern gebundenen Namen in dem dazugehörigen Ausdruck
 durch die entsprechenden Werte zu ersetzen.
 
 @elem[#:style inbox-style]{
 @italic{(MATCH-YES): }
 Falls in einem Ausdruck @racket[(match v [p-1 e-1] ... [p-n e-n])] gilt:
-match(@racket[p-1],@racket[v]) = @math-in{\sigma} und  @racket[e-1] @math-in{\sigma} = @racket[e],
+match(@racket[p-1],@racket[v]) = @${\sigma} und  @racket[e-1] @${\sigma} = @racket[e],
 dann @racket[(match v [p-1 e-1] ... [p-n e-n])] @step @racket[e].}
 
 @elem[#:style inbox-style]{
