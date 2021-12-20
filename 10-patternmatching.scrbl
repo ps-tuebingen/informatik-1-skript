@@ -17,7 +17,7 @@
 
 
 Viele Funktionen konsumieren Daten, die einen Summentyp oder einen algebraischen Datentyp (also eine Mischung aus
-Summen- und Produkttypen (@secref{adts}) mit einer Summe "ganz oben" haben. 
+Summen- und Produkttypen (@secref{adts})) mit einer Summe "ganz oben" haben.
 
 Häufig (und gemäß unseres Entwurfsrezepts) sehen solche Funktionen so aus, dass zunächst einmal unterschieden
 wird, welche Alternative gerade vorliegt, und dann wird (ggf. in Hilfsfunktionen) auf die Komponenten
@@ -91,7 +91,7 @@ im Pattern @racket[(posn y y)]. Dieses Pattern matcht nur dann, wenn @racket[x] 
 Komponenten den gleichen Wert haben.
 
 Falls mehrere Pattern gleichzeitig matchen, so "gewinnt" stets das erste Pattern, welches passt (analog dazu wie auch bei @racket[cond] stets
-die erste Klausel, deren Kondition @racket[true] ergibt, "gewinnt". Daher ergibt beispielsweise @racket[(f (make-posn 5 5))]
+die erste Klausel, deren Kondition @racket[true] ergibt, "gewinnt"). Daher ergibt beispielsweise @racket[(f (make-posn 5 5))]
 im Beispiel das Ergebnis @racket[42] und nicht etwa @racket[5] oder @racket[10].
 
 Das vorletzte Pattern, @racket[(cons (posn 1 z) y)], illustriert, dass Patterns beliebig tief verschachtelt werden können.
@@ -227,13 +227,13 @@ Beispiele:
 Beim Vergleich auf unterschiedliche Werte durch  @${\oplus} werden tatsächlich jedoch nicht die Werte direkt verglichen sondern 
 die Funktion @racket[equal?] zum Vergleich verwendet. Im derzeitigen Sprachlevel ist dieser Unterschied nicht relevant, doch wenn 
 wir später Funktionen als Werte betrachten, so kann dies zu überraschenden Ergebnissen führen, da eigentlich gleiche Funktionen 
-bezüglich der @racket[equal?] Funktion nicht umbedingt gleich sind. Da das Vergleichen von Funktionen eine komplizierte Angelegenheit
+bezüglich der @racket[equal?] Funktion nicht unbedingt gleich sind. Da das Vergleichen von Funktionen eine komplizierte Angelegenheit
 ist, wird in vielen Sprachen mit Pattern Matching nur sogenanntes "lineares" Pattern Matching unterstützt. Dies bedeutet, dass Pattern Variablen nur einmal im Pattern vorkommen dürfen;
 Patterns wie @racket[(posn x x)] wären dann nicht erlaubt.
 
 @subsection{Reduktion von Pattern Matching}
 
-Wir erweitern die Grammatik des Auswertungskontextes so, dass der Ausdruck, auf dem gemacht wird, zu einem Wert
+Wir erweitern die Grammatik des Auswertungskontextes so, dass der Ausdruck, auf dem gematcht wird, zu einem Wert
 reduziert werden kann. Alle anderen Unterausdrücke des @racket[match] Ausdrucks werden nicht ausgewertet.
 
 @BNF[(list @nonterm{E} 
@@ -241,7 +241,7 @@ reduziert werden kann. Alle anderen Unterausdrücke des @racket[match] Ausdrucks
       @BNF-seq[@litchar{(} @litchar{match} @nonterm{E} @kleeneplus[@BNF-group[@litchar{[}@nonterm{pattern} @nonterm{e} @litchar{]}]] @litchar{)}])]
 
 
-In der Reduktionsrelation verwenden wir nun die @${\mathit{match}} Funktion von oben um zu entscheiden,
+In der Reduktionsrelation verwenden wir nun die @${\mathit{match}} Funktion von oben, um zu entscheiden,
 ob ein Pattern matcht und um ggf. die durch das Pattern gebundenen Namen in dem dazugehörigen Ausdruck
 durch die entsprechenden Werte zu ersetzen.
 

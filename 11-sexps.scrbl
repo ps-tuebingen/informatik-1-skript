@@ -48,7 +48,7 @@ Funktion aus. Dies ändert sich, wenn wir damit verschachtelte Listen, also Bäu
 @ex['(("a" 1) ("b" 2) ("c" 3))]
 
 Wir können also mit @racket[quote] auch sehr einfach verschachtelte Listen erzeugen,
-und zwar mit minimalem syntaktischem Aufwand.
+und zwar mit minimalem syntaktischen Aufwand.
 
 Die Bedeutung von @racket[quote] ist über eine rekursive syntaktische Transformation definiert.
 
@@ -87,7 +87,7 @@ konkatenieren. Es gibt nur eine wichtige Operation für Symbole, nämlich der Ve
 @ex[(symbol=? 'x 'y)]
 
 Symbole sind dafür gedacht, "symbolische Daten" zu repräsentieren. Das sind Daten, die "in der Realität" eine wichtige
-Bedeutung haben, aber die wir in Programm nur mit einem Symbol darstellen wollen. Ein Beispiel dafür sind Farben:
+Bedeutung haben, aber die wir im Programm nur mit einem Symbol darstellen wollen. Ein Beispiel dafür sind Farben:
 @racket['red], @racket['green], @racket['blue]. Es macht keinen Sinn, die Namen von Farben als Text zu betrachten.
 Wir wollen lediglich ein Symbol für jede Farbe und vergleichen können, ob eine Farbe beispielsweise @racket['red] ist (mit
 Hilfe von @racket[symbol=?]).
@@ -137,7 +137,7 @@ Aber natürlich funktioniert diese Funktion nicht wie gewünscht:
 @ex[(some-list 2)]
 
 Für solche Fälle bietet sich @racket[quasiquote] an. Das @racket[quasiquote]
-Konstrukt verhält sich zunächst mal wie @racket[quote],ausser dass es
+Konstrukt verhält sich zunächst mal wie @racket[quote], außer dass es
 statt mit einem geraden Hochkomma  mit einem schrägen Hochkomma
 abgekürzt wird:
 
@@ -164,12 +164,12 @@ sich beide. Ein Ausdruck wie @racket[`,e] wird also transformiert zu @racket[e].
 
 @section[#:tag "sexps"]{S-Expressions}
 Betrachten Sie die @racket[person-has-ancestor] Funktion aus @secref{programmieren-rekdt}. Eine ähnliche Funktion
-läßt sich auch für viele andere baumartig organisierte Datentypen definieren, beispielsweise solche zur Repräsentation von
+lässt sich auch für viele andere baumartig organisierte Datentypen definieren, beispielsweise solche zur Repräsentation von
 Ordnerhierarchien in Dateisystemen oder zur Repräsentation der Hierarchie innerhalb einer Firma. 
 
 Natürlich könnten wir neben @racket[person-has-ancestor] nun auch noch @racket[file-has-enclosing-directory] 
 und @racket[employee-has-manager] implementieren, aber diese hätten eine sehr ähnliche Struktur wie @racket[person-has-ancestor].
-Wir würden also gegen das DRY-Prinzip verstossen.
+Wir würden also gegen das DRY-Prinzip verstoßen.
 
 Es gibt eine ganze Reihe von Funktionen, die sich auf vielen baumartigen Datentypen definieren liessen: Die Tiefe eines Baumes berechnen, 
 nach Vorkommen eines Strings suchen, alle "Knoten" des Baums finden, die ein Prädikat erfüllen, und so weiter.
@@ -180,7 +180,7 @@ wir bisher betrachtet haben, nicht.
 
 Eine der großen Innovationen der Programmiersprache LISP war die Idee eines universellen Datenformats: Ein Format, mit
 dem beliebige strukturierte Daten repräsentiert werden können, und zwar in solch einer Weise, dass das Datenformat
-Teil der Daten ist und dementsprechend darüber abstrahiert werden können. Diese Idee wird typischerweise alle paar Jahre
+Teil der Daten ist und dementsprechend darüber abstrahiert werden kann. Diese Idee wird typischerweise alle paar Jahre
 wieder einmal neu erfunden; zur Zeit sind beispielsweise XML und JSON beliebte universelle Datenformate.
 
 Der Mechanismus, den es dazu in LISP seit Ende der 1950er Jahre gibt, heißt @italic{S-Expressions}. Was sind S-Expressions?
@@ -220,7 +220,7 @@ in BSL nehmen, einen Quote-Operator drumherumschreiben, und Sie erhalten eine S-
 
 @ex[(first '(define-struct student (firstname lastname matnr)))]
 
-Diese Eigenschaft, die manchmal @italic{Homoikonizität} genannt, macht es besonders leicht, Programme als Daten zu 
+Diese Eigenschaft, die manchmal @italic{Homoikonizität} genannt wird, macht es besonders leicht, Programme als Daten zu
 repräsentieren und Programme zu schreiben, die die Repräsentation eines Programms als Eingabe bekommen oder als Ausgabe produzieren.
 In Scheme und (vollem) Racket gibt es sogar eine Funktion @racket[eval], die eine Repräsentation eines Ausdrucks als S-Expression
 als Eingabe bekommt und die diesen Ausdruck dann interpretiert und das Ergebnis zurückliefert. Beispielsweise würde @racket[(eval '(+ 1 1))] 
@@ -231,7 +231,7 @@ auch sehr gefährliche Möglichkeit.
 Da S-Expressions ein universelles Datenformat sind, ist es einfach, andere Datenformate darin zu kodieren, zum Beispiel HTML (die Sprache in 
 der die meisten Webseiten definiert werden).
 
-Zusammen mit Quasiquote und Antiquote können S-Expressions dadurch leicht zur Erstellung von dynamischen Webseiten, bei denen die
+Zusammen mit Quasiquote und Unquote können S-Expressions dadurch leicht zur Erstellung von dynamischen Webseiten, bei denen die
 festen Teile als Template definiert werden, genutzt werden. Beispielsweise könnte eine einfache Funktion zur Erzeugung
 einer dynamischen Webseite wie folgt aussehen:
 
@@ -251,7 +251,7 @@ einer dynamischen Webseite wie folgt aussehen:
 )
 
 Die Funktion erzeugt die Repräsentation einer HTML-Seite, bei der die übergebenen Parameter an der gewünschten Stelle eingebaut werden.
-S-Expressions und Quasi/Antiquote führen zu einer besseren Lesbarkeit im Vergleich zur Variante der Funktion, die die Datenstruktur mit @racket[cons]
+S-Expressions und Quasi-/Unquote führen zu einer besseren Lesbarkeit im Vergleich zur Variante der Funktion, die die Datenstruktur mit @racket[cons]
 und @racket[empty] oder @racket[list] zusammenbaut. Die erzeugte S-Expression ist zwar noch kein HTML, aber sie kann leicht zu HTML
 umgewandelt werden. In Racket gibt es zu diesem Zweck beispielsweise die @racket[xexpr->string] und @racket[xexpr->xml] Funktion der @hyperlink["http://docs.racket-lang.org/xml/index.html"]{XML Bibliothek}.
 
