@@ -336,7 +336,7 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
  Die Grammatik von dem Teil von BSL, den sie bereits kennen, ist sehr einfach:
 @itemize[
  @item{Ein BSL Programm ist eine Sequenz von Ausdrücken.}
- @item{Ein Ausdruck ist eine Zahlenliteral (wie @racket[123]), ein Bildliteral, @racket[#true] oder @racket[#false], ein Stringliteral (wie @racket["asdf"]), oder ein Funktionsaufruf.}
+ @item{Ein Ausdruck ist ein Zahlenliteral (wie @racket[123]), ein Bildliteral, @racket[#true] oder @racket[#false], ein Stringliteral (wie @racket["asdf"]), oder ein Funktionsaufruf.}
  @item{Ein Funktionsaufruf hat die Form @racket[(f e1 e2 ...)] wobei @racket[f] ein Name ist und
         @racket[e1],@racket[e2],... Ausdrücke sind.}
  ]

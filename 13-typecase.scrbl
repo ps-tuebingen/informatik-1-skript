@@ -141,7 +141,7 @@ die Ausdrücke:
 
 
 Beachten Sie, dass der Code von @racket[calc] in keiner Weise von der Repräsentation
-der Ausdrücke abhängt sondern lediglich auf Basis des Interfaces definiert wurde.
+der Ausdrücke abhängt, sondern lediglich auf Basis des Interfaces definiert wurde.
 
 @section{ADTs mit Strukturdefinitionen}
 
@@ -191,12 +191,12 @@ Datentypen zu verarbeiten, nämlich Pattern Matching (@secref{patternmatching}):
 
 @section{ADTs mit @racket[define-type]}
 
-@margin-note{Wechseln Sie zum Nutzen von @racket[define-type] auf die "Intermediate Student Language"}
+@margin-note{Wechseln Sie zum Nutzen von @racket[define-type] auf die "Intermediate Student Language".}
 Eine neue Möglichkeit, um algebraische Datentypen zu repräsentieren, bietet
 das @racket[2htdp/abstraction] Teachpack mit dem @racket[define-type] Konstrukt.
 Im Unterschied zu @racket[define-struct] bietet @racket[define-type] direkte Unterstützung
 für Summentypen, daher kann der Summentyp @racket[Expression] mit seinen unterschiedlichen
-Alternativen direkt definiert werden. Ein weiterer wichtiger Unterschied zu @racket[define-type]
+Alternativen direkt definiert werden. Ein weiterer wichtiger Unterschied zu @racket[define-struct]
 ist, dass zu jedem Feld einer Alternative eine Prädikatsfunktion angegeben wird, die definiert,
 welche Werte für dieses Feld zulässig sind. Diese Prädikatsfunktionen sind eine
 Form von dynamisch überprüften Contracts (siehe @secref{contracts}).
@@ -414,7 +414,7 @@ ADTs mit Strukturdefinitionen als b), ADTs mit @racket[define-type] als c), und 
  Alle Alternativen werden an einer Stelle definiert, daher ist eine Erweiterung um weitere Alternativen
  ohne Modifikation von Code nicht ohne weiteres möglich. } 
 @item{Erweiterbarkeit der Produkte: Können Produkte leicht um weitere Komponenten erweitert werden? Ein Beispiel wäre,
- dass die Alternative für Literale noch um eine weitere Zahl erweitert werden soll, welches aussagt, dass die
+ dass die Alternative für Literale noch um eine weitere Zahl erweitert werden soll, welche aussagt, dass die
  Zahl nur eine Annäherung an die genaue Zahl ist und die zweite Zahl gibt an, wie präzise die Annäherung ist.
  In der Variante a) können wir Produkte leicht dadurch erweitern, dass wir die Listen länger machen. Auf eine
  ähnliche Weise können wir auch in der Variante d) die Produkte erweitern. In den Varianten b) und c) hingegen
@@ -459,9 +459,9 @@ Namen und Vornamen könnte in JSON beispielsweise so aufgeschrieben werden:
 In diesem Fall sind @tt{name} und @tt{vorname} die Keys und @tt{'Ostermann'} und @tt{'Klaus'} die jeweils
 zugeordneten Werte. Dictionaries sind wie Listen, bei denen die Elemente nicht durch ihre Position in der Liste
 sondern durch einen Key adressiert werden. Da Dictionaries genau wie Listen verschachtelt werden können, können
-Dictionaries ähnlich wie s-expressions als universelle Datenstruktur verwendet werden.
+Dictionaries ähnlich wie S-Expressions als universelle Datenstruktur verwendet werden.
 
-Beispielsweise könnten die aritmetischen Ausdrücke von oben auch durch Dictionaries repräsentiert werden:
+Beispielsweise könnten die arithmetischen Ausdrücke von oben auch durch Dictionaries repräsentiert werden:
 
 @verbatim{
 { kind: 'add', lhs: { kind: 'lit', val: 7}, rhs: { kind: 'lit', val: 12}};

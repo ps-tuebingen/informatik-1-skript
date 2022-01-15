@@ -43,7 +43,7 @@ zur Information/Berechnung, die dieser Wert/Funktion repräsentiert, passt?}
 
 @item{Zu welchem Zeitpunkt werden Fehler gefunden? Im Allgemeinen möchte man, dass Fehler
  möglichst früh auftreten; am besten schon bevor das Programm startet, aber zumindest zu
- dem Zeitpunkt, an dem der Programmteil, der für den Fehler verantwortlich ist, ausgeführt wird.
+ dem Zeitpunkt, zu dem der Programmteil, der für den Fehler verantwortlich ist, ausgeführt wird.
  Am schlechtesten ist, wenn das Programm selber niemals einen Fehler meldet und stattdessen
  möglicherweise unbemerkt falsche Ergebnisse produziert.}
 
@@ -71,7 +71,7 @@ angewendet werden kann, unabhängig davon ob es einen Sinn ergibt oder nicht. Be
 ist es nicht sinnvoll, einen String und eine Zahl miteinander zu addieren.
 
 
-Assembler-Sprachen sind typischerweise ungetypt. alle Arten von Daten als (32 oder 64 bit) Zahlen
+Assembler-Sprachen sind typischerweise ungetypt. Alle Arten von Daten werden als (32 oder 64 bit) Zahlen
 repräsentiert. Auch Strings, boolsche Werte, und alle anderen Daten werden durch solche
 Zahlenwerte repräsentiert. Addiert man nun zwei Werte, so werden die Zahlenwerte addiert, egal
 ob das aus Sicht dessen, was diese Werte repräsentieren, einen Sinn ergibt.
@@ -102,7 +102,7 @@ Boolean (@racket[boolean?]), Number (@racket[number?]), String (@racket[string?]
 Neue Typen können mittels @racket[define-struct] definiert werden.
 
 Die dynamischen Typen werden verwendet, um sicherzustellen, dass nur solche primitiven Operationen
-auf die Werte angewendet werden, die auch für diese Werte definiert sind. Wenn wir beispielsweise
+auf Werte angewendet werden, die auch für diese Werte definiert sind. Wenn wir beispielsweise
 @racket[(+ x y)] auswerten, so prüft das Laufzeitsystem, dass @racket[x] und @racket[y]
 auch tatsächlich Zahlen sind. Wenn @racket[x] hingegen beispielsweise ein boolscher Wert ist, so
 wird dieser, anders als bei ungetypten Sprachen, nicht einfach irgendwie als Zahl interpretiert.
@@ -117,7 +117,7 @@ festhalten, kann es dennoch zu Fehlbenutzungen von Werten kommen. Beispielsweise
 Sinn, eine Temperatur und eine Länge zu addieren. Falls beide jedoch durch den Typ Number repräsentiert
 werden, kann das Laufzeitsystem diesen Fehler nicht feststellen.
 
-Schauen wir uns mal an einigen Beispielen an, wie und wann in dynamische Typsystemen Typfehler auftauchen.
+Schauen wir uns mal an einigen Beispielen an, wie und wann in dynamischen Typsystemen Typfehler auftauchen.
 Betrachten Sie folgende Funktion:
 @(define eval1 (isl-eval))
 
@@ -183,7 +183,7 @@ keinen Laufzeitfehler.
 Erst wenn wir das Ergebnis verwenden und damit rechnen kommt es zu einem Laufzeitfehler.
 @interaction[#:eval eval2 (cons 6 (rest-after 5 (list 1 2 3 4)))]
 
-Allerdings ist es im Allgemeinen sehr schwer, herauszufinden, wer denn "Schuld" an diesem Fehler ist, denn
+Allerdings ist es im Allgemeinen sehr schwer, herauszufinden, wer denn "Schuld" an diesem Fehler hat, denn
 die Stelle an der der Fehler auftritt ist möglicherweise weit von der Stelle entfernt, die den Fehler verursacht.
 Wenn Sie sich die Fehlermeldung anschauen, sehen Sie auch nichts, das darauf hindeutet, dass die Ursache
 des Fehlers in der Implementierung der @racket[rest-after] Funktion zu finden ist. Daher sind Fehlermeldungen
@@ -340,7 +340,7 @@ auszuführen, so erhalten wir folgende Fehlermeldung:
 }
 
 Sie sehen, dass nicht nur der Aufruf der Funktion direkt als fehlerhaft erkannt wurde. Die
-Fehlermeldung sagt auch klar, wer an diesem Fehler Schuld ist, nämlich Elke.
+Fehlermeldung sagt auch klar, wer an diesem Fehler schuld ist, nämlich Elke.
 
 Elke korrigiert also ihren Fehler. Nun kommt jedoch der Fehler, den Heinz in die Funktion
 eingebaut hat, zum Tragen. Dieser Fehler wird jedoch sofort gefunden und es wird korrekt
@@ -371,7 +371,7 @@ rest-after: broke its contract
 }
 
 Wie diese Beispiele illustrieren, ist der Hauptvorteil von dynamisch überprüften Signaturen und Contracts,
-das Fehler früher gefunden werden und die Fehlermeldungen modular sind und es bei Verletzungen
+dass Fehler früher gefunden werden und die Fehlermeldungen modular sind und es bei Verletzungen
 einen klar benennbaren "Schuldigen" gibt. Wenngleich Fehler hierdurch früher gefunden werden, so
 werden die Fehler dennoch erst während der Programmausführung gefunden. Da es im Allgemeinen unendlich
 viele verschiedene Programmausführungen für ein Programm gibt, kann man sich nie sicher sein, dass
@@ -398,7 +398,7 @@ Informationen auch als Daten zur Verfügung stehen. Eine Datendefinition wie
 ; interp. temperature in degrees Celsius
 )
 
-läßt sich nicht überprüfen, weil wir eine Zahl nicht ansehen können, ob sie eine Temperatur repräsentiert.
+lässt sich nicht überprüfen, weil wir einer Zahl nicht ansehen können, ob sie eine Temperatur repräsentiert.
 Allerdings können wir durch eine Strukturdefinition ein passendes Tag dazu definieren, welches dann
 auch zur Laufzeit überprüfbar ist:
 
@@ -473,7 +473,7 @@ Diese Funktion kann nun wie in der Beginning Student Language aufgerufen werden:
 ]
 
 Allerdings gibt es einen wichtigen Unterschied: Der Funktionsaufruf wird ebenfalls vor dem
-Auruf auf Konsistenz mit der Funktionssignatur überprüft:
+Aufruf auf Konsistenz mit der Funktionssignatur überprüft:
 
 @interaction[#:eval tr-evaluator 
 (rest-after "x" (list 1 2 3 4))
@@ -504,11 +504,11 @@ Ein Verstoss gegen die angegebene Signatur wird sofort angezeigt.
           (rest-after x (rest xs)))))
 ]
 
-Der grosse Vorteil statischer Typprüfung ist, dass diese schon vor der Programmausführung
+Der große Vorteil statischer Typprüfung ist, dass diese schon vor der Programmausführung
 (beispielsweise beim Entwickler und nicht beim Kunden) gefunden werden und ein wohlgetyptes Programm
 niemals Typfehler generieren wird. In der Theorie formalisiert man diese Eigenschaft häufig so,
 dass die Reduktionssemantik für die getypte Sprache stets die Wohlgetyptheit erhält, also
-wenn ein Programm vor der Reduktion wohlgetypt hat ist es das auch nach der Reduktion
+wenn ein Programm vor der Reduktion wohlgetypt ist, ist es das auch nach der Reduktion
 (sogenanntes "Preservation" oder "Subject Reduction" Theorem) und wohlgetypte Programme, die
 keine Werte sind, können stets reduziert werden (sogenanntes "Progress" Theorem).
 
