@@ -52,18 +52,17 @@ Zusammenhang manchmal "Pointful Style" genannt.
 ; Number -> Number
 (define (add2 x) (add1 (add1 x)))
 )
-Point-free style kann zu kürzeren und besser lesbaren Programmen führen. In manchen Situationen wird jedoch
-die Lesbarkeit und Wartbarkeit jedoch auch erschwert, weshalb manchmal dieser Programmierstil auch
+Point-free style kann zu kürzeren und besser lesbaren Programmen führen. In manchen Situationen wird
+die Lesbarkeit und Wartbarkeit jedoch auch erschwert, weshalb dieser Programmierstil manchmal auch
 ironisch abwertend "pointless style" genannt wird.
 
 @section{Currying und Typisomorphien von Funktionstypen}
 Mittels Funktionen höherer Ordnung können Funktionen, die mehrere Argumente erwarten, in Funktionen transformiert werden,
-die nur ein Argument bekommen und eine Funktion zurückliefert die die noch fehlenden Argumente erwartet. Diese
+die nur ein Argument bekommen und eine Funktion zurückliefern die die noch fehlenden Argumente erwartet. Diese
 Transformation nennt man @italic{currying}, nach dem Logiker Haskell B. Curry. Die Transformation in die umgekehrte Richtung
-nennt man @italic{uncurry}. Sie sind wie folgt definiert. @margin-note{Um Klammern zu vermeiden, wird der Funktionspfeil
+nennt man @italic{uncurrying}. Sie sind wie folgt definiert. @margin-note{Um Klammern zu vermeiden, wird der Funktionspfeil
  typischerweise als rechtsassoziativ interpretiert, also @racket[X -> Y -> Z] bedeutet @racket[X -> (Y -> Z)] und
  nicht @racket[(X -> Y) -> Z].}
-}
 
 @#reader scribble/comment-reader
 (racketblock
@@ -85,8 +84,8 @@ Beispielsweise können wir eine Funktion zur Addition von 5 zu ihrem Argument de
 
 Man kann statt einem nachträglichen Aufruf von @racket[curry] auch direkt in einer Funktionsdefinition
 currying betreiben. Die @racket[foldr] Funktion kann beispielsweise so umformuliert werden, dass die
-Liste auf der gefaltet werden soll noch nicht direkt als Argument mitgegeben wird sondern stattdessen
-eine Funktion zurückgegeben wird die auf die Liste wartet.
+Liste auf der gefaltet werden soll noch nicht direkt als Argument mitgegeben wird, sondern stattdessen
+eine Funktion zurückgegeben wird, die auf die Liste wartet.
 
 @#reader scribble/comment-reader
 (racketblock
@@ -115,11 +114,10 @@ definiert werden können, zum Beispiel:
 
 Die Funktionen @racket[curry] und @racket[uncurry] bilden zusammen die Bijektion eines Typisomorphismus zwischen
 @racket[X Y -> Z] und @racket[X -> Y -> Z]. In @secref{refactoring-adt} haben wir gesehen, dass sich Typisomorphien
-ähnlich wie Gleichheiten arithmetischer Ausdrücke verhalten wenn wir @racket[*] als Konstruktor für Produkttypen
-@margin-note{In der Kategorientheorie werden Funktionstypen verallgemeinert zu sogenannten @italic{exponential objects}.}
+ähnlich wie Gleichheiten arithmetischer Ausdrücke verhalten, wenn wir @racket[*] als Konstruktor für Produkttypen
 und @racket[+] als Konstruktor für (disjunkte) Summentypen verwenden. Diese Analogie können wir auf Funktionstypen
 erweitern indem wir Funktionen @racket[X -> Y] als Exponential @racket[Y]@superscript{@racket[X]} interpretieren.
-
+@margin-note{In der Kategorientheorie werden Funktionstypen verallgemeinert zu sogenannten @italic{exponential objects}.}
 
 Für das Rechnen mit Exponenten kennen wir die gewohnten Gleichungen
 
@@ -131,15 +129,15 @@ und
 
 Die erste Gleichung beschreibt exakt die durch @racket[curry] und @racket[uncurry] ausgedrückte Typisomorphie.
 
-Die zweite Gleichung gibt an, dass die Typen @racket[Y+Z -> X] und @racket[(Y -> X) * (Z->X)] isomorph sind. Dies
+Die zweite Gleichung gibt an, dass die Typen @racket[Y+Z -> X] und @racket[(Y -> X) * (Z -> X)] isomorph sind. Dies
 ist nicht schwer zu sehen. Wenn ich eine Funktion von  @racket[Y+Z] nach @racket[X] habe, so kann ich sie offensichtlich
 als Funktion von @racket[Y] nach @racket[X] wie auch von @racket[Z] nach @racket[X] verwenden, denn sie kann ja mit
-beiden Typen von Argumenten umgehen. Umgekehrt kann ich (bei disjunkten Summen) eine Paar von Funktionen
-@racket[(Y -> X) * (Z->X)] umbauen zu einer Funktion vom Typ @racket[Y+Z -> X], indem ich in der zu erstellenden
+beiden Typen von Argumenten umgehen. Umgekehrt kann ich (bei disjunkten Summen) ein Paar von Funktionen
+@racket[(Y -> X) * (Z -> X)] umbauen zu einer Funktion vom Typ @racket[Y+Z -> X], indem ich in der zu erstellenden
 Funktion prüfe, ob die Eingabe zum linken oder zum rechten Fall gehört und je nachdem die richtige Funktion aus dem Paar aufrufe.
 
 Auch weitere typische Identitäten aus der Algebra können für Typisomorphien verwendet werden. Erinnern Sie sich daran, dass
-der Typ @racket[1] die Äuivalenzklasse aller Typen mit nur einem Wert ist, der Typ @racket[2] die Äquivalenzklasse aller Typen mit zwei Werten
+der Typ @racket[1] die Äquivalenzklasse aller Typen mit nur einem Wert ist, der Typ @racket[2] die Äquivalenzklasse aller Typen mit zwei Werten
 (wie Boolean) ist. Dann gilt
 
 @racket[X]@superscript{@racket[1]} = @racket[X]
@@ -196,8 +194,8 @@ Die @racket[filter] Funktion gibt alle Elemente einer Liste zurück, für die ei
 (filter even? (list 1 2 3 4))]
 
 Die @racket[map] Funktion in der Racket Bibliothek kann sogar noch auf eine mächtigere Art und Weise benutzt
-werden. Mann kann mehrere Listen übergeben die dann synchron durchgegangen werden. Die Funktion, die übergeben
-wird muss soviele Argumente bekommen wie man Listen übergeben hat und wird dann jeweils auf die n-ten Elemente der Listen
+werden. Man kann mehrere Listen übergeben die dann synchron durchgegangen werden. Die Funktion, die übergeben
+wird, muss soviele Argumente bekommen wie man Listen übergeben hat und wird dann jeweils auf die n-ten Elemente der Listen
 angewendet. Hier ein Beispiel dazu:
 @interaction[#:eval (isl-eval+)
 (map cons (list 1 2 3) (list (list 4 5) (list 6 7) (list 8 9)))]
@@ -250,7 +248,7 @@ gleiche mit @racket[flatmap] ausdrücken können.
 @section{Konstruktion von Listen mit unfold}
 Die @racket[foldr] Funktion von oben abstrahiert das Pattern der strukturellen Rekursion auf Listen, also des
 Zerlegens (Dekonstruktion) von Listen. Es gibt auch eine "duale" Funktion zur Konstruktion von Listen. Es wird
-also keine Liste als Eingabe genommen und zerlegt sondern es geht in der @racket[unfold] Funktion um
+also keine Liste als Eingabe genommen und zerlegt, sondern es geht in der @racket[unfold] Funktion um
 die Konstruktion von Listen. Man kann sie wie folgt definieren:
 
 @#reader scribble/comment-reader
@@ -319,10 +317,10 @@ von @racket[unfold] erzeugten Ergebnisse anwenden können, und zwar so:
 Die Funktionen @racket[foldr] und @racket[unfold] können nicht nur für Listen sondern sogar
 für beliebige algebraische Datentypen definiert werden. Auch die Idee der Komposition von 
 @racket[unfold] und @racket[foldr] sowie der Optimierung durch Deforestation funktioniert für beliebige algebraische
-Datentypen. Die Verallgemeinerungen diese Konzepte haben beeindruckende Namen:
+Datentypen. Die Verallgemeinerungen dieser Konzepte haben beeindruckende Namen:
 Die @racket[foldr] Funktion ist ein @italic{Catamorphismus}, 
 die @racket[unfold] Funktion ist ein @italic{Anamorphismus} und die Komposition
-von @racket[unfold] gefolgt von @racket[foldr] Funktion ist ein @italic{Hylomorphismus}.
+von @racket[unfold] gefolgt von @racket[foldr] ist ein @italic{Hylomorphismus}.
 
 Wir wollen anhand eines algebraischen Datentyps für Binärbäume die Verallgemeinerung dieser
 Konzepte illustrieren.
@@ -340,7 +338,7 @@ Konzepte illustrieren.
 
 Die @racket[fold] Funktion für Bäume abstrahiert wie bei Listen das Prinzip der strukturellen Rekursion.
 Wir verwenden Currying in der Definition von @racket[fold-tree] 
-um die Funktionen @racket[sum-tree] und @racket[sum-tree] im "point-free style" definieren zu können.
+um die Funktionen @racket[sum-tree] und @racket[tree-to-list] im "point-free style" definieren zu können.
 
 @#reader scribble/comment-reader
 (racketblock
@@ -365,7 +363,7 @@ um die Funktionen @racket[sum-tree] und @racket[sum-tree] im "point-free style" 
 )
 Die @racket[unfold] Funktion für Bäume funktioniert analog wie die für Listen, mit dem
 Unterschied dass für beide Unterbäume ein rekursiver Aufruf nötig ist und es separate
-Funktionen @racket[nextl] und @racket[nextr] für den Zustandsupdate für den linken und
+Funktionen @racket[nextl] und @racket[nextr] für das Zustandsupdate für den linken und
 rechten Teilbaum gibt.
 
 @#reader scribble/comment-reader
@@ -378,7 +376,7 @@ rechten Teilbaum gibt.
                    (unfold-tree stop nextl nextr emit (nextr seed)))))
 )
 Ein etwas künstliches aber dafür sehr einfaches Beispiel für die Benutzung von @racket[unfold-tree]
-ist die Erzeugung eines Baums der die Rekursionsstruktur der Fibonacci-Funktion repräsentiert.
+ist die Erzeugung eines Baums, der die Rekursionsstruktur der Fibonacci-Funktion repräsentiert.
 Die Fibonacci-Funktion selber kann dann als Hylomorphismus definiert werden, nämlich als Komposition
 von @racket[sum-tree] und @racket[fib-tree].
 
@@ -399,8 +397,8 @@ von @racket[sum-tree] und @racket[fib-tree].
 (define fibonacci (compose sum-tree fib-tree))
 )
 
-Auch für Hylomorphismen auf Bäumen kann "Deforestation" betrieben werden, also die Konstruktion des Bäumes
-der direkt wieder zerlegt wird kann vermieden werden indem @racket[unfold] und @racket[fold] gleichzeitig
+Auch für Hylomorphismen auf Bäumen kann "Deforestation" betrieben werden, also die Konstruktion des Bäumes,
+der direkt wieder zerlegt wird, kann vermieden werden, indem @racket[unfold] und @racket[fold] gleichzeitig
 und synchron das Endergebnis berechnen.
 
 @#reader scribble/comment-reader
@@ -452,10 +450,10 @@ dieser:
 )
 Dieser Algorithmus verwendet eine Technik, die sich "Akkumulator" nennt, auf die wir später noch zu sprechen kommen.
 
-Erwähnen möchten wir an dieser Stelle jedoch, dass sich der oben stehende Algorithmus auch so umformulieren läßt,
+Erwähnen möchten wir an dieser Stelle jedoch, dass sich der oben stehende Algorithmus auch so umformulieren lässt,
 dass wir mit Hilfe von @racket[unfold] effizient eine Liste der ersten @racket[n] Fibonacci-Zahlen berechnen.
 Der Zustand in dem unten stehenden @racket[unfold] ist ein Tripel (kodiert als Liste der Länge 3, wobei die 
-ersten beiden Listenelemente jeweils die beiden vorhergehenden Fibonacci-Zahlen repräsentieren und die
+ersten beiden Listenelemente jeweils die beiden vorhergehenden Fibonacci-Zahlen repräsentieren und
 das dritte Listenelement zählt wieviele Listenelemente noch erzeugt werden müssen.)
 
 @#reader scribble/comment-reader

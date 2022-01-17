@@ -23,7 +23,7 @@ die Sie bitte durch das Umschalten auf den "Zwischenstufe mit Lambda" Sprachleve
 
 Unsere Programmiersprache wird hierdurch erstmal komplexer. Am Ende des Kapitels werden wir sehen,
 dass es allerdings eine so mächtige Art der Abstraktion gibt, dass wir damit viele
-andere Abstraktionsarten damit subsumieren können. Dies wird die Sprache konzeptuell wieder
+andere Abstraktionsarten subsumieren können. Dies wird die Sprache konzeptuell wieder
 vereinfachen.
 
 @section{Abstraktion von Konstanten}
@@ -254,7 +254,7 @@ häufigsten Fehler in Programmen und bei Schleifen, wie bei den Beispielen oben,
 Wenn wir einmal zeigen, dass @racket[op-elements] terminiert, so wissen wir, dass alle Schleifen, die wir
 mit Hilfe von @racket[op-elements] bilden, auch terminieren (sofern die Funktion, die wir als Argument 
 übergeben, terminiert). Wenn wir nicht @racket[op-elements] benutzen würden, müssten wir diese Überlegung
-jedes mal aufs neue anstellen.
+jedes mal aufs Neue anstellen.
 
 @section{Abstraktion in Signaturen, Typen und Datendefinitionen}
 
@@ -359,7 +359,7 @@ Die Signatur von @racket[add-circle] können wir nun so beschreiben:
   (f img (circle 10 "solid" "red")))
 )
 
-Diese Signatur sagt aus, dass der erste Parameter eine Funktion mit der Signatur Image -> Image sein muss.
+Diese Signatur sagt aus, dass der erste Parameter eine Funktion mit der Signatur (Image Image -> Image) sein muss.
 Wir verwenden also nun Signaturen als Typen oder, anders gesagt, wir unterscheiden nicht
 mehr zwischen Signaturen und Typen.
 
@@ -462,7 +462,7 @@ die Signatur
 )
 
 Es gibt keine Ersetzung von X durch einen Typ in der Signatur oben, die diese Signatur erzeugt.
-Wenn wir uns die Funktionsdefinition etwas genauer hinschauen, können
+Wenn wir uns die Funktionsdefinition etwas genauer anschauen, können
 wir allerdings auch noch eine allgemeinere Signatur finden, nämlich diese:
 
 @#reader scribble/comment-reader
@@ -523,7 +523,7 @@ beschrieben werden, festzulegen. Zum Beispiel können wir so die Menge der nicht
 Wir können die Typen und Signaturen, mit denen wir nun programmieren können, durch eine Grammatik beschreiben.
 Diese Grammatik spiegelt gut die rekursive Struktur von Typen wieder. Nicht alle Typen, die mit dieser
 Grammatik gebildet werden können, sind sinnvoll. Beispielsweise ist @nonterm{X} ein Typ, der nicht sinnvoll
-ist. Eine Bedeutung haben nur die Typen, bei denen alle vorkommenden Typvariablen durch ein 
+ist. Eine Bedeutung haben nur die Typen, bei denen alle vorkommenden Typvariablen durch eine
 im Ableitungsbaum darüber liegende Typabstraktion der Form @BNF-seq{@litchar{[} @nonterm{X} @litchar{]} @nonterm{Typ}})
 gebunden wurden.
 
@@ -576,12 +576,12 @@ Betrachten wir als erstes lokale Funktionen. Hier ein Beispiel:
             (string-append " " s t)))
     (foldr string-append-with-space
            " "
-           l))))
+           l)))
 )
 Die Funktion @racket[string-append-with-space] ist eine @italic{lokale} Funktion, die nur innerhalb der Funktion @racket[append-all-strings-with-space]
 sichtbar ist. Sie kann außerhalb von @racket[append-all-strings-with-space] nicht aufgerufen werden.
 
-Da @racket[local] Ausdrücke Ausdrücke sind, können sie überall stehen, wo ein Ausdruck erwartet wird. Häufig werden als
+Da @racket[local] Ausdrücke Ausdrücke sind, können sie überall stehen, wo ein Ausdruck erwartet wird. Häufig werden sie als
 äußerster Ausdruck eines Funktionsbodies verwendet, aber sie können auch an jeder anderen Stelle stehen.
 
 Diese Ausdrücke sind daher äquivalent:
@@ -670,10 +670,10 @@ weil die Unterausdrücke @racket[(* x x)] und @racket[(* (* x x) (* x x))] mehrf
 Konstanten in @racket[power8-fast] vermieden.
 
 Die zweite Facette der Redundanz, die wir durch lokale Konstanten vermeiden können, ist die dynamische Redundanz. Damit ist gemeint, dass wir
-das mehrfache Auswerten eines Ausdrucks vermeiden können. Dies liegt daran, dass der Wert einer lokale Konstante nur einmal bei ihrer Definition
+das mehrfache Auswerten eines Ausdrucks vermeiden können. Dies liegt daran, dass der Wert einer lokalen Konstante nur einmal bei ihrer Definition
 berechnet wird und im folgenden nur das bereits berechnete Ergebnis verwendet wird. 
 Im Beispiel @racket[power8-fast] haben wir gesehen, dass wir dadurch die Anzahl
-der Multiplikationen von 8 auf 3 senken konnten. Im Allgemeinen "lohnt" sich die Definition einer lokalen  le aus Sicht der dynamischen Redundanz dann,
+der Multiplikationen von 8 auf 3 senken konnten. Im Allgemeinen "lohnt" sich die Definition einer lokalen Konstante aus Sicht der dynamischen Redundanz dann,
 wenn sie mehr als einmal ausgewertet wird.
 
 Zusammengefasst haben lokale Konstanten also den gleichen Zweck wie nicht-lokale (globale) Konstanten, nämlich der Benennung von Konstanten bzw. Zwischenergebnissen und der Vermeidung
@@ -685,7 +685,7 @@ Als fortgeschrittenes Beispiel für die Verwendung lokaler Konstanten können wi
 Dieser Abschnitt kann übersprungen werden.
 
 Um den Effekt der Vermeidung dynamischer Redundanz noch deutlicher zu illustrieren, betrachten wir die Verallgemeinerung von @racket[power8] auf beliebige (natürlichzahlige) Exponenten.
-Wenn wir den Exponenten wie in Abschnitt @secref{natrec} beschrieben als Instanz eines rekursiven Datentyps auffassen, so ergibt sich folgende Definition:
+Wenn wir den Exponenten, wie in Abschnitt @secref{natrec} beschrieben, als Instanz eines rekursiven Datentyps auffassen, so ergibt sich folgende Definition:
 
 @#reader scribble/comment-reader
 (block
@@ -851,7 +851,7 @@ Zahlen @racket[lon] verdoppeln. Dies könnten Sie wie folgt anstellen:
 
 Dieser Ausdruck ist komplizierter als es ein müsste. Für eine so einfache Funktion wie @racket[double],
 die nur lokal verwendet wird, ist es Verschwendung, einen Namen zu vergeben und eine komplette
-Extra Zeile Code zu verwenden.
+extra Zeile Code zu verwenden.
 
 In ISL+ (dem Sprachlevel von HTDP welches wir zurzeit verwenden) gibt es aus diesem Grund die Möglichkeit,
 @italic{anonyme} Funktionen, also Funktionen ohne Namen, zu definieren. Anonyme Funktionen werden
@@ -913,7 +913,7 @@ an jeder Stelle, an der das Muster wieder auftritt, dieses Muster wieder korrekt
 Wir haben auch gesehen, dass es zu nicht unerheblicher Vergrößerung des Codes führen kann, wenn man
 keine guten Abstraktionen hat und sich oft wiederholt.
 
-Der wichtigste Vorteil guter Abstraktionen ist jedoch folgende: Es gibt für jede kohärente Funktionalität
+Der wichtigste Vorteil guter Abstraktionen ist jedoch folgender: Es gibt für jede kohärente Funktionalität
 des Programms genau eine Stelle, an der diese implementiert ist. Diese Eigenschaft macht es viel einfacher,
 ein Programm zu schreiben und zu warten. Wenn man einen Fehler gemacht hat, ist der Fehler an einer
 Stelle lokalisiert und nicht vielfach dupliziert. Wenn man die Funktionalität ändern möchte, gibt es eine
@@ -931,4 +931,4 @@ Aus diesem Grund formulieren wir folgende Richtlinie als Präzisierung des DRY-P
 
 Diese Richtlinie gilt nicht nur während der ersten Programmierung eines Programms. Auch in der Weiterentwicklung
 und Wartung von Programmen sollten Sie stets darauf achten, ob es in ihrem Programm Verstöße gegen
-dieses Prinzip gilt und diese Verstöße durch die Definition geeigneter Abstraktionen eliminieren.
+dieses Prinzip gibt und diese Verstöße durch die Definition geeigneter Abstraktionen eliminieren.
