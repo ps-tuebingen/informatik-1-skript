@@ -113,11 +113,12 @@ definiert werden können, zum Beispiel:
 )
 
 Die Funktionen @racket[curry] und @racket[uncurry] bilden zusammen die Bijektion eines Typisomorphismus zwischen
-@racket[X Y -> Z] und @racket[X -> Y -> Z]. In @secref{refactoring-adt} haben wir gesehen, dass sich Typisomorphien
+@racket[X Y -> Z] und @racket[X -> Y -> Z].
+@margin-note{In der Kategorientheorie werden Funktionstypen verallgemeinert zu sogenannten @italic{exponential objects}.}
+In @secref{refactoring-adt} haben wir gesehen, dass sich Typisomorphien
 ähnlich wie Gleichheiten arithmetischer Ausdrücke verhalten, wenn wir @racket[*] als Konstruktor für Produkttypen
 und @racket[+] als Konstruktor für (disjunkte) Summentypen verwenden. Diese Analogie können wir auf Funktionstypen
 erweitern indem wir Funktionen @racket[X -> Y] als Exponential @racket[Y]@superscript{@racket[X]} interpretieren.
-@margin-note{In der Kategorientheorie werden Funktionstypen verallgemeinert zu sogenannten @italic{exponential objects}.}
 
 Für das Rechnen mit Exponenten kennen wir die gewohnten Gleichungen
 
