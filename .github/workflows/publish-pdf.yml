@@ -18,6 +18,8 @@ jobs:
           variant: 'CS'
           version: 'stable'
       - run: raco pkg install --deps search-auto scribble-math
+      - name: Update apt
+        run: sudo apt-get update
       - name: Install TeXlive
         run: sudo apt-get install texlive texlive-latex-extra texlive-fonts-extra latexmk
       - name: Build Scribble PDF Docs
