@@ -186,9 +186,9 @@ Dann
 (+ 2 (* y_0 2))
 ]
 
-In diesem zweiten Schritt wurde die @italic{(LOCAL)} verwendet, um aus der lokalen Definition eine globale Definition
+In diesem zweiten Schritt wurde die Regel @italic{(LOCAL)} verwendet, um aus der lokalen Definition eine globale Definition
 zu machen. Die Abhängkeit vom lokalen Kontext (nämlich dem Funktionsargument @racket[x]) wurde zuvor im ersten Schritt durch 
-eine Verwendung der @italic{(APP)} Regel beseitigt. Die Auswertung setzt sich nun durch Verwendung der @italic{(PROG)} 
+eine Verwendung der @italic{(APP)} Regel beseitigt. Die Auswertung setzt sich nun durch Verwendung der Regel @italic{(PROG)}
 fort, also wir werten durch @racket[(+ 2 1)] @step @racket[3] die Konstantendefinition aus, fügen 
 @racket[(define y_0 3)] zur Umgebung hinzu, und werten nun in dieser Umgebung @racket[(+ 2 (* y_0 2))] zum Ergebnis @racket[8] aus. 
 
@@ -206,11 +206,11 @@ diskutieren, wie die formale Definition lexikalisches Scoping garantiert. Lexika
 In @italic{(LOCAL)} findet eine Umbenennung statt: Der Name von lokalen Konstanten wird umbenannt und alle Verwendungen des Namens 
 in den Unterausdrücken des @racket[local] Ausdrucks werden ebenfalls umbenannt. Dadurch, dass diese Umbenennung genau in den Unterausdrücken
 vollzogen wird, wird lexikalisches Scoping sichergestellt. Dadurch, dass ein "frischer" Name verwendet wird, kann keine Benutzung des Namens
-ausserhalb dieser Unterausdrücke an die umbenannte Definition gebunden werden.
+außerhalb dieser Unterausdrücke an die umbenannte Definition gebunden werden.
 
 Das gleiche Verhalten findet sich in @italic{(APP)}: Dadurch, dass die formalen Parameter nur im Body der Funktion durch die aktuellen 
 Argumente ersetzt werden, wird lexikalisches Scoping sichergestellt. Gleichzeitig wird hierdurch definiert, wie Closures repräsentiert werden,
-nämlich als Funktionsdefinitionen, in denen die "weiter aussen" gebundenen Namen bereits durch Werte ersetzt wurden.
+nämlich als Funktionsdefinitionen, in denen die "weiter außen" gebundenen Namen bereits durch Werte ersetzt wurden.
 
 Beispiel: Der Ausdruck @racket[(f 3)] in diesem Programm 
 
@@ -237,7 +237,7 @@ das rechte Vorkommen von @racket[x] ist sogar im lexikalischen Scope aller drei 
 Shadowing besagt, dass in solchen Situationen stets die lexikalisch "nächste" Definition "gewinnt". Mit "nächste" ist die Definition gemeint,
 die man als erstes antrifft, wenn man in der grammatikalischen Struktur des Programmtextes von dem Namen nach außen geht.
 Die weiter innen stehenden Definitionen überdecken also die weiter außen stehenden Definitionen: Sie werfen einen Schatten ("shadow"), in dem
-die aussen stehende Definition nicht sichtbar ist. Daher wird in dem Beispiel oben beispielsweise
+die außen stehende Definition nicht sichtbar ist. Daher wird in dem Beispiel oben beispielsweise
 der Ausdruck @racket[(f 3)] zu @racket[6] ausgewertet.
 
 Shadowing rechtfertigt sich aus einer Modularitätsüberlegung: Die Bedeutung eines Ausdrucks sollte möglichst lokal ablesbar sein. Insbesondere
