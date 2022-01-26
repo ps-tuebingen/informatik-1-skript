@@ -154,7 +154,7 @@ das offensichtliche tun:
     [(empty? l) z]
     [else
      (op (first l)
-         (op-numbers (rest l) z))]))
+         (op-numbers op z (rest l)))]))
 
 (define (add-numbers l) (op-numbers + 0 l))
 (define (mult-numbers l) (op-numbers * 1 l))
