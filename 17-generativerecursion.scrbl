@@ -57,7 +57,7 @@ Betrachten Sie das Problem, eine Liste von Zahlen zu sortieren. Eine Verwendung 
 )
 
 Im Basisfall ist die Vervollständigung des Templates trivial. Im rekursiven Fall müssen wir offensichtlich @racket[x] in die 
-bereits sortierte Liste @racket[(sort xs)] einfügen. Hierzu könne wir die bereits in 
+bereits sortierte Liste @racket[(sort xs)] einfügen. Hierzu können wir die bereits in
 @secref{funktionsparameter} definierte Funktion @racket[insert] verwenden. Insgesamt ergibt sich damit die folgende Definition:
 
 @#reader scribble/comment-reader
@@ -127,7 +127,7 @@ n*log(n) ist.
 
 @section[#:tag "entwurf-genrec"]{Entwurf von generativ rekursiven Funktionen}
 Wir nennen Rekursionsstrukturen die nicht (notwendigerweise) dem Muster der strukturellen Rekursion entsprechen @italic{generative Rekursion}.
-Eine generativ rekursive Rekursion hat eine Struktur, die etwa wie folgt aussieht:
+Eine generativ rekursive Funktion hat eine Struktur, die etwa wie folgt aussieht:
 
 @#reader scribble/comment-reader
 (racketblock
@@ -143,7 +143,7 @@ Eine generativ rekursive Rekursion hat eine Struktur, die etwa wie folgt aussieh
            (generative-recursive-fun (generate-problem-n problem)))]))
 )
 
-Dieses Template soll verdeutlichen, dass wir über beim Entwurf einer generativ rekursiven Funktion die folgenden
+Dieses Template soll verdeutlichen, dass wir beim Entwurf einer generativ rekursiven Funktion die folgenden
 fünf Fragen beantworten müssen:
 
 @itemize[#:style 'ordered
@@ -212,7 +212,7 @@ Wie können wir diesen Fehler vermeiden? Die Terminierung einer generativ rekurs
 @itemize[#:style 'ordered
   @item{Wir definieren eine Abbildung, die den Satz von Funktionsargumenten auf eine natürliche Zahl abbildet. Diese Abbildung
         misst quasi die Größe der Eingabe, wobei "Größe" nicht notwendigerweise die physikalische Größe der Daten im Speicher
-        beschreibt sondern die Größe des Problems aus Sicht des Algorithmus.}
+        beschreibt, sondern die Größe des Problems aus Sicht des Algorithmus.}
   @item{Wir zeigen, dass die Größe der Eingabe bzgl. der Abbildung aus dem ersten Schritt in allen rekursiven Funktionsaufrufen
         strikt kleiner wird.}]
 Falls die Größe der Originaleingabe (bzgl. der definierten Abbildung) also n ist, so ist sichergestellt, dass die maximale Rekursionstiefe ebenfalls n ist.  

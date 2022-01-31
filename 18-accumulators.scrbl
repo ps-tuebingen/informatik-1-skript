@@ -134,8 +134,8 @@ wir können die ursprüngliche Signatur leicht rekonstruieren:
     (relative-2-absolute-with-acc alon 0)))
 )
 
-Einige Experimente mit @racket[time] bestätigen, dass @racket[relative-2-absoluste-2]
-viel effizienter als @racket[relative-2-absoluste] ist und statt einem quadratischen
+Einige Experimente mit @racket[time] bestätigen, dass @racket[relative-2-absolute-2]
+viel effizienter als @racket[relative-2-absolute] ist und statt einem quadratischen
 nur noch ein lineares Wachstum der Laufzeit aufweist.
 
 @section{Beispiel: Suche in einem Graphen}
@@ -273,12 +273,12 @@ von @racketblock[(find-route 'A 'G graph2)] nach sich.
 
 Das Problem ist, genau wie im @racket[relative-2-absolute] Beispiel oben, dass wir nichts über
 den Kontext wissen, in dem @racket[find-route] aufgerufen wird. In diesem Beispiel wollen wir
-wissen, ob @racket[find-route] mit einem Startknoten aufrufen, von dem wir bereits gerade versuchen,
+wissen, ob wir @racket[find-route] mit einem Startknoten aufrufen, von dem wir bereits gerade versuchen,
 eine Route zum Ziel zu finden.
 
 Der Akkumulationsparameter, den wir in diesem Beispiel benötigen, repräsentiert die Liste
 der Knoten, die wir bereits auf dem Pfad, der konstruiert wird, besucht haben. Ein solcher Parameter
-läßt sich leicht hinzufügen. Da @racket[find-route] und @racket[find-route/list] wechselseitig
+lässt sich leicht hinzufügen. Da @racket[find-route] und @racket[find-route/list] wechselseitig
 rekursiv sind, wird der zusätzliche Parameter durch beide Funktionen durchgereicht. Wenn innerhalb
 von @racket[find-route/acc] @racket[find-route/list] aufgerufen wird, so wird durch den Ausdruck
 @racket[(cons origination visited)] die Invariante, dass @racket[visited] stets die Menge der
@@ -321,7 +321,7 @@ Hierzu definieren wir eine kleine Hilfsfunktion:
 @#reader scribble/comment-reader
 (racketblock
 ; [X] (list-of X) (list-of X) -> (list-of X)
-; removes all occurences of members of l1 from l2
+; removes all first occurences of members of l1 from l2
 (check-expect (removeall '(a b) '(c a d b e a b g))
               '(c d e a b g))
 (define (removeall l1 l2)
@@ -366,7 +366,7 @@ Wie sieht das Argument für den allgemeinen Fall aus?
 Gemäß der in @secref{terminierung} beschriebenen Methodik müssen wir eine Abbildung definieren, die
 die Funktionsargumente von @racket[find-route] auf eine natürliche Zahl abbildet. Sei n die Zahl
 der Knoten in @racket[G] und m die Zahl der Knoten in @racket[visited]. Dann definieren wir die
-Größe der Eingabe von @racket[find-route] als n-m, also die Anzahl der Knoten, die noch nicht besucht worden.
+Größe der Eingabe von @racket[find-route] als n-m, also die Anzahl der Knoten, die noch nicht besucht wurden.
 
 Die Differenz n-m ist stets eine natürliche Zahl, weil durch das Entfernen der bereits besuchten Knoten
 aus den Nachbarn (@racket[(remove-all visited (neighbors origination G))]) im Aufruf 
@@ -438,7 +438,7 @@ Hier ein weiteres Standardbeispiel:
 Diese beiden Möglichkeiten sind nicht die einzigen, aber sie sind sehr häufig.
 
 @subsection{Template für Funktionen mit Akkumulatoren}
-Wenn wir uns dafür entschieden haben, eine Funktion mit Akkumulator auszustatten, so ist es sinnvoll, ein Template
+Wenn wir uns dafür entschieden haben, eine Funktion mit einem Akkumulator auszustatten, so ist es sinnvoll, ein Template
 für die Funktionsdefinition zu erstellen. Dieses sieht so aus, dass wir die Funktion mit Akkumulator zu einer mit @racket[local]
 definierten lokalen Funktion der eigentlich zu definierenden Funktion machen und diese Funktion dann
 im Body des @racket[local] Ausdrucks aufrufen. 
