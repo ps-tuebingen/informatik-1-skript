@@ -5,13 +5,14 @@
 @(require (for-label (except-in lang/htdp-beginner e)))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label teachpack/2htdp/abstraction))
-@(require "math-utilities.rkt")
+@require [scribble-math]
+@;(require "math-utilities.rkt")
 
 @(require scribble/bnf)
 @(require scriblib/footnote)
 
 
-@setup-math
+@;setup-math
 
 @title[#:version "" #:tag "lang-support-adts"]{Sprachunterstützung für Algebraische Datentypen}
 
@@ -293,15 +294,15 @@ nicht vorkommen dürfen. Wir werden eine andere Technik wählen, die von Kurt G�
 und die auf der Eindeutigkeit der Primfaktorzerlegung beruht.
 
 Die Eindeutigkeit der Primfaktorzerlegung sagt aus, dass jede Zahl eindeutig in ihre Primfaktoren
-zerlegt werden kann. Wenn die Primzahlen durch @math-in{p_1,p_2,\ldots} bezeichnet werden,
-so bedeutet dies, dass es für jede natürliche Zahl @math-in{n} eine Zahl @math-in{k} sowie
-Zahlen @math-in{n_1,\ldots,n_k} gibt, so dass
-@math-in{n = p_1^{n_1} \cdot p_2^{n_2} \cdot \ldots  \cdot p_k^{n_k} }. Beispielsweise kann
-die Zahl 18 zerlegt werden in @math-in{18 = 2^1 \cdot 3^2}.
+zerlegt werden kann. Wenn die Primzahlen durch @${p_1,p_2,\ldots} bezeichnet werden,
+so bedeutet dies, dass es für jede natürliche Zahl @${n} eine Zahl @${k} sowie
+Zahlen @${n_1,\ldots,n_k} gibt, so dass
+@${n = p_1^{n_1} \cdot p_2^{n_2} \cdot \ldots  \cdot p_k^{n_k} }. Beispielsweise kann
+die Zahl 18 zerlegt werden in @${18 = 2^1 \cdot 3^2}.
 
 Aufgrund der Eindeutigkeit der Primfaktoren könnten wir beispielsweise Paare mit Hilfe der
 ersten beidem Primzahlen, 2 und 3, repräsentieren. Beispielsweise könnten die Zahlen 17 und 12
-von oben durch die Zahl @math-in{2^{17} \cdot 3^{12} = 69657034752} repräsentiert werden. Um die beiden Zahlen
+von oben durch die Zahl @${2^{17} \cdot 3^{12} = 69657034752} repräsentiert werden. Um die beiden Zahlen
 wieder zu extrahieren, berechnen wir, wie häufig sich die Zahl ohne Rest durch 2 bzw. 3 teilen lässt.
 
 Diese Idee können wir durch folgendes Programm ausdrücken:
@@ -326,8 +327,8 @@ Offensichtlich können durch Nutzen von mehr Primzahlen mit der gleichen Technik
 beliebig lange Listen von (natürlichen) Zahlen durch eine einzelne Zahl repräsentiert werden.
 Verschachtelte Listen, also quasi S-Expressions, können durch Verschachtelung der gleichen
 Kodierungstechnik repräsentiert werden. Wollen wir beispielsweise ein Paar von zwei Paaren
-repräsentieren und @math-in{n_1} ist die Kodierung des ersten Paars und @math-in{n_2}
-die Kodierung des zweiten Paars, so kann das Paar der beiden Paare durch @math-in{2^{n_1} \cdot 3^{n_2}}
+repräsentieren und @${n_1} ist die Kodierung des ersten Paars und @${n_2}
+die Kodierung des zweiten Paars, so kann das Paar der beiden Paare durch @${2^{n_1} \cdot 3^{n_2}}
 repräsentiert werden.
 
 Bleibt noch die Frage, wie wir Summentypen repräsentieren. Hierzu können wir einfach für jede Variante
