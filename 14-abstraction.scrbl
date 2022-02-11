@@ -653,7 +653,7 @@ Es kann auch dazu dienen, eine sehr tiefe Verschachtelung von Ausdrücken flache
 Die andere wichtige Motivation für lokale Konstanten ist die Vermeidung von Redundanz. Tatsächlich können wir mit lokalen Konstanten
 sogar zwei unterschiedliche Arten von Redundanz vermeiden: Statische Redundanz und dynamische Redundanz.
 
-Mit statischer Redundanz ist unser DRY Prinzip gemeint: Wir verwenden lokale Konstanten, um uns nicht im Programtext wiederholen zu müssen.
+Mit statischer Redundanz ist unser DRY Prinzip gemeint: Wir verwenden lokale Konstanten, um uns nicht im Programmtext wiederholen zu müssen.
 Dies illustriert unser erstes Beispiel. Illustrieren wir dies, indem wir unsere @racket[power8-fast] Funktion wieder de-optimieren
 indem wir alle Vorkommen der Konstanten durch ihre Definition ersetzen:
 
