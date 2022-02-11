@@ -5,7 +5,7 @@
 @(require (for-label (except-in lang/htdp-beginner e)))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label teachpack/2htdp/abstraction))
-@require [scribble-math]
+@require[scribble-math]
 @;(require "math-utilities.rkt")
 
 @(require scribble/bnf)
