@@ -75,7 +75,7 @@ lokalisiert, so muss nur diese eine Funktion modifiziert werden.
 Wenn man eine größere Menge von Funktionen zu programmieren hat, stellt sich die Frage, in welcher 
 Reihenfolge man diese Funktionen programmiert. Zwei wichtige Varianten sind "Top-Down" 
 und "Bottom-Up". "Top-Down" bedeutet, dass man mit der Hauptfunktion anfängt, dann alle Funktionen
-programmiert die in der Hauptfunktion aufgerufen werden, dann alle Funktionen die widerum von
+programmiert die in der Hauptfunktion aufgerufen werden, dann alle Funktionen, die wiederum von
 diesen Funktionen aufgerufen werden, und so weiter. "Bottom-Up" ist genau umgekehrt: Man
 programmiert zunächst die einfachsten Funktionen, die wiederum nur primitive Funktionen aufrufen, dann
 die Funktionen, welche die gerade programmierten Funktionen aufrufen. Dies setzt man fort bis man ganz
