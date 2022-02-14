@@ -21,7 +21,7 @@ Die Entwurfstechniken, die wir Ihnen beibringen, lassen sich in allen Programmie
 Allerdings unterscheiden sich Programmiersprachen darin, wie gut die Entwurfstechniken durch die
 Sprache unterstützt werden. Wenn Sie beispielsweise in Assembler-Programmiersprachen programmieren,
 gibt es nichts,
-was unserem @racket[define-struct] entspricht; ein Assembler Programmier muss sich daher selber überlegen,
+was unserem @racket[define-struct] entspricht; ein Assembler Programmierer muss sich daher selber überlegen,
 wie er mehrere Werte zusammenfasst und in einem linearen Speicher anordnet.
 
 Auf der anderen Seite gibt es auch Programmiersprachen, in denen unsere Entwurfstechniken besser
