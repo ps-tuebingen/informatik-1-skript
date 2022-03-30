@@ -4,6 +4,7 @@
 @(require (for-label lang/htdp-beginner))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require scriblib/footnote)
+@(require "questionnaire.rkt")
 
 
 @title[#:version ""]{Programmieren mit Ausdrücken}
@@ -22,6 +23,41 @@ wird ihn ausführen.  Eine formale Sprache, in der solche Algorithmen formuliert
 verwenden wir @italic{DrRacket}. DrRacket kann man unter der URL @url{http://racket-lang.org/} herunterladen.
 Bitte stellen Sie als Sprache "How To Design Programs - Anfänger" ein. Folgen Sie diesem Text am besten,
 indem Sie DrRacket parallel starten und immer mitprogrammieren.
+
+@questionnaire[
+  @question[
+    "singlechoice"
+    "Wofür steht BSL?"
+    @answer[#f
+      "Bovine Sign Language"
+      ""
+    ]
+    @answer[#t
+      "Beginning Student Language"
+      "siehe oben"
+    ]
+    @answer[#f
+      "Basic S-Expression Language"
+      "S-Expressions lernen wir später kennen."
+    ]
+  ]
+  @question[
+    "multiplechoice"
+    "Was kann man in DrRacket tun?"
+    @answer[#t
+      "BSL Programme editieren"
+      "Theoretisch kann man jede Art von Textdatei damit editieren."
+    ]
+    @answer[#t
+      "BSL Programme ausführen"
+      "Dafür bietet DrRacket die REPL an"
+    ]
+    @answer[#f
+      "BSL Programme kompilieren"
+      "BSL ist eine interpretierte Sprache und wird nicht kompiliert"
+    ]
+  ]
+]
 
 Viele einfache Algorithmen sind in einer Programmiersprache bereits vorgegeben, z.B. solche
 zur Arithmetik mit Zahlen. Wir können "Aufgaben" stellen, indem wir DrRacket eine Frage stellen,
@@ -312,7 +348,7 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
 @section{Auftreten und Umgang mit Fehlern}
 
  Bei der Erstellung und Ausführung von Programmen können unterschiedliche Arten von Fehlern auftreten.
- Außerdem treten Fehler zu unterschiedlichen Zeitpunkten auf. 
+ Außerdem treten Fehler zu unterschiedlichen Zeitpunkten auf.
  Es ist wichtig, die Klassen und Ursachen dieser Fehler zu kennen.
 
  Programmiersprachen unterscheiden sich darin, zu welchem Zeitpunkt Fehler
@@ -363,7 +399,7 @@ Die folgenden Programme sind alle syntaktisch korrekt, allerdings lassen sich ni
  (/ 1 0)
  (string->number "asdf")]
 
- 
+
  Nicht jedes syntaktisch korrekte Programm hat in BSL eine Bedeutung. @italic{Bedeutung} heißt in diesem
  Fall dass das Programm korrekt ausgeführt werden kann und einen Wert zurückliefert.
  Die Menge der BSL Programme, die eine Bedeutung haben, ist nur eine @italic{Teilmenge} der syntaktisch
@@ -468,7 +504,7 @@ Wir werden später mehr dazu sagen, wo, wie und wie ausführlich Programme komme
            links davon den Wert @racket[#true], dann wird die Auswertung mit einer Fehlermeldung abgebrochen.}
          @item{Falls @eI das am weitesten links stehende Argument ist, welches noch kein Wert ist, so wird durch Anwendung
                der gleichen Auswertungsvorschriten der Wert dieses Arguments bestimmt und dann mit den gleichen Vorschriften die Auswertung fortgesetzt.}]}
-  @item{Hat der Ausdruck die Form @racket[(or (unsyntax @e1) ... (unsyntax @eN))], so wird analog zur Auswertung von @racket[and] verfahren. }                                                                                                                                                      
+  @item{Hat der Ausdruck die Form @racket[(or (unsyntax @e1) ... (unsyntax @eN))], so wird analog zur Auswertung von @racket[and] verfahren. }
 
 ]
 
@@ -556,4 +592,3 @@ Sei @e1 ein Unterausdruck eines größeren Ausdrucks @e2 und @e1 @equiv @e3 . Fe
 Diese Eigenschaft folgt direkt aus der Kongruenzregel und der Definition von @equiv . Dieser Äquivalenzbegriff ist identisch mit dem, den Sie aus der Schulmathematik kennen, wenn Sie Gleichungen umformen, zum Beispiel wenn wir a + a - b umformen zu 2a - b weil wir wissen dass a + a = 2a.
 
 Die Benutzung von @equiv um zu zeigen dass Programme die gleiche Bedeutung haben nennt man auch @italic{equational reasoning}.
-

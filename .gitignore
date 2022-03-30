@@ -4,6 +4,5 @@ compiled/*
 *.mpg
 *.*~
 pict*.png
-*.js
 *.pdf
 *.css
