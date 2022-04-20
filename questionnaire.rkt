@@ -8,27 +8,69 @@
 (require scribble/latex-properties)
 (require scribble/base)
 
-(provide questionnaire question answer)
+(provide questionnaire question solution distractor explanation texquestions q)
 
 ;;;;;;;;;;; Type Definitions
-(define questiontypes (or/c "singlechoice" "multiplechoice"))
+(define questiontypes (or/c "singlechoice" "multiplechoice" "infer"))
 (define texsolutionstyles (or/c "inline" "margin"))
  ; one-of does not work with strings
+(define arbitrary-content?
+  (or/c block?
+  (or/c content?
+        (listof (or/c content? block?)))))
 
-(struct/contract answer-container (
-  [correct boolean?]
-  [text content?]
-  [explanation content?])
+; helper for arbitrary content
+(define/contract
+  (homogenize xs)
+  (-> (listof (or/c content? block?)) (listof block?))
+  (map (lambda (x) (if (block? x) x
+        (paragraph (style #f '()) x)
+  )) xs)
+)
+
+; general answer for easy accessor
+(struct/contract answer (
+  [text arbitrary-content?])
   #:transparent
 )
 
+; solution and distractor
+(struct/contract solution-container answer ()
+  #:transparent
+)
+(define (solution . x) (solution-container x))
+
+(struct/contract distractor-container answer ()
+  #:transparent
+)
+(define (distractor . x) (distractor-container x))
+
+; same but with explanation
+(struct/contract solution/e solution-container (
+  [explanation arbitrary-content?])
+  #:transparent
+)
+(struct/contract distractor/e distractor-container (
+  [explanation arbitrary-content?])
+  #:transparent
+)
+
+; explanation
+(struct/contract explanation-container (
+  [text arbitrary-content?])
+  #:transparent
+)
+(define (explanation . x) (explanation-container x))
+
+; question
 (struct/contract question-container (
   [type questiontypes]
-  [text content?]
-  [answers (listof answer-container?)])
+  [text arbitrary-content?]
+  [answers (listof answer?)])
   #:transparent
 )
 
+; quiz
 (struct/contract questionnaire-container (
   [questions (listof question-container?)])
   #:transparent
@@ -37,88 +79,122 @@
 ;;;;;;;;;;; HTML Part
 
 ;;;; Custom HTML tags
+; helper for wrapping arbitrary content
+(define/contract
+  (wrap-tag wrapper content)
+  (-> style? arbitrary-content? block?)
+  (cond
+    [(content? content)
+     (paragraph wrapper content)]
+    [(block? content)
+     (nested-flow wrapper (list content))]
+    [((listof (or/c block? content?)) content)
+     (nested-flow wrapper (homogenize content))]
+  )
+)
+
 ; questionnaire
 (define
   questionnaire-tag-wrapper
-  (xexpr-property
-    (cdata #f #f "<questionnaire>")
-    (cdata #f #f "</questionnaire>")))
+  (style "" (list (alt-tag "questionnaire")))
+)
 
 (define/contract
   (questionnaire-tag content)
-  (-> content? content?)
-      (element (style #f (list questionnaire-tag-wrapper))
-                content))
+  (-> arbitrary-content? block?)
+  (wrap-tag questionnaire-tag-wrapper content)
+)
 
 ; question
 (define/contract
   (question-tag-wrapper type)
-  (-> questiontypes xexpr-property?)
-  (xexpr-property
-    (cdata #f #f (string-append
-      "<question type=\"" type "\">"
-      ))
-    (cdata #f #f "</question>")))
+  (-> questiontypes style?)
+  (style "" (list
+    (alt-tag "question")
+    (attributes (if (string=? type "infer") '()
+                    (list (cons 'type type))))
+  ))
+)
 
 (define/contract
   (question-tag type content)
-  (-> questiontypes content? content?)
-        (element (style #f (list (question-tag-wrapper type)))
-                 content))
+  (-> questiontypes arbitrary-content? block?)
+  (wrap-tag (question-tag-wrapper type) content)
+)
 
 ; answer
 (define/contract
   (answer-tag-wrapper correct)
-  (-> boolean? xexpr-property?)
-  (xexpr-property
-    (cdata #f #f (string-append
-      "<answer correct=\"" (if correct "true" "false") "\">"
-      ))
-    (cdata #f #f "</answer>")))
+  (-> boolean? style?)
+  (style "" (list
+    (alt-tag (if correct "solution" "distractor"))
+  ))
+)
 
 (define/contract
   (answer-tag correct content)
-  (-> boolean? content? content?)
-        (element (style #f (list (answer-tag-wrapper correct)))
-                 content))
+  (-> boolean? arbitrary-content? block?)
+  (wrap-tag (answer-tag-wrapper correct) content)
+)
 
 ; explanation
 (define
   explanation-tag-wrapper
-  (xexpr-property
-    (cdata #f #f "<explanation>")
-    (cdata #f #f "</explanation>")))
+  (style "" (list (alt-tag "explanation")))
+)
 
 (define/contract
   (explanation-tag content)
-  (-> content? content?)
-      (element (style #f (list explanation-tag-wrapper))
-                content))
+  (-> arbitrary-content? block?)
+  (wrap-tag explanation-tag-wrapper content)
+)
 
 ;;;; Render-Functions for each struct
-(define
-  (render-answer-html answer)
-  (answer-tag (answer-container-correct answer)
-    (list (answer-container-text answer)
-          (explanation-tag (answer-container-explanation answer)))
+; helper
+(define/contract
+  (blocksify c)
+  (-> arbitrary-content? (listof block?))
+  (cond
+    [(content? c) (list (paragraph (style #f '()) c))]
+    [(block? c) (list c)]
+    [((listof (or/c block? content?)) c) (homogenize c)]
   )
 )
 
-(define
+(define/contract
+  (render-answer-html answer)
+  (-> answer? block?)
+  (answer-tag (solution-container? answer)
+    (append
+      (blocksify (answer-text answer))
+      (cond
+        [(solution/e? answer)
+         (list (explanation-tag (solution/e-explanation answer)))]
+        [(distractor/e? answer)
+         (list (explanation-tag (distractor/e-explanation answer)))]
+        [else '()]))
+  )
+)
+
+(define/contract
   (render-question-html question)
+  (-> question-container? block?)
   (question-tag (question-container-type question)
-    (cons (question-container-text question)
-          (map render-answer-html (question-container-answers question)))
+    (append
+      (blocksify (question-container-text question))
+      (map render-answer-html (question-container-answers question)))
   )
 )
 
 (define/contract
   (render-html questionnaire)
   (-> questionnaire-container? block?)
-  (paragraph (style #f (list (js-addition "questionnaire.js")))
-    (questionnaire-tag
-      (map render-question-html
-        (questionnaire-container-questions questionnaire)))
+  (nested-flow
+    (style #f (list (js-addition "questionnaire.js")))
+    (list
+      (questionnaire-tag
+       (map render-question-html
+         (questionnaire-container-questions questionnaire))))
   )
 )
 
@@ -129,10 +205,12 @@
 (define/contract
   (render-question-latex question)
   (-> question-container? (listof block?))
-  (list (paragraph (style #f '()) (bold (question-container-text question)))
-        (itemlist #:style 'ordered
-        (map (lambda (x) (item (answer-container-text x)))
-                       (question-container-answers question)))
+  (append
+    (blocksify (question-container-text question))
+    (list
+      (itemlist #:style 'ordered
+        (map (lambda (x) (item (answer-text x)))
+             (question-container-answers question))))
   )
 )
 
@@ -165,45 +243,68 @@
         (map-number #:current (+ current 1) f (cdr xs))))
 )
 
-; solution for single answer
+; show explanation for answer (if applicable)
 (define/contract
   (latex-explanation n answer)
-  (-> exact-integer? answer-container? content?)
-  (let ([correct (answer-container-correct answer)]
-        [explanation (answer-container-explanation answer)]
+  (-> exact-integer? answer? (cons/c boolean? block?))
+  (let ([correct (solution-container? answer)]
+        [explanation (cond
+          [(solution/e? answer) (solution/e-explanation answer)]
+          [(distractor/e? answer) (distractor/e-explanation answer)]
+          [else ""])]
         [letter (enumerate-letter n)])
-    (element #f (list
-      (if correct (bold letter) letter)
-      ")"
-      explanation
-      " "
-    ))
+    (cons
+      ((or/c solution/e? distractor/e?) answer)
+      (cond
+        [(content? explanation)
+         (car (blocksify (list (if correct (bold letter) letter) ")" explanation)))]
+        [else
+         (compound-paragraph
+          (style #f '())
+          (append
+            (blocksify (list (if correct (bold letter) letter) ")"))
+            (blocksify explanation)
+          ))]
+      )
+    )
   )
+)
+
+; show letter for correct answers
+(define/contract
+  (short-solution n answer)
+  (-> exact-integer? answer? content?)
+  (if (solution-container? answer) (enumerate-letter n) "")
 )
 
 ; solution for a question
 (define/contract
-  (latex-solution n question)
-  (-> exact-integer? question-container? content?)
+  (latex-solution n question explain)
+  (-> exact-integer? question-container? boolean? (listof block?))
   (let ([answers (question-container-answers question)]
         [numeral (string-append (number->string n) ".")])
-
-      (cons numeral
-        (append (map-number latex-explanation answers)
-                (list (element 'newline '()))))
+    (append
+      (blocksify (cons numeral (map-number short-solution answers)))
+      (if explain
+          (map (lambda (x) (cdr x))
+            (filter (lambda (x) (car x))
+              (map-number latex-explanation answers)))
+          '())
+    )
   )
 )
 
 ; solution part
 (define/contract
-  (render-solutions-latex questionnaire solstyle)
-  (-> questionnaire-container? texsolutionstyles block?)
+  (render-solutions-latex questionnaire solstyle explain)
+  (-> questionnaire-container? texsolutionstyles boolean? block?)
   (let
     ([rotatedtext
-      (paragraph (style (string-append "QRotate" solstyle) '())
-        (smaller
-          (map-number latex-solution
-           (questionnaire-container-questions questionnaire))))
+      (nested-flow
+        (style (string-append "QRotate" solstyle) (list 'command))
+        (foldr append '() (map-number
+          (lambda (n q) (latex-solution n q explain))
+          (questionnaire-container-questions questionnaire))))
     ])
   (cond [(string=? solstyle "inline") rotatedtext]
         [(string=? solstyle "margin") (margin-note rotatedtext)])
@@ -223,54 +324,128 @@
 
 ;; top-level latex renderer for questionnaire
 (define/contract
-  (render-latex questionnaire solstyle)
-  (-> questionnaire-container? texsolutionstyles block?)
+  (render-latex solstyle explain questionnaire)
+  (-> texsolutionstyles boolean? questionnaire-container? block?)
   (nested-flow
     (style 'vertical-inset (list (tex-addition (solutions-style solstyle))))
     (list
      (render-questions-latex
       (questionnaire-container-questions questionnaire))
-      (render-solutions-latex questionnaire solstyle)))
+     (render-solutions-latex questionnaire solstyle explain)))
+)
+
+; save a questionnaire during the collect pass
+(define/contract
+  (save-questionnaire location content)
+  (-> string? questionnaire-container? block?)
+  (paragraph (style #f '()) (list
+    (collect-element
+      (style #f '())
+      '()
+      (lambda (ci)
+        (collect-put!
+          ci
+          (list (string->symbol (string-append "Questionnaire" location)) #t)
+          content
+        )
+      )
+    )))
+)
+
+; retrieve and render questionnaire during the resolve pass
+(define/contract
+  (retrieve-questionnaire location renderer)
+  (-> string? any/c delayed-block?)
+  (delayed-block
+    (lambda (r p ri)
+      (renderer (resolve-get p ri (list (string->symbol (string-append "Questionnaire" location)) #t))))
+  )
 )
 
 
 ;;;;;;;;;;; Exposed API
-; answer
-(define/contract
-  (answer correct text explanation)
-  (-> boolean? content? content? answer-container?)
-  (answer-container correct text explanation)
-)
+; helper for being able to put arbitrary content in answers
+(define (q . x) x)
 
-; question
-(define; /contract
-  (question type text . answers)
-  ; (-> questiontypes content? (listof answer-container?) question-container?)
-  (cond
-    [(not (questiontypes type))
-     (raise-argument-error 'type "A valid question type string (singlechoice or multiplechoice)" type)]
-    [(not (content? text))
-     (raise-argument-error 'text "An Element of Type content (no block, like e.g. a table or itemization)" text)]
-    [(not (andmap answer-container? answers))
-     (raise-argument-error 'answers "A list of @answer s (answer-container)" answers)]
-    [else
-     (question-container type text answers)]
+; helper for assigning explanations to answers
+(define/contract
+  (merge-explanations xs)
+  (-> (listof (or/c answer? explanation-container?)) (listof answer?))
+  (if (pair? xs)
+      (if (pair? (cdr xs))
+          (let ([a (car xs)]
+                [b (car (cdr xs))]
+                [xxs (cdr (cdr xs))])
+            (cond
+              [(and (distractor-container? a) (explanation-container? b))
+               (cons (distractor/e (answer-text a) (explanation-container-text b)) (merge-explanations xxs))]
+              [(and (solution-container? a) (explanation-container? b))
+               (cons (solution/e (answer-text a) (explanation-container-text b)) (merge-explanations xxs))]
+              [(explanation-container? a)
+               (raise-argument-error 'xs "A solution or distractor before every explanation, at most one explanation per solution/distractor" xs)]
+              [else (cons a (merge-explanations (cdr xs)))]
+            )
+          )
+          xs
+      )
+      xs
   )
 )
 
+; question
+(define
+  (question text #:type [type "infer"] . answers)
+  (cond
+    [(not (questiontypes type))
+     (raise-argument-error 'type "A valid question type string (singlechoice or multiplechoice)" type)]
+    [(not (arbitrary-content? text))
+     (raise-argument-error 'text "An Element of Type content?, block? or a list of (possibly a mix of) them" text)]
+    [(not (andmap (or/c answer? explanation-container?) answers))
+     (raise-argument-error 'answers "A list of @solution|@distractor|@explanation" answers)]
+    [(< (length (filter answer? answers)) 2)
+     (raise-argument-error 'answers "At least two answers (@solution|@distractor) to the question" answers)]
+    [(not (ormap solution-container? answers))
+     (raise-argument-error 'answers "At least one @solution to the question." answers)]
+    [(and (string=? type "singlechoice")
+          (> (length (filter solution-container? answers)) 1))
+     (raise-argument-error 'answers "At most one @solution for a question of #:type \"singlechoice\"" answers)]
+    [else
+     (question-container type text (merge-explanations answers))]
+  )
+)
+
+; helper for "nothing"
+(define nothing (nested-flow (style #f '()) '()))
+
 ; questionnaire
-(define ; /contract
-  (questionnaire #:texsolutionstyle [style "margin"] . questions)
-   ;(-> (listof question-container?) any)
+(define
+  (questionnaire #:key [key "DefaultQuestionnaire"] . questions)
    (cond [(not (andmap question-container? questions))
           (raise-argument-error 'questions "A list of @question s (question-container)" questions)]
-         [(not (texsolutionstyles style))
-          (raise-argument-error 'texsolutionstyle "A valid layout option for the solutions in latex (margin or inline)" style)]
+         [(not (string? key))
+          (raise-argument-error 'key "A string key for retrieving the questionnaire with @texquestions" key)]
          [else
          (cond-block
            [html (render-html (questionnaire-container questions))]
-           [latex (render-latex (questionnaire-container questions) style)]
+           [latex (save-questionnaire key (questionnaire-container questions))]
          )
          ]
    )
+)
+
+; latex print location
+(define
+  (texquestions #:key [key "DefaultQuestionnaire"] #:texsolutionstyle [style "margin"] #:explain [explain #t])
+  (cond [(not (string? key))
+         (raise-argument-error 'key "A string key for retrieving the questionnaire with @texquestions" key)]
+        [(not (texsolutionstyles style))
+         (raise-argument-error 'texsolutionstyle "A valid layout option for the solutions in latex (margin or inline), default: margin" style)]
+        [(not (boolean? explain))
+         (raise-argument-error 'explain "A boolean flag whether to print explanations, default: #t" explain)]
+        [else (cond-block
+                [latex
+                 (retrieve-questionnaire key (lambda (x) (render-latex style explain x)))]
+                [html nothing]
+              )]
+  )
 )

@@ -24,38 +24,25 @@ verwenden wir @italic{DrRacket}. DrRacket kann man unter der URL @url{http://rac
 Bitte stellen Sie als Sprache "How To Design Programs - Anfänger" ein. Folgen Sie diesem Text am besten,
 indem Sie DrRacket parallel starten und immer mitprogrammieren.
 
-@questionnaire[
+@questionnaire[#:key "intro"
   @question[
-    "singlechoice"
-    "Wofür steht BSL?"
-    @answer[#f
-      "Bovine Sign Language"
-      ""
-    ]
-    @answer[#t
-      "Beginning Student Language"
-      "siehe oben"
-    ]
-    @answer[#f
-      "Basic S-Expression Language"
-      "S-Expressions lernen wir später kennen."
-    ]
+    @q{Wofür steht BSL?}
+
+    @distractor{Bovine Sign Language}
+
+    @solution{Beginning Student Language}
+
+    @distractor{Basic S-Expression Language}
+    @explanation{S-Expressions lernen wir später kennen}
   ]
   @question[
-    "multiplechoice"
-    "Was kann man in DrRacket tun?"
-    @answer[#t
-      "BSL Programme editieren"
-      "Theoretisch kann man jede Art von Textdatei damit editieren."
-    ]
-    @answer[#t
-      "BSL Programme ausführen"
-      "Dafür bietet DrRacket die REPL an"
-    ]
-    @answer[#f
-      "BSL Programme kompilieren"
-      "BSL ist eine interpretierte Sprache und wird nicht kompiliert"
-    ]
+    @q{Wozu reduziert der folgende Ausdruck?
+       @racketblock[(+ (* 20 2) 2)]}
+
+    @solution{@racketblock[(+ 40 2)]}
+    @solution{@racketblock[42]}
+    @distractor{@racketblock[80]}
+
   ]
 ]
 
