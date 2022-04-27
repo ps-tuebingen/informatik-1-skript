@@ -547,6 +547,42 @@ Wenn in BSL ein Laufzeitfehler auftritt, wird die Programmausführung abgebroche
  aber auch so definiert werden können, dass sie in dieser Situation einen Laufzeitfehler auslöst.
 
 
+@questionnaire[#:language "de" #:key "errors"
+  @question[
+    @q{Welche der folgenden Programme enthalten @italic{Syntaxfehler}?}
+
+    @solution{@tt{(+ 2 (- 44 4)}}
+    @distractor{@tt{(string->number 42)}}
+    @explanation{Der Datentyp von Argumenten ist nicht Teil der Syntax}
+    @distractor{@tt{(string-length "40" "2")}}
+    @solution{@tt{-(44, 2)}}
+  ]
+  @question[
+    @q{Wann werden Syntaxfehler erkannt?}
+
+    @solution{Vor der Ausführung des Programms}
+    @distractor{Während der Ausführung des Programms}
+    @distractor{Nach der Ausführung des Programms}
+  ]
+  @question[
+    @q{Was für einen Fehler enthält das folgende Programm?
+    @racketblock[(string->number "40" "2")]}
+
+    @distractor{Typfehler}
+    @solution{Aritätsfehler}
+    @explanation{Die @italic{Arität} einer Funktion beschreibt, wie viele Argumente sie benötigt.}
+    @distractor{Syntaxfehler}
+  ]
+  @question[
+    @q{Gibt es eine Turing-vollständige Programmiersprache, in der keine Laufzeitfehler auftreten können?}
+
+    @distractor{Ja, Haskell}
+    @distractor{Ja, alle Sprachen mit statischem Typsystem}
+    @solution{Nein, da stoßen wir an fundamentale Grenzen der Berechenbarkeit}
+  ]
+]
+
+
 @section{Kommentare}
 
 Ein Programm kann neben dem eigentlichen Programmtext auch Kommentare enthalten.
