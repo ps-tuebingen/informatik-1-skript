@@ -27,4 +27,3 @@ Große Teile dieses Skripts basieren auf dem Buch "How To Design Programs" von M
 @include-section["16-semanticsisl.scrbl"]
 @include-section["17-generativerecursion.scrbl"]
 @include-section["18-accumulators.scrbl"]
-@include-section["19-quizzes.scrbl"]

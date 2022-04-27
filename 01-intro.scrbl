@@ -24,28 +24,6 @@ verwenden wir @italic{DrRacket}. DrRacket kann man unter der URL @url{http://rac
 Bitte stellen Sie als Sprache "How To Design Programs - Anfänger" ein. Folgen Sie diesem Text am besten,
 indem Sie DrRacket parallel starten und immer mitprogrammieren.
 
-@questionnaire[#:key "intro"
-  @question[
-    @q{Wofür steht BSL?}
-
-    @distractor{Bovine Sign Language}
-
-    @solution{Beginning Student Language}
-
-    @distractor{Basic S-Expression Language}
-    @explanation{S-Expressions lernen wir später kennen}
-  ]
-  @question[
-    @q{Wozu reduziert der folgende Ausdruck?
-       @racketblock[(+ (* 20 2) 2)]}
-
-    @solution{@racketblock[(+ 40 2)]}
-    @solution{@racketblock[42]}
-    @distractor{@racketblock[80]}
-
-  ]
-]
-
 Viele einfache Algorithmen sind in einer Programmiersprache bereits vorgegeben, z.B. solche
 zur Arithmetik mit Zahlen. Wir können "Aufgaben" stellen, indem wir DrRacket eine Frage stellen,
 auf die uns DrRacket dann im Ausgabefenster die Antwort gibt. So können wir zum Beispiel die Frage
@@ -139,6 +117,62 @@ Noch ein praktischer Hinweis: Wenn Sie dieses Dokument mit einem Webbrowser lese
 in den Beispielausdrücken vorkommen, einen Hyperlink zu ihrer Dokumentation enthalten. Beispielsweise
 sollte der Additionsoperator im Ausdruck @racket[(+ 5 7)] einen solchen Hyperlink enthalten. Unter diesen
 Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie verwenden können.
+
+@questionnaire[#:key "intro" #:language "de"
+  @question[
+    @q{Was ist die aktuelle Version von DrRacket?}
+
+    @distractor{5.2}
+
+    @solution{8.4}
+    @explanation{Stand April 2022, zu sehen u.a. auf der Downloadseite @url{https://download.racket-lang.org/}}
+
+    @distractor{9.0}
+  ]
+  @question[
+    @q{Wofür steht BSL?}
+    @distractor{Bovine Sign Language}
+    @solution{Beginning Student Language}
+    @distractor{Bayrische Schnaps-Lieferanten}
+  ]
+  @question[
+    @q{Welche der folgenden Optionen sind gültige BSL-Programme?}
+
+    @solution{@racketblock[(+ 40 2)]}
+    @distractor{@racketblock[40 + 2]}
+    @distractor{@racketblock[add(40, 2)]}
+    @solution{@racketblock[42]}
+
+  ]
+  @question[
+    @q{Wie nennen wir im Folgenden Operationen wie @racket[+] oder @racket[/]?}
+
+    @distractor{Prozeduren}
+    @distractor{Methoden}
+    @distractor{Funktoren}
+    @solution{Funktionen}
+  ]
+  @question[
+    @q{Und wie nennen wir die Zahlen, auf die wir die Funktionen anwenden?}
+
+    @distractor{Operanden}
+    @solution{Argumente}
+    @distractor{Passoren}
+  ]
+  @question[
+    @q{Wieviele @italic{zusammengesetzte} Ausdrücken sind in folgendem Ausdruck enthalten?
+    @racketblock[(+ (* 5 5) (+ (* 3 (/ 12 4)) 4))]
+    }
+
+    @solution{5}
+    @explanation{@racket[(* 5 5)], @racket[(/ 12 4)], @racket[(* 3 (/ 12 4))], @racket[(+ (* 3 (/ 12 4)) 4)] und der Ausdruck selbst.}
+
+    @distractor{11}
+    @explanation{Die 6 Zahlen sind @italic{atomare} Ausdrücke.}
+
+    @distractor{2}
+  ]
+]
 
 @section[#:tag "arithmeticnm"]{Arithmetik mit nicht-numerischen Werten}
 
