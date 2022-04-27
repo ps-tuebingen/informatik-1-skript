@@ -160,12 +160,12 @@ Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie ve
     @distractor{Passoren}
   ]
   @question[
-    @q{Wieviele @italic{zusammengesetzte} Ausdrücken sind in folgendem Ausdruck enthalten?
+    @q{Wieviele @italic{zusammengesetzte} Ausdrücke sind in folgendem Programm enthalten?
     @racketblock[(+ (* 5 5) (+ (* 3 (/ 12 4)) 4))]
     }
 
     @solution{5}
-    @explanation{@racket[(* 5 5)], @racket[(/ 12 4)], @racket[(* 3 (/ 12 4))], @racket[(+ (* 3 (/ 12 4)) 4)] und der Ausdruck selbst.}
+    @explanation{@racket[(* 5 5)], @racket[(/ 12 4)], @racket[(* 3 (/ 12 4))], @racket[(+ (* 3 (/ 12 4)) 4)] und @racket[(+ (* 5 5) (+ (* 3 (/ 12 4)) 4))].}
 
     @distractor{11}
     @explanation{Die 6 Zahlen sind @italic{atomare} Ausdrücke.}
@@ -364,6 +364,90 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
 (place-image (circle 5 "solid" "green") ; ergibt
              50 80
              (empty-scene 100 100))]
+
+@questionnaire[#:key "types" #:language "de"
+  @question[
+    @q{Wie nennen wir verschiedene Arten von Werten in der Informatik?}
+
+    @distractor{Kategorien}
+    @distractor{Objekte}
+    @solution{Datentypen}
+  ]
+  @question[
+    @q{Wie fügt man in BSL zwei Strings zusammen?}
+
+    @solution{@racket[(string-append "zusammen" "setzen")]}
+    @distractor{@racket[(+ "zusammen" "setzen")]}
+    @distractor{@tt{"zusammen" . "setzen"}}
+    @distractor{@racket["zusammen" || "setzen"]}
+
+  ]
+
+  @question[#:type "multiplechoice"
+    @q{Wie kann man in BSL eine Zahl in einen String umwandeln, um sie z.B. an einen anderen String anzuhängen?}
+
+    @distractor{@racket[string-append] wandelt seine Argumente automatisch um}
+    @solution{Mit @racket[number->string]}
+    @distractor{Mit der @racket[print]-Funktion}
+  ]
+
+  @question[
+    @q{Welchen Datentyp hat das Ergebnis des Ausdrucks @racket[(string=? "Apfel" "Birne")]?}
+
+    @distractor{String}
+    @distractor{Zahl}
+    @solution{Boolscher Wert (Wahrheitswert)}
+  ]
+  @question[
+    @q{Was ergibt die Auswertung des folgenden Ausdrucks? @racketblock[(or (= 2 (string->number "2")) (> 1 "1"))]}
+
+    @solution{@racket[#true]}
+    @distractor{@racket[#false]}
+    @distractor{einen Fehler}
+    @explanation{Da das erste Argument von @racket[or] bereits wahr ist, wird das zweite Argument nicht ausgewertet und der Fehler tritt nicht auf.}
+  ]
+  @question[
+    @q{Wie kann man mit DrRacket ein Bild in ein BSL-Programm hinzufügen?}
+
+    @solution{Mit Copy&Paste}
+    @solution{Über das Menü "Einfügen -> Bild"}
+    @distractor{Mithilfe von @racket[load-image]}
+  ]
+  @question[
+    @q{Was ist das Ergebnis des folgenden Ausdrucks?
+    @racketblock[(place-image (overlay (circle 50 "solid" "white")
+               (circle 55 "solid" "blue")
+               (circle 60 "solid" "purple")
+               (circle 65 "solid" "red")
+               (circle 70 "solid" "orange")
+               (circle 75 "solid" "yellow")
+               (circle 80 "solid" "green"))
+               50 90
+               (empty-scene 90 90))]}
+
+    @solution{
+      @interaction-eval-show[
+      (require 2htdp/image)
+      (place-image (overlay (circle 50 "solid" "white")
+                 (circle 55 "solid" "blue")
+                 (circle 60 "solid" "purple")
+                 (circle 65 "solid" "red")
+                 (circle 70 "solid" "orange")
+                 (circle 75 "solid" "yellow")
+                 (circle 80 "solid" "green"))
+                 50 90
+                 (empty-scene 90 90))]
+    }
+    @distractor{
+      @interaction-eval-show[
+      (require 2htdp/image)
+      (place-image
+                 (circle 80 "solid" "green")
+                 50 90
+                 (empty-scene 90 90))]
+    }
+  ]
+]
 
 
 @section{Auftreten und Umgang mit Fehlern}
