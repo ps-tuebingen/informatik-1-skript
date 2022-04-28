@@ -118,6 +118,10 @@ in den Beispielausdrücken vorkommen, einen Hyperlink zu ihrer Dokumentation ent
 sollte der Additionsoperator im Ausdruck @racket[(+ 5 7)] einen solchen Hyperlink enthalten. Unter diesen
 Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie verwenden können.
 
+@pdf-note{Im HTML-Skript ist an dieser Stelle und nach ein paar anderen Kapiteln ein interaktives Quiz.
+  Im PDF haben wir die Quizzes ans Ende gepackt, damit man frei entscheiden kann, ob man sie mitdrucken will,
+  und verweisen darauf mit einer Notiz am Rande, wie hier: @secref{quiz-intro}}
+
 @questionnaire[#:key "intro" #:language "de"
   @question[
     @q{Was ist die aktuelle Version von DrRacket?}
@@ -365,6 +369,8 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
              50 80
              (empty-scene 100 100))]
 
+@pdf-note{Quiz: @secref{quiz-types}}
+
 @questionnaire[#:key "types" #:language "de"
   @question[
     @q{Wie nennen wir verschiedene Arten von Werten in der Informatik?}
@@ -546,6 +552,7 @@ Wenn in BSL ein Laufzeitfehler auftritt, wird die Programmausführung abgebroche
  Das Programm ist also aus BSL-Sicht wohldefiniert. Die Funktion @racket[string->number] hätte alternativ
  aber auch so definiert werden können, dass sie in dieser Situation einen Laufzeitfehler auslöst.
 
+@pdf-note{Quiz: @secref{quiz-errors}}
 
 @questionnaire[#:language "de" #:key "errors"
   @question[
