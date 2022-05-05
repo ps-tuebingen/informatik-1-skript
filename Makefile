@@ -5,8 +5,7 @@ html:
 	chmod a+rw ./script/*
 
 pdf:
-	racket	-l	racket/gui -l-	scribble/run	++xref-in	setup/xref	load-collections-xref	--prefix scribble-prefix.tex --pdf	script.scrbl
-	chmod a+rw script.pdf
+	racket	-l	racket/gui -l-	scribble/run	++xref-in	setup/xref	load-collections-xref	--prefix scribble-prefix.tex --pdf	script-pdf.scrbl
+	chmod a+rw script-pdf.pdf
 	mkdir -p script
-	mv ./script.pdf ./script
-
+	mv ./script-pdf.pdf ./script/script.pdf

@@ -4,6 +4,7 @@
 @(require (for-label lang/htdp-beginner))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require scriblib/footnote)
+@(require "questionnaire.rkt")
 
 
 @title[#:version ""]{Programmieren mit Ausdrücken}
@@ -116,6 +117,66 @@ Noch ein praktischer Hinweis: Wenn Sie dieses Dokument mit einem Webbrowser lese
 in den Beispielausdrücken vorkommen, einen Hyperlink zu ihrer Dokumentation enthalten. Beispielsweise
 sollte der Additionsoperator im Ausdruck @racket[(+ 5 7)] einen solchen Hyperlink enthalten. Unter diesen
 Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie verwenden können.
+
+@pdf-note{Im HTML-Skript ist an dieser Stelle und nach ein paar anderen Kapiteln ein interaktives Quiz.
+  Im PDF haben wir die Quizzes ans Ende gepackt, damit man frei entscheiden kann, ob man sie mitdrucken will,
+  und verweisen darauf mit einer Notiz am Rande, wie hier: @secref{quiz-intro}}
+
+@questionnaire[#:key "intro" #:language "de"
+  @question[
+    @q{Was ist die aktuelle Version von DrRacket?}
+
+    @distractor{5.2}
+
+    @solution{8.4}
+    @explanation{Stand April 2022, zu sehen u.a. auf der Downloadseite @url{https://download.racket-lang.org/}}
+
+    @distractor{9.0}
+  ]
+  @question[
+    @q{Wofür steht BSL?}
+    @distractor{Bovine Sign Language}
+    @solution{Beginning Student Language}
+    @distractor{Bayrische Schnaps-Lieferanten}
+  ]
+  @question[
+    @q{Welche der folgenden Optionen sind gültige BSL-Programme?}
+
+    @solution{@racketblock[(+ 40 2)]}
+    @distractor{@racketblock[40 + 2]}
+    @distractor{@racketblock[add(40, 2)]}
+    @solution{@racketblock[42]}
+
+  ]
+  @question[
+    @q{Wie nennen wir im Folgenden Operationen wie @racket[+] oder @racket[/]?}
+
+    @distractor{Prozeduren}
+    @distractor{Methoden}
+    @distractor{Funktoren}
+    @solution{Funktionen}
+  ]
+  @question[
+    @q{Und wie nennen wir die Zahlen, auf die wir die Funktionen anwenden?}
+
+    @distractor{Operanden}
+    @solution{Argumente}
+    @distractor{Passoren}
+  ]
+  @question[
+    @q{Wieviele @italic{zusammengesetzte} Ausdrücke sind in folgendem Programm enthalten?
+    @racketblock[(+ (* 5 5) (+ (* 3 (/ 12 4)) 4))]
+    }
+
+    @solution{5}
+    @explanation{@racket[(* 5 5)], @racket[(/ 12 4)], @racket[(* 3 (/ 12 4))], @racket[(+ (* 3 (/ 12 4)) 4)] und @racket[(+ (* 5 5) (+ (* 3 (/ 12 4)) 4))].}
+
+    @distractor{11}
+    @explanation{Die 6 Zahlen sind @italic{atomare} Ausdrücke.}
+
+    @distractor{2}
+  ]
+]
 
 @section[#:tag "arithmeticnm"]{Arithmetik mit nicht-numerischen Werten}
 
@@ -308,11 +369,97 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
              50 80
              (empty-scene 100 100))]
 
+@pdf-note{Quiz: @secref{quiz-types}}
+
+@questionnaire[#:key "types" #:language "de"
+  @question[
+    @q{Wie nennen wir verschiedene Arten von Werten in der Informatik?}
+
+    @distractor{Kategorien}
+    @distractor{Objekte}
+    @solution{Datentypen}
+  ]
+  @question[
+    @q{Wie fügt man in BSL zwei Strings zusammen?}
+
+    @solution{@racket[(string-append "zusammen" "setzen")]}
+    @distractor{@racket[(+ "zusammen" "setzen")]}
+    @distractor{@tt{"zusammen" . "setzen"}}
+    @distractor{@racket["zusammen" || "setzen"]}
+
+  ]
+
+  @question[#:type "multiplechoice"
+    @q{Wie kann man in BSL eine Zahl in einen String umwandeln, um sie z.B. an einen anderen String anzuhängen?}
+
+    @distractor{@racket[string-append] wandelt seine Argumente automatisch um}
+    @solution{Mit @racket[number->string]}
+    @distractor{Mit der @racket[print]-Funktion}
+  ]
+
+  @question[
+    @q{Welchen Datentyp hat das Ergebnis des Ausdrucks @racket[(string=? "Apfel" "Birne")]?}
+
+    @distractor{String}
+    @distractor{Zahl}
+    @solution{Boolscher Wert (Wahrheitswert)}
+  ]
+  @question[
+    @q{Was ergibt die Auswertung des folgenden Ausdrucks? @racketblock[(or (= 2 (string->number "2")) (> 1 "1"))]}
+
+    @solution{@racket[#true]}
+    @distractor{@racket[#false]}
+    @distractor{einen Fehler}
+    @explanation{Da das erste Argument von @racket[or] bereits wahr ist, wird das zweite Argument nicht ausgewertet und der Fehler tritt nicht auf.}
+  ]
+  @question[
+    @q{Wie kann man mit DrRacket ein Bild in ein BSL-Programm hinzufügen?}
+
+    @solution{Mit Copy&Paste}
+    @solution{Über das Menü "Einfügen -> Bild"}
+    @distractor{Mithilfe von @racket[load-image]}
+  ]
+  @question[
+    @q{Was ist das Ergebnis des folgenden Ausdrucks?
+    @racketblock[(place-image (overlay (circle 50 "solid" "white")
+               (circle 55 "solid" "blue")
+               (circle 60 "solid" "purple")
+               (circle 65 "solid" "red")
+               (circle 70 "solid" "orange")
+               (circle 75 "solid" "yellow")
+               (circle 80 "solid" "green"))
+               50 90
+               (empty-scene 90 90))]}
+
+    @solution{
+      @interaction-eval-show[
+      (require 2htdp/image)
+      (place-image (overlay (circle 50 "solid" "white")
+                 (circle 55 "solid" "blue")
+                 (circle 60 "solid" "purple")
+                 (circle 65 "solid" "red")
+                 (circle 70 "solid" "orange")
+                 (circle 75 "solid" "yellow")
+                 (circle 80 "solid" "green"))
+                 50 90
+                 (empty-scene 90 90))]
+    }
+    @distractor{
+      @interaction-eval-show[
+      (require 2htdp/image)
+      (place-image
+                 (circle 80 "solid" "green")
+                 50 90
+                 (empty-scene 90 90))]
+    }
+  ]
+]
+
 
 @section{Auftreten und Umgang mit Fehlern}
 
  Bei der Erstellung und Ausführung von Programmen können unterschiedliche Arten von Fehlern auftreten.
- Außerdem treten Fehler zu unterschiedlichen Zeitpunkten auf. 
+ Außerdem treten Fehler zu unterschiedlichen Zeitpunkten auf.
  Es ist wichtig, die Klassen und Ursachen dieser Fehler zu kennen.
 
  Programmiersprachen unterscheiden sich darin, zu welchem Zeitpunkt Fehler
@@ -363,7 +510,7 @@ Die folgenden Programme sind alle syntaktisch korrekt, allerdings lassen sich ni
  (/ 1 0)
  (string->number "asdf")]
 
- 
+
  Nicht jedes syntaktisch korrekte Programm hat in BSL eine Bedeutung. @italic{Bedeutung} heißt in diesem
  Fall dass das Programm korrekt ausgeführt werden kann und einen Wert zurückliefert.
  Die Menge der BSL Programme, die eine Bedeutung haben, ist nur eine @italic{Teilmenge} der syntaktisch
@@ -404,6 +551,43 @@ Wenn in BSL ein Laufzeitfehler auftritt, wird die Programmausführung abgebroche
  Umwandlung erfolgreich war oder nicht, und je nachdem das Programm anders fortzusetzen.
  Das Programm ist also aus BSL-Sicht wohldefiniert. Die Funktion @racket[string->number] hätte alternativ
  aber auch so definiert werden können, dass sie in dieser Situation einen Laufzeitfehler auslöst.
+
+@pdf-note{Quiz: @secref{quiz-errors}}
+
+@questionnaire[#:language "de" #:key "errors"
+  @question[
+    @q{Welche der folgenden Programme enthalten @italic{Syntaxfehler}?}
+
+    @solution{@tt{(+ 2 (- 44 4)}}
+    @distractor{@tt{(string->number 42)}}
+    @explanation{Der Datentyp von Argumenten ist nicht Teil der Syntax}
+    @distractor{@tt{(string-length "40" "2")}}
+    @solution{@tt{-(44, 2)}}
+  ]
+  @question[
+    @q{Wann werden Syntaxfehler erkannt?}
+
+    @solution{Vor der Ausführung des Programms}
+    @distractor{Während der Ausführung des Programms}
+    @distractor{Nach der Ausführung des Programms}
+  ]
+  @question[
+    @q{Was für einen Fehler enthält das folgende Programm?
+    @racketblock[(string->number "40" "2")]}
+
+    @distractor{Typfehler}
+    @solution{Aritätsfehler}
+    @explanation{Die @italic{Arität} einer Funktion beschreibt, wie viele Argumente sie benötigt.}
+    @distractor{Syntaxfehler}
+  ]
+  @question[
+    @q{Gibt es eine Turing-vollständige Programmiersprache, in der keine Laufzeitfehler auftreten können?}
+
+    @distractor{Ja, Haskell}
+    @distractor{Ja, alle Sprachen mit statischem Typsystem}
+    @solution{Nein, da stoßen wir an fundamentale Grenzen der Berechenbarkeit}
+  ]
+]
 
 
 @section{Kommentare}
@@ -468,7 +652,7 @@ Wir werden später mehr dazu sagen, wo, wie und wie ausführlich Programme komme
            links davon den Wert @racket[#true], dann wird die Auswertung mit einer Fehlermeldung abgebrochen.}
          @item{Falls @eI das am weitesten links stehende Argument ist, welches noch kein Wert ist, so wird durch Anwendung
                der gleichen Auswertungsvorschriten der Wert dieses Arguments bestimmt und dann mit den gleichen Vorschriften die Auswertung fortgesetzt.}]}
-  @item{Hat der Ausdruck die Form @racket[(or (unsyntax @e1) ... (unsyntax @eN))], so wird analog zur Auswertung von @racket[and] verfahren. }                                                                                                                                                      
+  @item{Hat der Ausdruck die Form @racket[(or (unsyntax @e1) ... (unsyntax @eN))], so wird analog zur Auswertung von @racket[and] verfahren. }
 
 ]
 
@@ -556,4 +740,3 @@ Sei @e1 ein Unterausdruck eines größeren Ausdrucks @e2 und @e1 @equiv @e3 . Fe
 Diese Eigenschaft folgt direkt aus der Kongruenzregel und der Definition von @equiv . Dieser Äquivalenzbegriff ist identisch mit dem, den Sie aus der Schulmathematik kennen, wenn Sie Gleichungen umformen, zum Beispiel wenn wir a + a - b umformen zu 2a - b weil wir wissen dass a + a = 2a.
 
 Die Benutzung von @equiv um zu zeigen dass Programme die gleiche Bedeutung haben nennt man auch @italic{equational reasoning}.
-
