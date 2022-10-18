@@ -2,6 +2,8 @@
 @(require scribble/eval)
 @(require scribble/core)
 @(require "marburg-utils.rkt")
+@(require "questionnaire.rkt")
+@(require "bsl_tools.rkt")
 @(require (for-label lang/htdp-beginner))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label 2htdp/universe))
@@ -10,21 +12,21 @@
           scribble/html-properties
           scribble/latex-properties)
 @(require scriblib/footnote)
-   
+
 
 @title[#:version "" #:tag "bsl-semantics"]{Bedeutung von BSL}
 
 
 In diesem Kapitel werden wir die Bedeutung (fast) aller Sprachkonstrukte von BSL zusammenfassen und formal definieren.
 
-Dies geschieht in zwei Schritten: Wir werden zunächst die @italic{Syntax} der Sprache definieren. 
+Dies geschieht in zwei Schritten: Wir werden zunächst die @italic{Syntax} der Sprache definieren.
 Die Syntax definiert, welche Texte BSL-Programme sind. Die Syntax wird in Form einer @italic{Grammatik}
-definiert. Die Grammatik sagt nicht nur, welche Texte BSL-Programme sind, sondern zerlegt ein BSL-Programm in 
+definiert. Die Grammatik sagt nicht nur, welche Texte BSL-Programme sind, sondern zerlegt ein BSL-Programm in
 seine Teile, genauso wie eine Grammatik für natürliche Sprachen einen Satz in Teile wie Subjekt, Prädikat und Objekt zerlegt.
 
-Im zweiten Schritt definieren wir für die grammatikalisch korrekten BSL-Programme, was diese bedeuten. 
+Im zweiten Schritt definieren wir für die grammatikalisch korrekten BSL-Programme, was diese bedeuten.
 Die Bedeutung legen wir durch die Definition von Reduktionsschritten fest, mit denen BSL Programme zu Werten
-ausgewertet werden können (sofern kein Fehler auftritt und sie terminieren). 
+ausgewertet werden können (sofern kein Fehler auftritt und sie terminieren).
 
 Wir haben bereits in den Abschnitten
 @secref{semanticsofexpressions}, @secref{semanticsoffundefs}, @secref{kondsem} und @secref{semanticsofvardefs}
@@ -33,9 +35,9 @@ anhand der formalen Syntaxdefinition nochmal präzisieren. Außerdem werden wir 
 Strukturen haben.
 
 Es gibt verschiedene Möglichkeiten, die Bedeutung einer Programmiersprache zu definieren; die, die wir benutzen,
-nennt man @italic{Reduktionssemantik} oder @italic{strukturelle operationelle Semantik} oder @italic{Plotkin Semantik} 
+nennt man @italic{Reduktionssemantik} oder @italic{strukturelle operationelle Semantik} oder @italic{Plotkin Semantik}
 (nach Gordon Plotkin). Für die Formalisierung der Auswertungspositionen, von denen wir in den vorherigen Kapiteln
-gesprochen haben,  verwenden wir sogenannte @italic{Auswertungskontexte}, 
+gesprochen haben,  verwenden wir sogenannte @italic{Auswertungskontexte},
 die 1989 von Matthias Felleisen und Robert Hieb vorgeschlagen wurde. Das alles hört sich für einen Programmieranfänger
 vielleicht angsteinflößend an, aber Sie werden sehen, dass es nicht so kompliziert ist wie es sich anhört :-)
 
@@ -44,9 +46,9 @@ Die meisten Programmierer dieser Welt programmieren, ohne dass sie jeweils eine 
 Programmiersprache gesehen haben. Insofern ist die Frage berechtigt, wieso wir uns dies "antun".
 
 Hierzu ist zu sagen, dass viele Programmierer die Programmiersprache, die sie verwenden, nicht wirklich verstehen.
-Dies führt zu einer Methodik, in der statt systematischem Programmentwurf einfach so lange am Programm "herumgedoktort" 
+Dies führt zu einer Methodik, in der statt systematischem Programmentwurf einfach so lange am Programm "herumgedoktort"
 wird, bis es "läuft". Ein Programm durch Ausführen und Tests zu validieren ist zwar sinnvoll, aber dennoch kann dies
-nicht den gedanklichen Prozess ersetzen, wie ein Programm ablaufen muss, damit zu jeder Eingabe die korrekte Ausgabe 
+nicht den gedanklichen Prozess ersetzen, wie ein Programm ablaufen muss, damit zu jeder Eingabe die korrekte Ausgabe
 produziert wird. Dazu ist es unumgänglich, dass Sie genau verstehen, was der Code bedeutet, den Sie gerade programmiert haben.
 
 Wir möchten, dass Sie prinzipiell in der Lage sind, Ihre Programme auf einem Blatt Papier auszuführen und exakt vorherzusagen,
@@ -58,18 +60,18 @@ es allein aus diesem Grund wert macht, sie zu studieren.
 
 @section{Kontextfreie Grammatiken}
 
-Bisher haben wir nur informell beschrieben, wie BSL Programme aussehen. Mit Hilfe einer @italic{Grammatik} kann 
+Bisher haben wir nur informell beschrieben, wie BSL Programme aussehen. Mit Hilfe einer @italic{Grammatik} kann
 man diese informelle Beschreibung präzise und prägnant darstellen. Es gibt viele unterschiedliche Arten von Grammatiken.
-Im Bereich der Programmiersprachen verwendet man meistens sogenannte @italic{kontextfreie} Grammatiken. Diese 
+Im Bereich der Programmiersprachen verwendet man meistens sogenannte @italic{kontextfreie} Grammatiken. Diese
 und andere Grammatikformalismen werden in der Vorlesung "Theoretische Informatik" im Detail behandelt; wir werden
-Grammatiken hier nur soweit besprechen, wie es zum Verständnis der Definitionen erforderlich ist. 
+Grammatiken hier nur soweit besprechen, wie es zum Verständnis der Definitionen erforderlich ist.
 
 Es gibt unterschiedliche Notationen für kontextfreie Grammatiken. Wir verwenden die sogenannte EBNF --- die Erweiterte Backus Naur Form.
 
 @subsection{Beispiel einer kontextfreien Grammatik}
 Hier direkt ein Beispiel einer Grammatik für Zahlen:
 @BNF[
-  (list @nonterm{Zahl} 
+  (list @nonterm{Zahl}
           @nonterm{PositiveZahl}
           @(make-element #f (list @litchar{-} @nonterm{PositiveZahl})))
   (list @nonterm{PositiveZahl}
@@ -89,51 +91,125 @@ Beispiele für Texte, die der @nonterm{Zahl} Definition dieser Grammatik entspre
 
 Beispiele für Texte, die nicht der @nonterm{Zahl} Definition dieser Grammatik entsprechen, sind: @litchar{007}, @litchar{-.65}, @litchar{13.}, @litchar{zwölf}, @litchar{111Nonsense222}.
 
-Die mit spitzen Klammern markierten Bezeichner wie @nonterm{Zahl} heißen @italic{Nichtterminale}; 
+Die mit spitzen Klammern markierten Bezeichner wie @nonterm{Zahl} heißen @italic{Nichtterminale};
 die farblich markierten Symbole wie @litchar{3} oder @litchar{.} heißen @italic{Terminalsymbole}. Eine Klausel wie die ersten beiden Zeilen der obigen Grammatik heißt @italic{Produktion}.
-Eine Produktion besteht aus einem Nichtterminal auf der linken Seite der Definition und auf der rechten Seite aus einer 
+Eine Produktion besteht aus einem Nichtterminal auf der linken Seite der Definition und auf der rechten Seite aus einer
 Menge von Alternativen, die durch das Symbol | voneinander getrennt werden. Zu jedem Nichtterminal gibt es genau eine Produktion.
 
-Zu jedem Nichtterminal kann man eine Menge von @italic{Ableitungsbäumen} bilden. 
+Zu jedem Nichtterminal kann man eine Menge von @italic{Ableitungsbäumen} bilden.
 Ein Ableitungsbaum entsteht durch das Ersetzen der Nichtterminale in einer der Alternativen der dazugehörigen Produktion durch Ableitungsbäume für diese Nichtterminale.
 Die Konstruktion der Ableitungsbäume ist also ein rekursiver Prozess.  Der Prozess stoppt dort, wo man eine Alternative wählt, die nur aus Terminalsymbolen bestehen.
 Falls ein Nichtterminal durch ein Sternchen oder ein Pluszeichen markiert wird, so wie  @kleenestar[@nonterm{Ziffer}] oder @kleeneplus[@nonterm{Ziffer}] oben,
 so bedeutet dies 0 oder mehr Wiederholungen (für @kleenestar[]) bzw. 1 oder mehr Wiederholungen (für @kleeneplus[]) des Nichtterminals.
 
-Jeder Ableitungsbaum steht für einen Text (häufig @italic{Wort} oder @italic{Satz} genannt), 
-nämlich die Sequenz der Terminalsymbole, die in dem Baum vorkommen, von links nach rechts im Baum abgelesen. Die durch eine Grammatik definierte Sprache ist 
+Jeder Ableitungsbaum steht für einen Text (häufig @italic{Wort} oder @italic{Satz} genannt),
+nämlich die Sequenz der Terminalsymbole, die in dem Baum vorkommen, von links nach rechts im Baum abgelesen. Die durch eine Grammatik definierte Sprache ist
 die Menge aller Worte, für die man Ableitungsbäume bilden kann.
 
 Hier einige Beispiele für Ableitungsbäume@note{Wenn Sie mit Grammatiken und Ableitungsbäumen experimentieren möchten, schauen Sie sich mal
-                                                   das Grammatik-Werkzeug unter @url{http://www.cburch.com/proj/grammar/index.html} an. Mit diesem 
+                                                   das Grammatik-Werkzeug unter @url{http://www.cburch.com/proj/grammar/index.html} an. Mit diesem
                                                    Werkzeug können Sie automatisch Ableitungsbäume für Wörter kontextfreier Grammatiken eingeben.
                                                    Die Notation für kontextfreie Grammatiken in dem Tool ist allerdings etwas anders und sie u
                                                    nterstützt nicht die + und * Operatoren sowie nur alphanumerische Nichtterminale. Eine Variante
-                                                   der Grammatik oben, die dieses Tool versteht, finden Sie unter der URL @url{https://github.com/ps-mr/KdP2014/blob/master/materials/grammar}.}                                                   
+                                                   der Grammatik oben, die dieses Tool versteht, finden Sie unter der URL @url{https://github.com/ps-mr/KdP2014/blob/master/materials/grammar}.}
 des Nichtterminals @nonterm{Zahl} und die Worte, die sie repräsentieren.
 Wir stellen die Bäume der Einfachheit halber durch Einrückung des Textes dar. Da damit die Bäume um 90 Grad gegenüber der Standarddarstellung gedreht sind,
 müssen die Terminalsymbole von oben nach unten (statt von links nach rechts) abgelesen werden.
 
-Der Ableitungsbaum für @litchar{0} ist:
-                               
+Klicke auf die gelben Kästen, um den Ableitungsbaum für @litchar{0} nach und nach auszuklappen:
 
-@nonterm{Zahl} @linebreak[]
- @hspace[2] @nonterm{PositiveZahl} @linebreak[]
-   @hspace[4] @nonterm{GanzeZahl} @linebreak[]
-    @hspace[6] @litchar{0} @linebreak[]
-
-Der Ableitungsbaum für @litchar{420} ist: 
-
-@nonterm{Zahl} @linebreak[]
-  @hspace[2] @nonterm{PositiveZahl} @linebreak[]
+@pdf-note{
+  In der HTML Version ist hier eine interaktive Darstellung, die in etwa dem folgenden entspricht:
+  @nonterm{Zahl} @linebreak[]
+   @hspace[2] @nonterm{PositiveZahl} @linebreak[]
      @hspace[4] @nonterm{GanzeZahl} @linebreak[]
-        @hspace[6] @nonterm{ZifferNichtNull} @linebreak[]
-          @hspace[8] @litchar{4} @linebreak[]
-        @hspace[6] @nonterm{Ziffer} @linebreak[]
-          @hspace[8] @nonterm{ZifferNichtNull} @linebreak[]
-            @hspace[10] @litchar{2} @linebreak[]
-        @hspace[6] @nonterm{Ziffer} @linebreak[]
-          @hspace[8]@litchar{0}
+      @hspace[6] @litchar{0} @linebreak[]
+}
+@jsontree[]{
+  {
+    "production": "<Zahl>",
+    "code": "|0|",
+    "holes": [
+      {
+        "production": "<PositiveZahl>",
+        "code": "|0|",
+        "holes": [{
+          "production": "<GanzeZahl>",
+          "code": "0"
+        }]
+      }
+    ],
+    "grammar": {
+      "<Zahl>": ["<PositiveZahl>", "-<PositiveZahl>"],
+      "<PositiveZahl>": ["<GanzeZahl>", "<KommaZahl>"],
+      "<GanzeZahl>": ["<ZifferNichtNull><Ziffer>*", "0"],
+      "<KommaZahl>": ["<GanzeZahl>.<Ziffer>+"],
+      "<ZifferNichtNull>": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+      "<Ziffer>": ["0", "<ZifferNichtNull>"]
+    }
+  }
+}
+
+Hier kannst du selbst testen, ob du den Ableitungsbaum für @litchar{420} bilden kannst: Wähle die richtige Produktion und markiere die Nichtterminale jeweils einzeln, um die nächste Ebene auszuklappen!
+
+@jsontree[
+ #:quiz #t
+ #:lang "de"
+]{
+  {
+    "production": "<Zahl>",
+    "code": "|420|",
+    "holes": [
+      {
+        "production": "<PositiveZahl>",
+        "code": "|420|",
+        "holes": [{
+          "production": "<GanzeZahl>",
+          "code": "|4||2||0|",
+          "holes": [
+            {
+              "production": "<ZifferNichtNull>",
+              "code": "4"
+            },
+            {
+              "production": "<Ziffer>",
+              "code": "|2|",
+              "holes": [{
+                "production": "<ZifferNichtNull>",
+                "code": "2"
+              }]
+            },
+            {
+              "production": "<Ziffer>",
+              "code": "0"
+            }
+          ]
+        }]
+      }
+    ],
+    "grammar": {
+      "<Zahl>": ["<PositiveZahl>", "-<PositiveZahl>"],
+      "<PositiveZahl>": ["<GanzeZahl>", "<KommaZahl>"],
+      "<GanzeZahl>": ["<ZifferNichtNull><Ziffer>*", "0"],
+      "<KommaZahl>": ["<GanzeZahl>.<Ziffer>+"],
+      "<ZifferNichtNull>": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+      "<Ziffer>": ["0", "<ZifferNichtNull>"]
+    }
+  }
+}
+
+@; Der Ableitungsbaum für @litchar{420} ist:
+@;
+@; @nonterm{Zahl} @linebreak[]
+@;   @hspace[2] @nonterm{PositiveZahl} @linebreak[]
+@;      @hspace[4] @nonterm{GanzeZahl} @linebreak[]
+@;         @hspace[6] @nonterm{ZifferNichtNull} @linebreak[]
+@;           @hspace[8] @litchar{4} @linebreak[]
+@;         @hspace[6] @nonterm{Ziffer} @linebreak[]
+@;           @hspace[8] @nonterm{ZifferNichtNull} @linebreak[]
+@;             @hspace[10] @litchar{2} @linebreak[]
+@;         @hspace[6] @nonterm{Ziffer} @linebreak[]
+@;           @hspace[8]@litchar{0}
 
 
 @subsection{Syntax von EBNF in EBNF}
@@ -149,7 +225,7 @@ Wir definieren die folgenden Nonterminale: @nonterm{G} für Grammatik, @nonterm{
 und @nonterm{T} für Terminalsymbole (nicht explizit definiert).
 
 @BNF[
-  (list @nonterm{G} 
+  (list @nonterm{G}
         @kleenestar[@nonterm{P}])
   (list @nonterm{P}
         @BNF-seq[  @litchar{<} @nonterm{V} @litchar{>} @litchar{::=} @kleenestar[@BNF-group[@BNF-seq[@nonterm{S} @litchar{|}]] ] @nonterm{S}]
@@ -177,11 +253,11 @@ zu einer neuen SALB.
 Für @mv{S}, @mv{E} und @mv{I} können wir nun die Konstruktion einer SALB wie folgt definieren:
 
 @itemlist[
-         
+
 @item{Falls @mv{S} = @mv{E-1} ... @mv{E-n} und für alle i ist @mv{B-i} ein SALB von @mv{E-i}, so ist
  @mv{B-1},...,@mv{B-n} ein SALB für @mv{S}.}
 @item{Falls @mv{E} = @mv{I} und  @mv{B} ein SALB von @mv{I}, so ist
- @mv{B} ein SALB für @mv{E}.}                                            
+ @mv{B} ein SALB für @mv{E}.}
 @item{Falls @mv{E} = @kleeneplus{@mv{I}} oder @mv{E} = @kleenestar{@mv{I}}, dann ist für alle @mv{k} >= 1 (für +)
   bzw. @mv{k} >= 0 (für *) @mv{B-1},...,@mv{B-k} ein SALB für @mv{E}, falls alle @mv{B-i} SALBs für @mv{I} sind.}
 @item{Falls @mv{I} = @mv{V} und @nonterm{V} ::= ... | S | ... ist eine Produktion der Grammatik und
@@ -201,7 +277,7 @@ ein SALB (und ein ALB) für @mv{I}.}
 
 @section[#:tag "bsl-grammar"]{Syntax von BSL}
 Nach diesen Vorarbeiten können wir nun präzise die Syntax von BSL durch eine kontextfreie Grammatik definieren.
-Diese Syntax ist vollständig bis auf folgende Sprachfeatures, die wir noch nicht behandelt haben: Definition von Funktionen durch lambda-Ausdrücke, 
+Diese Syntax ist vollständig bis auf folgende Sprachfeatures, die wir noch nicht behandelt haben: Definition von Funktionen durch lambda-Ausdrücke,
 Quoting, Zeichendaten, Bibliotheksimporte. Außerdem werden in der Grammatik Aspekte, die für die Bedeutung der Sprache irrelevant
 sind, außer Acht gelassen, zum Beispiel Kommentare, Zeilenumbrüche und Leerzeichen. Aus diesem Grund bezeichnet man Grammatiken
 wie die folgende für BSL häufig als die @italic{abstrakte Syntax} einer Programmiersprache, im Unterschied zur @italic{konkreten Syntax}, die
@@ -219,7 +295,7 @@ Kontext abstrakter Syntax häufig als @italic{abstrakte Syntaxbäume} (@italic{a
 
 @BNF[(list @nonterm{program} @kleenestar[@nonterm{def-or-expr}])
      (list @nonterm{def-or-expr} @BNF-alt[@nonterm{definition} @nonterm{e}])
-     (list @nonterm{definition} 
+     (list @nonterm{definition}
          @BNF-seq[open @litchar{define} open @nonterm{name} @kleeneplus[@nonterm{name}] close @nonterm{e} close]
          @BNF-seq[open @litchar{define} @nonterm{name} @nonterm{e} close]
          @BNF-seq[open @litchar{define-struct} @nonterm{name} open @kleenestar[@nonterm{name}] close close])
@@ -247,7 +323,7 @@ um den  @kleenestar[] oder @kleeneplus[] Operator auf eine ganze Sequenz von Ter
 auf ein einzelens Nichtterminal. In diesem Beispiel bedeutet es, dass 1 oder mehr Vorkommen von @BNF-seq[lb @nonterm{e} @nonterm{e} rb ]
 erwartet werden.
 
-Die Produktionen für einige Nichtterminale, deren genaue Form nicht interessant ist, wurden in der Grammatik ausgelassen: 
+Die Produktionen für einige Nichtterminale, deren genaue Form nicht interessant ist, wurden in der Grammatik ausgelassen:
 @nonterm{name} steht für die zugelassenen Bezeichner für Funktionen, Strukturen und Konstanten. @nonterm{number}
 steht für die zugelassenen Zahlen. @nonterm{boolean} steht für @racket[#true] oder @racket[#false]. @nonterm{string} steht
 für alle Strings wie @racket["asdf"]. Das Nichtterminal @nonterm{image} steht für Bilder im Programmtext (Bildliterale) wie @ev[rocket].
@@ -256,24 +332,25 @@ Die Werte der Form @BNF-seq[@litchar{<}  @(make-element #f (list @litchar{make-}
 dazu, Instanzen von Strukturen zu repräsentieren. Sie dürfen in BSL nicht direkt im Original-Programmtext vorkommen, aber sie werden
 während der Reduktion erzeugt und in das Programm eingefügt.
 
+
 @section{Die BSL Kernsprache}
 Wenn man die Bedeutung einer Sprache definiert, möchte man normalerweise, dass diese Definition so kurz wie möglich ist, denn nur dann
 kann ein Benutzer sie leicht verstehen und Schlussfolgerungen ziehen.
 
 Aus diesem Grund identifizieren wir eine Untersprache der BSL, die bereits ausreichend ist, um alle Programme zu schreiben,
 die man auch in BSL schreiben kann. Der einzige Unterschied ist, dass man an einigen Stellen vielleicht etwas Umständlicheres
-schreiben muss. 
+schreiben muss.
 
 Wir haben bereits ein intellektuelles Werkzeug kennengelernt, um Kernsprachenelemente von eher unwichtigem Beiwerk zu unterscheiden,
-nämlich den syntaktischen Zucker. Im Abschnitt @secref{kondsem} haben wir gesehen, dass es nicht notwendig ist, @racket[if] Ausdrücke 
-und innerhalb von @racket[cond] Ausdrücken den @racket[else] Operator zu unterstützen, weil man diese Sprachfeatures leicht mit dem einfachen 
+nämlich den syntaktischen Zucker. Im Abschnitt @secref{kondsem} haben wir gesehen, dass es nicht notwendig ist, @racket[if] Ausdrücke
+und innerhalb von @racket[cond] Ausdrücken den @racket[else] Operator zu unterstützen, weil man diese Sprachfeatures leicht mit dem einfachen
 @racket[cond] Ausdruck simulieren kann. Die in @secref{kondsem} angegebenen Transformationen betrachten wir daher als die @italic{Definition}
 dieser Sprachfeatures und betrachten daher im folgenden nur noch die Kernsprache, in die diese Transformationen abbilden.
 
 @margin-note{Recherchieren Sie, was die @italic{de Morgan'schen Regeln} sind, falls ihnen die Transformation nicht klar ist.}
 Die Syntax oben enthält auch spezielle Syntax für die logischen Funktionen @racket[and] und @racket[or], weil deren Argumente anders ausgewertet
-werden als die Argumente normaler Funktionen. Allerdings ist es in unserer Kernsprache nicht nötig, die Funktionen zu betrachten, da @racket[or] 
-und @racket[and] durch @racket[cond] ausgedrückt werden kann. 
+werden als die Argumente normaler Funktionen. Allerdings ist es in unserer Kernsprache nicht nötig, die Funktionen zu betrachten, da @racket[or]
+und @racket[and] durch @racket[cond] ausgedrückt werden kann.
 
 Man könnte versuchen,  @racket[and] direkt durch einen @racket[cond] Ausdruck zu ersetzen: @racket[(and e-1 e-2)]
 wird transformiert zu @racket[(cond [e-1 e-2] [else #false])]. Zwar simuliert dies korrekt die Auswertungsreihenfolge, aber diese Transformation ist nicht adäquat für
@@ -296,7 +373,7 @@ Damit sieht die Grammatik unserer Kernsprache wie folgt aus. Die Grammatik für 
 
 @BNF[(list @nonterm{program} @kleenestar[@nonterm{def-or-expr}])
      (list @nonterm{def-or-expr} @BNF-alt[@nonterm{definition} @nonterm{e}])
-     (list @nonterm{definition} 
+     (list @nonterm{definition}
          @BNF-seq[open @litchar{define} open @nonterm{name} @kleeneplus[@nonterm{name}] close @nonterm{e} close]
          @BNF-seq[open @litchar{define} @nonterm{name} @nonterm{e} close]
          @BNF-seq[open @litchar{define-struct} @nonterm{name} open @kleenestar[@nonterm{name}] close close])
@@ -307,7 +384,27 @@ Damit sieht die Grammatik unserer Kernsprache wie folgt aus. Die Grammatik für 
          @nonterm{v}
          )]
 
-     
+
+Testen Sie sich selbst - wie oben können Sie hier Ableitungsbäume für BSL ausklappen, wenn sie die richtigen Nichtterminale ("Produktionen") wählen und die richtigen Bestandteile markieren:
+
+@bsltree[
+ #:quiz #t   @; optional keyword argument, default is #f
+ #:lang "de" @; optional keyword argument, default is "en"
+ 420
+]
+
+@bsltree[
+ #:quiz #t   @; optional keyword argument, default is #f
+ #:lang "de" @; optional keyword argument, default is "en"
+ #'((define (f x) (+ x 42)))
+]
+
+@bsltree[
+ #:quiz #t   @; optional keyword argument, default is #f
+ #:lang "de" @; optional keyword argument, default is "en"
+ #'((define-struct tree (roots trunk leaves)))
+]
+
 @section{Werte und Umgebungen}
 
 Was bedeuten nun Programme in der Sprache, deren Syntax oben definiert wurde? Die Bedeutung eines Ausdrucks wollen wir modellieren
@@ -316,15 +413,15 @@ als Sequenz von Reduktionsschritten, die am Ende zu einem Wert führt (oder mit 
 Werte haben wir bereits oben durch die Grammatik definiert. Alle Konstanten wie @racket[#true], @racket[42] oder @racket["xyz"] sind also Werte. Außerdem sind Instanzen von Strukturen Werte;
 die Werte aller Felder der Struktur müssen ebenfalls Werte sein. Also ist beispielsweise @racket[<make-posn 3 4>] ein Wert.
 Wir modellieren Strukturen so, dass Ausdrücke wie @racket[(make-posn 3 (+ 2 2))] zu diesem Wert ausgewertet werden --- hier ist
-also der Ausdruck der @racket[make-posn] aufruft (mit runden Klammern) von dem Wert @racket[<make-posn 3 4>] (mit spitzen Klammern) 
+also der Ausdruck der @racket[make-posn] aufruft (mit runden Klammern) von dem Wert @racket[<make-posn 3 4>] (mit spitzen Klammern)
 zu unterscheiden.
 
 Sofern in Ausdrücken Funktionen, Konstanten, oder Strukturen benutzt werden, kann die Auswertung eines Ausdrucks nicht im "luftleeren" Raum
-stattfinden, sondern man muss die @italic{Umgebung} (@italic{Environment}, im folgenden als @italic{env} abgekürzt) kennen, 
+stattfinden, sondern man muss die @italic{Umgebung} (@italic{Environment}, im folgenden als @italic{env} abgekürzt) kennen,
 in dem der Ausdruck ausgewertet wird, um Zugriff auf die dazugehörigen Definitionen
-zu haben. Vom Prinzip her ist die Umgebung einfach der Teil des Programms bis zu dem Ausdruck, der gerade ausgewertet wird. Allerdings 
+zu haben. Vom Prinzip her ist die Umgebung einfach der Teil des Programms bis zu dem Ausdruck, der gerade ausgewertet wird. Allerdings
 werden Konstantenfinitionen ja auch ausgewertet (siehe @secref{semanticsofvardefs}). Dies bringen wir durch folgende Definition
-zum Ausdruck. Beachten Sie, dass im Unterschied zur Grammatik von BSL Konstantendefinitionen die Form 
+zum Ausdruck. Beachten Sie, dass im Unterschied zur Grammatik von BSL Konstantendefinitionen die Form
 @BNF-seq[open @litchar{define} @nonterm{name} @nonterm{v} close] und nicht @BNF-seq[open @litchar{define} @nonterm{name} @nonterm{e} close] haben.
 
 @BNF[(list @nonterm{env}
@@ -333,7 +430,7 @@ zum Ausdruck. Beachten Sie, dass im Unterschied zur Grammatik von BSL Konstanten
          @BNF-seq[open @litchar{define} open @nonterm{name} @kleeneplus[@nonterm{name}] close @nonterm{e} close]
          @BNF-seq[open @litchar{define} @nonterm{name} @nonterm{v} close]
          @BNF-seq[open @litchar{define-struct} @nonterm{name} open @kleenestar[@nonterm{name}] close close])]
-         
+
 Ein Umgebung besteht also aus einer Sequenz von Funktions-, Konstanten- oder Strukturdefinitionen, wobei
 der Ausdruck in Konstantendefinitionen bereits zu einem Wert ausgewertet wurde.
 
@@ -349,17 +446,17 @@ und kann zu @racket[3] ausgewertet werden. Gemäß der Kongruenzregel kann ich d
 
 Wir werden Auswertungspositionen und die Kongruenzregel durch einen @italic{Auswertungskontext} formalisieren. Ein Auswertungskontext ist
 eine Grammatik für Programme, die ein "Loch", @litchar{[]}, enthalten. In Bezug auf den DrRacket Stepper kann man den
-Auswertungskontext als den während einer Reduktion nicht farblich markierten Teil des Ausdrucks verstehen. 
+Auswertungskontext als den während einer Reduktion nicht farblich markierten Teil des Ausdrucks verstehen.
 Die Grammatik ist so strukturiert, dass jedes Element
 der definierten Sprache genau ein "Loch" enthält.
 
-@BNF[(list @nonterm{E} 
+@BNF[(list @nonterm{E}
       @litchar{[]}
       @BNF-seq[open @nonterm{name} @kleenestar[@nonterm{v}] @nonterm{E} @kleenestar[@nonterm{e}]  close]
       @BNF-seq[open @litchar{cond} lb @nonterm{E} @nonterm{e} rb @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]] close]
 )]
 
-Hier einige Beispiele für Auswertungskontexte: 
+Hier einige Beispiele für Auswertungskontexte:
 
 @racketblock[(* (unsyntax (litchar "[]")) (+ 3 4))]
 
@@ -373,10 +470,10 @@ Dies sind alles @italic{keine} Auswertungskontexte:
 
 
 Das "Loch" in diesen Ausdrücken steht genau für die Unterausdrücke in einem Programm, die in Auswertungsposition sind. Wir verwenden die Definition für Werte, @nonterm{v},
-von oben, um zu steuern, dass die Auswertung der Argumente in Funktionsaufrufen von links nach rechts erfolgt. 
+von oben, um zu steuern, dass die Auswertung der Argumente in Funktionsaufrufen von links nach rechts erfolgt.
 
 Bisher (in Abschnitt @secref{semanticsofexpressions} und @secref{semanticsoffundefs}) hatten wir die Auswertungspositionen so definiert,
-dass man bei Funktionsaufrufen die Argumente in beliebiger Reihenfolge auswerten kann. Die Auswertungskontexte wie oben definiert legen 
+dass man bei Funktionsaufrufen die Argumente in beliebiger Reihenfolge auswerten kann. Die Auswertungskontexte wie oben definiert legen
 diese Reihenfolge fest, nämlich von links nach rechts. Wir werden später mehr zu diesem Unterschied sagen.
 
 Sei @mv{E} ein Auswertungskontext. Wir verwenden die Schreibweise @mv{E}[@mv{e}], um das "Loch" in dem Auswertungskontext durch einen Ausdruck @mv{e} zu ersetzen.
@@ -387,23 +484,23 @@ Mit Hilfe dieser Schreibweise können wir nun die Kongruenzregel so definieren:
 
 @elem[#:style inbox-style]{
 @italic{(KONG): }Falls @mv{e-1} @step @mv{e-2}, dann @mv{E[e-1]} @step @mv{E[e-2]}.
-}      
+}
 
 Wir schreiben die Auswertungsregeln generell so auf, dass wir jeder Regel einen Namen geben. Diese Regel heißt @italic{(KONG)}.
 
-Beispiel: Betrachten wir den Ausdruck @mv{e} = @racket[(* (+ 1 2) (+ 3 4))]. Diesen können wir zerlegen in einen Auswertungskontext 
+Beispiel: Betrachten wir den Ausdruck @mv{e} = @racket[(* (+ 1 2) (+ 3 4))]. Diesen können wir zerlegen in einen Auswertungskontext
 @mv{E} = @racket[(* (unsyntax (litchar "[]")) (+ 3 4))] und einen Ausdruck @mv{e-1} = @racket[(+ 1 2)], so dass @mv{e} = @mv{E}[@mv{e-1}].
 Da wir @mv{e-1} reduzieren können, @racket[(+ 1 2)] @step @racket[3], können wir auch dank @italic{(KONG)} @mv{e} reduzieren zu @mv{E}[@racket[3]] = @racket[(* 3 (+ 3 4))].
 
- 
+
 @section{Nichtterminale und Metavariablen - Keine Panik!}
 In der Kongruenzregel von oben stehen Namen wie @mv{e-1} und @mv{e-2} für beliebige Ausdrücke und @mv{E} für einen beliebigen Auswertungskontext.
 
-Im Allgemeinen verwenden wir die Konvention, dass der Name @mv{x} und Varianten wie @mv{x-1} und @mv{x-2} für beliebige Worte des Nichtterminals @nonterm{x} steht 
+Im Allgemeinen verwenden wir die Konvention, dass der Name @mv{x} und Varianten wie @mv{x-1} und @mv{x-2} für beliebige Worte des Nichtterminals @nonterm{x} steht
 (zum Beispiel für @nonterm{x} = @nonterm{e} oder @nonterm{x} = @nonterm{v}). Derart verwendete Bezeichner wie @mv{v-1} oder @mv{e-2} nennt man auch @italic{Metavariablen},
 weil sie nicht Variablen von BSL sind, sondern Variablen sind, die für Teile von BSL Programmen stehen.
 
-Wenn wir Nonterminale als Mengen interpretieren (nämlich die Menge der Worte für die es Ableitungsbäume gibt), so könnten wir 
+Wenn wir Nonterminale als Mengen interpretieren (nämlich die Menge der Worte für die es Ableitungsbäume gibt), so könnten wir
 die Regel von oben auch so aufschreiben:
 
 Für alle @mv{e-1}∈@nonterm{e} und alle @mv{e-2}∈@nonterm{e} und alle @mv{E}∈@nonterm{E} : Falls @mv{e-1} @step @mv{e-2}, dann @mv{E[e-1]} @step @mv{E[e-2]}.
@@ -414,11 +511,11 @@ Da dies die Regeln aber viel länger macht, verwenden wir die hier beschriebene 
 
 Gemäß unserer Grammatik besteht ein Programm aus einer Sequenz von Definitionen und Ausdrücken.
 Die Auswertungsregel für Programme nennen wir @italic{(PROG)}:
-                                                      
+
 @elem[#:style inbox-style]{
 @italic{(PROG): }Ein Programm wird von links nach rechts ausgeführt und startet mit der leeren Umgebung. Ist das nächste Programmelement eine Funktions- oder Strukturdefinition, so wird
 diese Definition in die Umgebung aufgenommen und die Ausführung mit dem nächsten Programmelement in der erweiterten Umgebung fortgesetzt. Ist das nächste Programmelement
-ein Ausdruck, so wird dieser gemäß der unten stehenden Regeln in der aktuellen Umgebung zu einem Wert ausgewert. Ist das nächste Programmelement 
+ein Ausdruck, so wird dieser gemäß der unten stehenden Regeln in der aktuellen Umgebung zu einem Wert ausgewert. Ist das nächste Programmelement
 eine Konstantendefinition @racket[(define x e)], so wird in der aktuellen Umgebung zunächst @racket[e] zu einem Wert @racket[v] ausgewertet und dann
 @racket[(define x v)] zur aktuellen Umgebung hinzugefügt.}
 
@@ -429,9 +526,9 @@ Beispiel: Das Programm ist:
 (define c (f 5))
 (+ c 3)]
 
-Im ersten Schritt wird @racket[(define (f x) (+ x 1))] zur (leeren) Umgebung hinzugefügt. Die Konstantendefinition wird in der Umgebung 
+Im ersten Schritt wird @racket[(define (f x) (+ x 1))] zur (leeren) Umgebung hinzugefügt. Die Konstantendefinition wird in der Umgebung
 @racket[(define (f x) (+ x 1))] ausgewertet zu @racket[(define c 6)] und dann dem Kontext hinzugefügt. Der Ausdruck @racket[(+ c 3)]
-wird schliesslich in der Umgebung 
+wird schliesslich in der Umgebung
 @racketblock[
 (define (f x) (+ x 1))
 (define c 6)]
@@ -440,8 +537,8 @@ ausgewertet.
 
 @section{Bedeutung von Ausdrücken}
 Jeder Ausdruck wird in einer Umgebung @mv{env} ausgewertet, wie sie im vorherigen Abschnitt definiert wurde. Um die Notation nicht zu überladen,  werden wir @mv{env}
-nicht explizit zu jeder Reduktionsregel dazuschreiben sondern als implizit gegeben annehmen. Die Auswertung wird, wie aus 
-Abschnitt @secref{semanticsofexpressions} bekannt, in Form von Reduktionsregeln der Form @mv{e-1} @step @mv{e-2} definiert. 
+nicht explizit zu jeder Reduktionsregel dazuschreiben sondern als implizit gegeben annehmen. Die Auswertung wird, wie aus
+Abschnitt @secref{semanticsofexpressions} bekannt, in Form von Reduktionsregeln der Form @mv{e-1} @step @mv{e-2} definiert.
 Ein Ausdruck @mv{e} wird ausgewertet, indem er solange reduziert wird, bis ein Wert herauskommt: @mv{e} @step @mv{e-1} @step ... @step @mv{v}.
 
 Ein Fehler während der Auswertung äußert sich darin, dass die Reduktion "steckenbleibt", also wir bei einem Ausdruck ankommen,
@@ -465,7 +562,7 @@ dann @BNF-seq[open @mv{name} @mv{v-1} "..." @mv{v-n} close] @step @mv{e}[@mv{nam
 
 @elem[#:style inbox-style]{
 @italic{(PRIM): }Falls @mv{name} eine primitive Funktion @mv{f} ist und @italic{f(v-1,...,v-n)=v}, @linebreak[]
-dann @BNF-seq[open @mv{name} @mv{v-1} "..." @mv{v-n} close] @step @mv{v}. 
+dann @BNF-seq[open @mv{name} @mv{v-1} "..." @mv{v-n} close] @step @mv{v}.
 }
 
 @subsection{Bedeutung von Konstanten}
@@ -473,8 +570,8 @@ dann @BNF-seq[open @mv{name} @mv{v-1} "..." @mv{v-n} close] @step @mv{v}.
 Konstanten werden ausgewertet, indem sie in der Umgebung nachgeschlagen werden:
 
 @elem[#:style inbox-style]{
-@italic{(CONST): }Falls @BNF-seq[open @litchar{define} @mv{name} @mv{v} close] in der Umgebung, 
-dann @mv{name} @step @mv{v}. 
+@italic{(CONST): }Falls @BNF-seq[open @litchar{define} @mv{name} @mv{v} close] in der Umgebung,
+dann @mv{name} @step @mv{v}.
 }
 
 @subsection{Bedeutung konditionaler Ausdrücke}
@@ -493,15 +590,15 @@ oder den um die fehlgeschlagene Bedingung gekürzten @racket[cond] Ausdruck redu
 
 @subsection{Bedeutung von Strukturkonstruktoren und Selektoren}
 
-Strukturdefinitionen definieren drei Arten von Funktionen: Konstruktoren wie @racket[make-posn], Selektoren wie @racket[posn-x] und 
+Strukturdefinitionen definieren drei Arten von Funktionen: Konstruktoren wie @racket[make-posn], Selektoren wie @racket[posn-x] und
 Prädikate wie @racket[posn?]. Zu jeder dieser drei Arten benötigen wir eine Reduktionsregel.
 
 Konstruktoren erzeugen Instanzen einer Struktur. Dies gelingt, wenn eine Struktur des gleichen Namens
-in der Umgebung zu finden ist, und diese so viele Felder wie der Konstruktor Parameter hat. Dies 
+in der Umgebung zu finden ist, und diese so viele Felder wie der Konstruktor Parameter hat. Dies
 bringt uns zu folgender Regel:
 
 @elem[#:style inbox-style]{
-@italic{(STRUCT-make): }Falls @BNF-seq[open @litchar{define-struct} @mv{name} open @mv{name-1} "..." @mv{name-n} close close] in der Umgebung, 
+@italic{(STRUCT-make): }Falls @BNF-seq[open @litchar{define-struct} @mv{name} open @mv{name-1} "..." @mv{name-n} close close] in der Umgebung,
 dann @BNF-seq[open  @(make-element #f (list @litchar{make-} @mv{name})) @mv{v-1} "..." @mv{v-n} close] @step
 @BNF-seq[@litchar{<}  @(make-element #f (list @litchar{make-} @mv{name})) @mv{v-1} "..." @mv{v-n} @litchar{>}].
 }
@@ -512,7 +609,7 @@ Wert des Feldes zurückgegeben:
 
 @elem[#:style inbox-style]{
 @italic{(STRUCT-select): }Falls @BNF-seq[open @litchar{define-struct} @mv{name} open @mv{name-1} "..." @mv{name-n} close close] in der Umgebung,
-dann @BNF-seq[open @(make-element #f (list @mv{name} @litchar{-} @mv{name} "-" @mv{i})) 
+dann @BNF-seq[open @(make-element #f (list @mv{name} @litchar{-} @mv{name} "-" @mv{i}))
                       @BNF-seq[@litchar{<}  @(make-element #f (list @litchar{make-} @mv{name})) @mv{v-1} "..." @mv{v-n} @litchar{>}] close] @step @mv{v-i}
 }
 
@@ -524,7 +621,7 @@ handelt oder nicht, und je nachdem @racket[#true] bzw. @racket[#false] zurückge
 
 @elem[#:style inbox-style]{
 @italic{(STRUCT-predfalse): }Falls @mv{v} nicht @BNF-seq[@litchar{<}  @(make-element #f (list @litchar{make-} @mv{name}))  "..." @litchar{>}],
-dann @BNF-seq[open @(make-element #f (list @mv{name} @litchar{?})) @mv{v} close] @step @litchar{#false} 
+dann @BNF-seq[open @(make-element #f (list @mv{name} @litchar{?})) @mv{v} close] @step @litchar{#false}
 }
 
 @section{Reduktion am Beispiel}
@@ -533,7 +630,7 @@ Betrachten Sie folgendes Programm, dessen Bedeutung wir Schritt für Schritt mit
 der Auswertungsregeln ermitteln werden:
 
 @racketblock[
-(define-struct s (x y))             
+(define-struct s (x y))
 (define (f x) (cond [(< x 1) (/ x 0)]
                     [#true (+ x 1)]
                     [#true x]))
@@ -541,15 +638,15 @@ der Auswertungsregeln ermitteln werden:
 (f (s-x c))]
 
 @itemlist[
-         
+
 @item{Gemäß @italic{(PROG)} starten wir mit der leeren Umgebung @mv{env} = leer.
 Das erste Programmelement ist eine Strukturdefinition, daher ist gemäß @italic{(PROG)}
 die Umgebung im nächsten Schritt @mv{env} = @racket[(define-struct s (x y))].}
 
-@item{Das nächste Programmelement ist eine Funktionsdefinition, daher ist gemäß 
-      @italic{(PROG)} die Umgebung im nächsten Schritt  
+@item{Das nächste Programmelement ist eine Funktionsdefinition, daher ist gemäß
+      @italic{(PROG)} die Umgebung im nächsten Schritt
 @mv{env} = @racketblock[
-(define-struct s (x y))                                
+(define-struct s (x y))
 (define (f x) (cond [(< x 1) (/ x 0)]
                     [#true (+ x 1)]
                     [#true x]))]
@@ -560,43 +657,43 @@ müssen wir also zunächst @racket[(make-s 5 (+ (* 2 3) 4))] auswerten:
 @itemlist[
 @item{@mv{e} = @racket[(make-s 5 (+ (* 2 3) 4))] zerfällt in
 @mv{E} = @racket[(make-s 5 (+ (unsyntax (litchar "[]")) 4))] und @mv{e-1} = @racket[(* 2 3)].
-Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[6]; gemäß @italic{(KONG)} gilt daher 
+Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[6]; gemäß @italic{(KONG)} gilt daher
 @mv{e} @step @racket[(make-s 5 (+ 6 4))].}
 
 
 @item{@mv{e} = @racket[(make-s 5 (+ 6 4))] zerfällt in
 @mv{E} = @racket[(make-s 5 (unsyntax (litchar "[]")))] und @mv{e-1} = @racket[(+ 6 4)].
-Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[10]; gemäß @italic{(KONG)} gilt daher 
+Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[10]; gemäß @italic{(KONG)} gilt daher
 @mv{e} @step @racket[(make-s 5 10)].}
 
 @item{@racket[(make-s 5 10)] @step @racket[<make-s 5 10>] gemäß @italic{(STRUCT-make)}.}
 ]
 Gemäß  @italic{(PROG)} ist unsere neue Umgebung daher nun @mv{env} = @racketblock[
-(define-struct s (x y))             
+(define-struct s (x y))
 (define (f x) (cond [(< x 1) (/ x 0)]
                     [#true (+ x 1)]
                     [#true x]))
 (define c <make-s 5 10>)]
 }
 
-@item{Das letzte Programmelement ist ein Ausdruck, den wir gemäß @italic{(PROG)} in der 
+@item{Das letzte Programmelement ist ein Ausdruck, den wir gemäß @italic{(PROG)} in der
 aktuellen Umgebung auswerten:
 @itemlist[
-@item{@mv{e} = @racket[(f (s-x c))] zerfällt in 
+@item{@mv{e} = @racket[(f (s-x c))] zerfällt in
 @mv{E} = @racket[(f (s-x (unsyntax (litchar "[]"))))] und @mv{e-1} = @racket[c].
-Gemäß @italic{(CONST)} gilt @racket[c] @step @racket[<make-s 5 10>]; gemäß @italic{(KONG)} gilt daher 
+Gemäß @italic{(CONST)} gilt @racket[c] @step @racket[<make-s 5 10>]; gemäß @italic{(KONG)} gilt daher
 @mv{e} @step @racket[(f (s-x <make-s 5 10>))].}
 
-@item{@mv{e} = @racket[(f (s-x <make-s 5 10>))] zerfällt in 
+@item{@mv{e} = @racket[(f (s-x <make-s 5 10>))] zerfällt in
 @mv{E} = @racket[(f (unsyntax (litchar "[]")))] und @mv{e-1} = @racket[(s-x <make-s 5 10>)].
-Gemäß @italic{(STRUCT-select)} gilt @mv{e-1} @step @racket[5]; gemäß @italic{(KONG)} gilt daher 
+Gemäß @italic{(STRUCT-select)} gilt @mv{e-1} @step @racket[5]; gemäß @italic{(KONG)} gilt daher
 @mv{e} @step @racket[(f 5)].}
 
 @item{@racket[(f 5)] @step @racket[(cond [(< 5 1) (/ 5 0)] [#true (+ 5 1)] [#true 5])] gemäß @italic{(FUN)}.}
 
-@item{@mv{e} = @racket[(cond [(< 5 1) (/ 5 0)] [#true (+ 5 1)] [#true 5])] zerfällt in 
+@item{@mv{e} = @racket[(cond [(< 5 1) (/ 5 0)] [#true (+ 5 1)] [#true 5])] zerfällt in
 @mv{E} = @racket[(cond [(unsyntax (litchar "[]")) (/ 5 0)] [#true (+ 5 1)] [#true 5])] und @mv{e-1} = @racket[(< 5 1)].
-Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[#false]; gemäß @italic{(KONG)} gilt daher 
+Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[#false]; gemäß @italic{(KONG)} gilt daher
 @mv{e} @step @racket[(cond [#false (/ 5 0)] [#true (+ 5 1)] [#true 5])].}
 
 @item{@racket[(cond [#false (/ 5 0)] [#true (+ 5 1)] [#true 5])] @step @racket[(cond [#true (+ 5 1)] [#true 5])] gemäß @italic{(COND-False)}.}
@@ -607,9 +704,28 @@ Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[#false]; gemäß @italic{(KO
 ]}]
 
 
+Alternativ können Sie sich auch interaktiv durch dieses Beispiel steppen:
+@stepper[ #:lang "de"
+#'((define x (+ 40 2))
+(* (+ 1 2 (- 3 9 x) (/ 200 4 5)) (/ 1 2 3) 2)
+(cond [(>= 5 5) "isThree"]
+[#false 3]
+[(or #true #false) (* 2 3 4)])
+(cond
+  [(cond
+  [(and #false #true) #false]
+  [#false 3]
+  [(or #true #false) #false])
+  "isThree"]
+[#false 3]
+[(< 2 3) (* 2 3 4)])
+(define y "hallo")
+(> 2 4))
+]
+
 
 @section{Bedeutung von Daten und Datendefinitionen}
-Datendefinitionen haben auf das Programmverhalten keinen Einfluss, da sie in Form eines Kommentars 
+Datendefinitionen haben auf das Programmverhalten keinen Einfluss, da sie in Form eines Kommentars
 definiert werden. Dennoch können wir ihnen eine präzise Bedeutung geben, die hilft, ihre
 Rolle zu verstehen.
 
@@ -657,11 +773,11 @@ und welche Ergebnisse sie produzieren.
 @section[#:tag "equationalreasoning"]{Refactoring von Ausdrücken und Schliessen durch Gleichungen}
 
 Wir hatten in Abschnitt @secref{semanticsofexpressions} vorgestellt, wie man auf Basis der Reduktionsregeln
-eine Äquivalenzrelation auf Ausdrücken definieren kann. 
+eine Äquivalenzrelation auf Ausdrücken definieren kann.
 Diese Äquivalenzen können zum Refactoring von Programmen verwendet
 werden - also Programmänderungen, die nicht die Bedeutung verändern aber die Struktur des Programms verbessern.
 Außerdem können sie verwendet werden, um Eigenschaften eines Programmes herzuleiten, zum Beispiel
-dass die Funktion @racket[overlaps-circle] aus dem vorherigen Kapitel kommutativ ist, also 
+dass die Funktion @racket[overlaps-circle] aus dem vorherigen Kapitel kommutativ ist, also
 @racket[(overlaps-circle c1 c2)] @equiv @racket[(overlaps-circle c2 c1)].
 
 Die Äquivalenzrelation aus Abschnitt @secref{semanticsofexpressions} war allerdings zu klein für viele
@@ -675,38 +791,38 @@ einfach die Argumentausdrücke verwenden.
 
 Die Idee wird durch folgenden, allgemeineren Auswertungskontext ausgedrückt:
 
-@BNF[(list @nonterm{E} 
+@BNF[(list @nonterm{E}
       @litchar{[]}
       @BNF-seq[open @nonterm{name} @kleenestar[@nonterm{e}] @nonterm{E} @kleenestar[@nonterm{e}]  close]
       @BNF-seq[open @litchar{cond} @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]] lb @nonterm{E} @nonterm{e} rb @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]]  close]
-      @BNF-seq[open @litchar{cond} @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]] lb @nonterm{e} @nonterm{E} rb @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]]  close]      
+      @BNF-seq[open @litchar{cond} @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]] lb @nonterm{e} @nonterm{E} rb @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]]  close]
       @BNF-seq[open @litchar{and} @kleenestar[@nonterm{e}] @nonterm{E} @kleenestar[@nonterm{e}] close ]
 )]
-Zusammen mit der folgenden Kongruenzregel für unsere Äquivalenzrelation, drückt dieser Auswertungskontext aus, 
+Zusammen mit der folgenden Kongruenzregel für unsere Äquivalenzrelation, drückt dieser Auswertungskontext aus,
 dass überall "gleiches mit gleichem" ersetzt werden darf:
 
 @elem[#:style inbox-style]{
 @italic{(EKONG): }Falls @mv{e-1} @equiv @mv{e-2}, dann @mv{E[e-1]} @equiv @mv{E[e-2]}.
-}      
- 
+}
+
 Eine Äquivalenzsrelation sollte möglichst groß sein, damit wir so viele Äquivalenzen wie möglich zeigen können.
 Gleichzeitig sollte sie korrekt sein. Dies bedeutet, dass äquivalente Programme das gleiche Verhalten haben, also
 insbesondere -- sofern sie terminieren -- bei Auswertung den gleichen Wert ergeben.
 
-Wir definieren nun nach und nach die Regeln, die für die Äquivalenzrelation gelten sollen. 
+Wir definieren nun nach und nach die Regeln, die für die Äquivalenzrelation gelten sollen.
 Zunächst einmal sollte es tatsächlich eine Äquivalenzrelation --- also reflexiv, symmetrisch und transitiv --- sein:
 
 @elem[#:style inbox-style]{
 @italic{(EREFL): }@mv{e} @equiv @mv{e}.
-}      
+}
 
 @elem[#:style inbox-style]{
 @italic{(ESYM): }Falls @mv{e1} @equiv @mv{e2}, dann @mv{e2} @equiv @mv{e1}.
-}      
+}
 
 @elem[#:style inbox-style]{
 @italic{(ETRANS): }Falls @mv{e-1} @equiv @mv{e-2} und @mv{e-2} @equiv @mv{e-3}, dann @mv{e-1} @equiv @mv{e-3}.
-}      
+}
 
 Die Verknüpfung zur Auswertungsrelation wird durch diese Regel geschaffen: Reduktion erhält Äquivalenz.
 
@@ -733,7 +849,7 @@ Namen @italic{(EPRIM)} zusammen.
 
 Einen kleinen Hakenfuss gibt es allerdings doch noch. Man würde sich von einer Äquivalenzrelation für Programme wünschen, dass folgende Eigenschaft
 gilt: Falls @mv{e-1} @equiv @mv{e-2} und @mv{e-1} @multistep @mv{v}, dann auch @mv{e-2} @multistep @mv{v}. Diese Eigenschaft gilt jedoch
-nicht, weil es sein kann, dass @mv{e-1} terminiert aber @mv{e-2} nicht. 
+nicht, weil es sein kann, dass @mv{e-1} terminiert aber @mv{e-2} nicht.
 
 Beispiel: Betrachten Sie folgendes Programm:
 
