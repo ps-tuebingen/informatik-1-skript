@@ -431,24 +431,33 @@ Damit sieht die Grammatik unserer Kernsprache wie folgt aus. Die Grammatik für 
          )]
 
 
-Testen Sie sich selbst - wie oben können Sie hier Ableitungsbäume für BSL ausklappen, wenn sie die richtigen Nichtterminale ("Produktionen") wählen und die richtigen Bestandteile markieren:
+Wie oben können Sie hier ein paar Ableitungsbäume für BSL erkunden:
+Klicken Sie wieder auf Nichtterminale, um weiter auszuklappen.
+Wissen Sie schon vor dem Klicken, was kommen wird?
 
 @bsltree[
- #:quiz #t   @; optional keyword argument, default is #f
+ #:quiz #f   @; optional keyword argument, default is #f
  #:lang "de" @; optional keyword argument, default is "en"
  420
 ]
 
 @bsltree[
- #:quiz #t   @; optional keyword argument, default is #f
+ #:quiz #f   @; optional keyword argument, default is #f
  #:lang "de" @; optional keyword argument, default is "en"
  #'((define (f x) (+ x 42)))
 ]
 
 @bsltree[
- #:quiz #t   @; optional keyword argument, default is #f
+ #:quiz #f   @; optional keyword argument, default is #f
  #:lang "de" @; optional keyword argument, default is "en"
  #'((define-struct tree (roots trunk leaves)))
+]
+
+Für Fortgeschrittene hier auch wieder ein Programm als Quiz:
+@bsltree[
+ #:quiz #t   @; optional keyword argument, default is #f
+ #:lang "de" @; optional keyword argument, default is "en"
+ #'((cond [e1 #true] [else (asBool e2)]))
 ]
 
 @section{Werte und Umgebungen}
@@ -580,6 +589,13 @@ wird schliesslich in der Umgebung
 (define c 6)]
 ausgewertet.
 
+Hier können Sie das Ganze auch nochmal im interaktiven Stepper sehen (einige der angezeigten Regeln werden wir später noch einführen):
+@stepper[ #:lang "de"
+#'((define (f x) (+ x 1))
+(define c (f 5))
+(+ c 3))
+]
+
 
 @section{Bedeutung von Ausdrücken}
 Jeder Ausdruck wird in einer Umgebung @mv{env} ausgewertet, wie sie im vorherigen Abschnitt definiert wurde. Um die Notation nicht zu überladen,  werden wir @mv{env}
@@ -611,6 +627,13 @@ dann @BNF-seq[open @mv{name} @mv{v-1} "..." @mv{v-n} close] @step @mv{e}[@mv{nam
 dann @BNF-seq[open @mv{name} @mv{v-1} "..." @mv{v-n} close] @step @mv{v}.
 }
 
+Das sieht dann z.B. so aus:
+@stepper[ #:lang "de"
+#'((* 2 21)
+(define (double x) (+ x x))
+(double 21))
+]
+
 @subsection{Bedeutung von Konstanten}
 
 Konstanten werden ausgewertet, indem sie in der Umgebung nachgeschlagen werden:
@@ -619,6 +642,14 @@ Konstanten werden ausgewertet, indem sie in der Umgebung nachgeschlagen werden:
 @italic{(CONST): }Falls @BNF-seq[open @litchar{define} @mv{name} @mv{v} close] in der Umgebung,
 dann @mv{name} @step @mv{v}.
 }
+
+Hier ein Beispiel dazu - man sieht auch das Verhalten, dass im Fehlerfall gestoppt wird, wie oben beschrieben:
+
+@stepper[ #:lang "de"
+#'((define x 3)
+  (+ 1 (- x y)))
+]
+
 
 @subsection{Bedeutung konditionaler Ausdrücke}
 Konditionale Ausdrücke werden ausgewertet, wie schon in @secref{kondsem} beschrieben. Gemäß
@@ -632,6 +663,10 @@ oder den um die fehlgeschlagene Bedingung gekürzten @racket[cond] Ausdruck redu
 @elem[#:style inbox-style]{
 @italic{(COND-False): }@BNF-seq[open @litchar{cond} lb @litchar{#false} @mv{e-1} rb lb @mv{e-2}  @mv{e-3} rb "..." close] @step @BNF-seq[open @litchar{cond} lb @mv{e-2}  @mv{e-3} rb "..." close]
 }
+
+@stepper[ #:lang "de"
+#'((cond [#false "No"] [(< 2 2) "No"] [#true "42"] [#true 42]))
+]
 
 
 @subsection{Bedeutung von Strukturkonstruktoren und Selektoren}
@@ -669,6 +704,14 @@ handelt oder nicht, und je nachdem @racket[#true] bzw. @racket[#false] zurückge
 @italic{(STRUCT-predfalse): }Falls @mv{v} nicht @BNF-seq[@litchar{<}  @(make-element #f (list @litchar{make-} @mv{name}))  "..." @litchar{>}],
 dann @BNF-seq[open @(make-element #f (list @mv{name} @litchar{?})) @mv{v} close] @step @litchar{#false}
 }
+
+@stepper[ #:lang "de"
+#'((define-struct posn (x y))
+(define p (make-posn 1 2))
+(posn? 32)
+(posn? p)
+(posn-x p))
+]
 
 @section{Reduktion am Beispiel}
 
@@ -750,23 +793,15 @@ Gemäß @italic{(PRIM)} gilt @mv{e-1} @step @racket[#false]; gemäß @italic{(KO
 ]}]
 
 
-Alternativ können Sie sich auch interaktiv durch dieses Beispiel steppen:
+Hier nochmal in interaktiv - klicken Sie auf das Info-i rechts, wenn Sie
+den Text einer Regel nochmal sehen möchten:
 @stepper[ #:lang "de"
-#'((define x (+ 40 2))
-(* (+ 1 2 (- 3 9 x) (/ 200 4 5)) (/ 1 2 3) 2)
-(cond [(>= 5 5) "isThree"]
-[#false 3]
-[(or #true #false) (* 2 3 4)])
-(cond
-  [(cond
-  [(and #false #true) #false]
-  [#false 3]
-  [(or #true #false) #false])
-  "isThree"]
-[#false 3]
-[(< 2 3) (* 2 3 4)])
-(define y "hallo")
-(> 2 4))
+#'((define-struct s (x y))
+(define (f x) (cond [(< x 1) (/ x 0)]
+                    [#true (+ x 1)]
+                    [#true x]))
+(define c (make-s 5 (+ (* 2 3) 4)))
+(f (s-x c)))
 ]
 
 
