@@ -106,17 +106,11 @@ Jeder Ableitungsbaum steht für einen Text (häufig @italic{Wort} oder @italic{S
 nämlich die Sequenz der Terminalsymbole, die in dem Baum vorkommen, von links nach rechts im Baum abgelesen. Die durch eine Grammatik definierte Sprache ist
 die Menge aller Worte, für die man Ableitungsbäume bilden kann.
 
-Hier einige Beispiele für Ableitungsbäume@note{Wenn Sie mit Grammatiken und Ableitungsbäumen experimentieren möchten, schauen Sie sich mal
-                                                   das Grammatik-Werkzeug unter @url{http://www.cburch.com/proj/grammar/index.html} an. Mit diesem
-                                                   Werkzeug können Sie automatisch Ableitungsbäume für Wörter kontextfreier Grammatiken eingeben.
-                                                   Die Notation für kontextfreie Grammatiken in dem Tool ist allerdings etwas anders und sie u
-                                                   nterstützt nicht die + und * Operatoren sowie nur alphanumerische Nichtterminale. Eine Variante
-                                                   der Grammatik oben, die dieses Tool versteht, finden Sie unter der URL @url{https://github.com/ps-mr/KdP2014/blob/master/materials/grammar}.}
+Hier einige Beispiele für Ableitungsbäume
 des Nichtterminals @nonterm{Zahl} und die Worte, die sie repräsentieren.
-Wir stellen die Bäume der Einfachheit halber durch Einrückung des Textes dar. Da damit die Bäume um 90 Grad gegenüber der Standarddarstellung gedreht sind,
-müssen die Terminalsymbole von oben nach unten (statt von links nach rechts) abgelesen werden.
 
-Klicke auf die gelben Kästen, um den Ableitungsbaum für @litchar{0} nach und nach auszuklappen:
+Klicken Sie auf die gelben Kästen, um den Ableitungsbaum für @litchar{0} und
+@litchar{-3,14} nach und nach auszuklappen:
 
 @pdf-note{
   In der HTML Version ist hier eine interaktive Darstellung, die in etwa dem folgenden entspricht:
@@ -149,8 +143,60 @@ Klicke auf die gelben Kästen, um den Ableitungsbaum für @litchar{0} nach und n
     }
   }
 }
+@jsontree[]{
+  {
+    "production": "<Zahl>",
+    "code": "-|3,14|",
+    "holes": [
+      {
+        "production": "<PositiveZahl>",
+        "code": "|3,14|",
+        "holes": [{
+          "production": "<KommaZahl>",
+          "code": "|3|,|1||4|",
+          "holes": [
+            {
+              "production": "<GanzeZahl>",
+              "code": "|3|",
+              "holes":[{
+                "production": "<ZifferNichtNull>",
+                "code": "3"
+                }]
+            },
+            {
+              "production": "<Ziffer>",
+              "code": "|1|",
+              "holes":[{
+                "production": "<ZifferNichtNull>",
+                "code": "1"
+                }]
+            },
+            {
+              "production": "<Ziffer>",
+              "code": "|4|",
+              "holes":[{
+                "production": "<ZifferNichtNull>",
+                "code": "4"
+                }]
+            }
+          ]
+        }]
+      }
+    ],
+    "grammar": {
+      "<Zahl>": ["<PositiveZahl>", "-<PositiveZahl>"],
+      "<PositiveZahl>": ["<GanzeZahl>", "<KommaZahl>"],
+      "<GanzeZahl>": ["<ZifferNichtNull><Ziffer>*", "0"],
+      "<KommaZahl>": ["<GanzeZahl>.<Ziffer>+"],
+      "<ZifferNichtNull>": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+      "<Ziffer>": ["0", "<ZifferNichtNull>"]
+    }
+  }
+}
 
-Hier kannst du selbst testen, ob du den Ableitungsbaum für @litchar{420} bilden kannst: Wähle die richtige Produktion und markiere die Nichtterminale jeweils einzeln, um die nächste Ebene auszuklappen!
+Hier können Sie selbst testen, ob Sie den Ableitungsbaum für @litchar{420} bilden
+können: Wählen Sie die richtige Produktion und markieren Sie die Nichtterminale
+jeweils einzeln, um die nächste Ebene auszuklappen!
 
 @jsontree[
  #:quiz #t
