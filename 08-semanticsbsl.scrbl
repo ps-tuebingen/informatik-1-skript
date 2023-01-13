@@ -119,7 +119,9 @@ Klicken Sie auf die gelben Kästen, um den Ableitungsbaum für @litchar{0} und
      @hspace[4] @nonterm{GanzeZahl} @linebreak[]
       @hspace[6] @litchar{0} @linebreak[]
 }
-@jsontree[]{
+@jsontree[
+  #:extrastyle "jsontree .bsl-tools-tree span {margin-left: 2.5em; margin-right: 2.5em}"
+]{
   {
     "production": "<Zahl>",
     "code": "|0|",
@@ -143,7 +145,9 @@ Klicken Sie auf die gelben Kästen, um den Ableitungsbaum für @litchar{0} und
     }
   }
 }
-@jsontree[]{
+@jsontree[
+  #:extrastyle "jsontree .bsl-tools-tree span {margin-left: 2.5em; margin-right: 2.5em}"
+]{
   {
     "production": "<Zahl>",
     "code": "-|3,14|",
@@ -201,6 +205,7 @@ jeweils einzeln, um die nächste Ebene auszuklappen!
 @jsontree[
  #:quiz #t
  #:lang "de"
+ #:extrastyle "jsontree .bsl-tools-tree span {margin-left: 2.5em; margin-right: 2.5em}"
 ]{
   {
     "production": "<Zahl>",
