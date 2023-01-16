@@ -955,3 +955,59 @@ Es gilt jedoch folgende etwas schwächere Eigenschaft, die wir ohne Beweis auff�
 Falls @mv{e-1} @equiv @mv{e-2} und @mv{e-1} @multistep @mv{v-1} und @mv{e-2} @multistep @mv{v-2}, dann @mv{v1} = @mv{v2}.
 
 Wenn also @mv{e-1} und @mv{e-2} gleich sind und beide terminieren, dann ist der Wert, der herauskommt, gleich.
+
+@pdf-note{Im HTML-Skript ist an dieser Stelle und nach ein paar anderen Kapiteln ein interaktives Quiz.
+  Im PDF haben wir die Quizzes ans Ende gepackt, damit man frei entscheiden kann, ob man sie mitdrucken will,
+  und verweisen darauf mit einer Notiz am Rande, wie hier: @secref{quiz-semanticsbsl}}
+
+@questionnaire[#:key "semanticsbsl" #:language "de"
+  @question[
+    @q{Was definiert, welche Texte BSL-Programme sind?}
+
+    @distractor{Die Semantik}
+    @solution{Die Syntax}
+  ]
+  @question[
+    @q{Was macht eine Grammatik?}
+
+    @solution{Definiert, welche Texte gültige Programme sind}
+
+    @distractor{Legt fest, welche Reduktionsregeln gelten}
+    @explanation{Für die Bedeutung eines Programms ist die Grammatik nicht zuständig.}
+
+    @solution{Zerlegt ein Programm in seine Teile}
+    @explanation{Wie auch eine natürliche Grammatik z.B. einen Satz in Subjekt, Objekt und Prädikat aufteilt.}
+  ]
+  @question[
+    @q{Wofür steht EBNF?}
+
+    @distractor{Europäisches Bank Noten Format}
+    @distractor{Elektronisches Befehls Namen Format}
+    @solution{Erweiterte Backus Naur Form}
+    @explanation{Eine Notation zum Aufschreiben von Grammatiken}
+
+  ]
+  @question[
+    @q{Gegeben die Folgende Grammatik:
+      @BNF[(list @nonterm{LieblingsZahl} @BNF-alt[@nonterm{RundeZahl} @nonterm{Mystery}])
+           (list @nonterm{RundeZahl} @BNF-alt[@litchar{0} @litchar{3} @litchar{6} @litchar{8} @litchar{9}])
+           (list @nonterm{Mystery} @BNF-seq[@kleeneplus[@nonterm{Paar}] @litchar{7}])
+           (list @nonterm{Paar} @BNF-seq[@nonterm{RundeZahl} @nonterm{RundeZahl}])
+           ]
+       Welche der folgenden Zahlen sind Lieblingszahlen?
+    }
+
+    @distractor{7}
+    @explanation{Das plus bedeutet, dass der Ausdruck mindestens einmal vorkommen muss. Somit ist 7 kein Mystery.}
+    @distractor{33}
+    @explanation{In der LieblingsZahl-Produktion steht nur eine einzelne Zahl oder eine Mystery, die auf 7 endet.}
+    @solution{907}
+    @explanation{Lässt sich aus der Produktion Mystery ableiten.}
+    @solution{68087}
+    @explanation{Lässt sich aus der Produktion Mystery ableiten}
+    @distractor{0007}
+    @explanation{Hier haben wir eine ungerade Anzahl an RundeZahl vor der 7}
+    @solution{3}
+    @explanation{Ganz oben in der Produktion}
+  ]
+]
