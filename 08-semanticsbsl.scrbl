@@ -1010,4 +1010,51 @@ Wenn also @mv{e-1} und @mv{e-2} gleich sind und beide terminieren, dann ist der 
     @solution{3}
     @explanation{Ganz oben in der Produktion}
   ]
+  @question[
+    @q{Welche der folgenden Ausdrücke kann in einer Auswertungsumgebung vorkommen?}
+
+    @distractor{@racketblock[(define x (+ 40 2))]}
+    @explanation{Konstantendefinitionen in der Auswertungsumgebung haben die
+      Form @BNF-seq[open @litchar{define} @nonterm{name} @nonterm{v} close],
+      da die Ausdrücke ausgewertet werden, bevor sie in die Umgebung
+      aufgenommen werden.}
+    @solution{@racketblock[(define (f x) (+ x 2))]}
+    @solution{@racketblock[(define x 42)]}
+    @distractor{@racketblock[(+ 40 2)]}
+    @explanation{Nur Definitionen sind teil der Auswertungsumgebung.}
+    @distractor{@racketblock[42]}
+    @explanation{Nur Definitionen sind teil der Auswertungsumgebung.}
+  ]
+  @question[
+    @q{Wählen Sie alle gültigen Auswertungskontexte!}
+
+    @solution{@racketblock[(* (unsyntax (litchar "[]")) (+ 3 4))]}
+    @distractor{@racketblock[(* (+ 3 4) (unsyntax (litchar "[]")) )]}
+    @explanation{Wir werten die Ausdrücke immer von links nach rechts aus.
+      Links steht aber noch ein unausgewerteter Ausdruck.}
+    @solution{@racketblock[(posn-x (make-posn 14 (unsyntax (litchar "[]"))))]}
+    @distractor{@racketblock[(posn-x (make-posn 14 17))]}
+    @explanation{Hier fehlt ein Loch, in das wir das Ergebnis der Auswertung
+      einfügen können.}
+  ]
+
+  @question[
+    @q{In der Auswertungsumgebung steht @racketblock[(define-struct posn (x y))].
+      Die Auswertung welcher Ausdrücke führt @bold{nicht} zu einem Fehler?}
+
+    @distractor{@racketblock[(is-posn? (make-posn 2 2))]}
+    @explanation{@racketblock[make-posn] ist in Ordnung, aber @racketblock[is-posn?]
+      wurde nicht definiert - das Prädikat heißt @racketblock[posn?].}
+
+    @distractor{@racketblock[(posn-x myposn)]}
+    @explanation{Wir haben in der Auswertungsumgebung nirgendwo
+      @racketblock[myposn] definiert.}
+
+    @solution{@racketblock[(posn? 42)]}
+    @explanation{Das Prädikat können wir auf beliebige Werte anwenden - der obige
+      Ausdruck wertet zu @racketblock[#f] aus.}
+
+    @solution{@racketblock[(posn-y (make-posn 0 "42"))]}
+
+  ]
 ]
