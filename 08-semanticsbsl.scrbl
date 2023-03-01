@@ -465,6 +465,11 @@ Für Fortgeschrittene hier auch wieder ein Programm als Quiz:
  #'((cond [e1 #true] [else (asBool e2)]))
 ]
 
+@margin-note{
+  Unter @url{https://se-tuebingen.github.io/bsl-tools/generator.html} können Sie
+  auch selbst BSL-Programme eingeben und Ableitungsbäume dazu generieren.
+}
+
 @section{Werte und Umgebungen}
 
 Was bedeuten nun Programme in der Sprache, deren Syntax oben definiert wurde? Die Bedeutung eines Ausdrucks wollen wir modellieren
@@ -808,6 +813,11 @@ den Text einer Regel nochmal sehen möchten:
 (define c (make-s 5 (+ (* 2 3) 4)))
 (f (s-x c)))
 ]
+
+@margin-note{
+  Unter @url{https://se-tuebingen.github.io/bsl-tools/generator.html} können Sie
+  auch selbst BSL-Programme eingeben und Stepper dazu generieren.
+}
 
 
 @section{Bedeutung von Daten und Datendefinitionen}
