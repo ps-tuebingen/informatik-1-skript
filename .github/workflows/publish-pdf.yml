@@ -24,7 +24,7 @@ jobs:
         run: sudo apt-get install texlive texlive-latex-extra texlive-fonts-extra latexmk
       - name: Build Scribble PDF Docs
         run: |
-          xvfb-run racket -l racket/gui -l- scribble/run ++xref-in setup/xref load-collections-xref --prefix scribble-prefix.tex --pdf script-pdf.scrbl
+          xvfb-run racket -l racket/gui -l- scribble/run ++xref-in setup/xref load-collections-xref --prefix scribble-prefix.tex --dest-name script --pdf script-pdf.scrbl
       - name: Upload PDF
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
