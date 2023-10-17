@@ -577,3 +577,14 @@ dies wird damit zum Teil der Spezifikation, auf die sich Aufrufer verlassen kön
 Würde hingegen auf einen festen Ausgabestring getestet, so würde der Test zu viele Details über
 die Implementierung verraten und damit das Information Hiding Prinzip nutzlos gemacht.
 
+@subsection[#:tag "signatures"]{Überprüfbare Signaturen}
+
+@#reader scribble/comment-reader
+(racketblock
+(: age Integer)
+(define age 42)
+ 
+(: area-of-square (Number -> Number))
+(define (area-of-square len)
+  (sqr len))
+)
