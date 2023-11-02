@@ -6,7 +6,7 @@
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label 2htdp/universe))
 @(require scriblib/footnote)
-@require[scribble-math]
+@(require scribble-math)
 @; (require "math-utilities.rkt")
 
 @;setup-math

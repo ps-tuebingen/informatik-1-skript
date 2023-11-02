@@ -4,7 +4,9 @@
 @(require (for-label lang/htdp-beginner))
 @(require (for-label (except-in 2htdp/image image?)))
 @(require (for-label 2htdp/universe))
-   
+@(require racket/sandbox)
+
+
 @title[#:version ""]{Systematischer Programmentwurf}
 
 @margin-note{Dieser Teil des Skripts basiert auf [HTDP/2e] Kapitel I und dem Artikel "On Teaching How to Design Programs" von Norman Ramsey.}
@@ -577,7 +579,24 @@ dies wird damit zum Teil der Spezifikation, auf die sich Aufrufer verlassen kön
 Würde hingegen auf einen festen Ausgabestring getestet, so würde der Test zu viele Details über
 die Implementierung verraten und damit das Information Hiding Prinzip nutzlos gemacht.
 
+<<<<<<< HEAD
 @subsection[#:tag "signatures"]{Überprüfbare Signaturen}
+=======
+@section{Signaturen als Teil des Codes}
+
+Der Vorteil unsere Methode, Signaturen als semi-formalen Kommentar zu definieren, ist, dass sich diese Form des Programmentwurfs in
+fast jeder Programmiersprache einsetzen lässt. Allerdings haben diese Kommentare auch einige Nachteile.
+Dadurch, dass sie nicht automatisiert überprüfbar und lesbar sind, können sich Fehler einschleichen.
+Der Programmierer muss Disziplin aufbringen, um die Signaturen zu erstellen und bei Änderungen des Codes immer dem
+jeweils aktuellen Stand anzupassen. Wenn sich eine Definition nicht an die angegebene Signature hält, so fällt
+dies zunächst nicht auf und es kann möglicherweise erst irgendwann zur Laufzeit zu einem Fehler kommen, von dem
+nicht unmittelbar klar ist, dass die Ursache in der Signaturverletzung liegt.
+
+In der neuesten Version von DrRacket (8.10) gibt es daher die Möglichkeit, formale Signaturen anzugeben, die
+von DrRacket gelesen und zur Laufzeit überprüft werden könnnen.
+
+
+Schauen wir uns zwei Beispiele an, die von dieser Möglichkeit Gebrauch machen.
 
 @#reader scribble/comment-reader
 (racketblock
@@ -588,3 +607,35 @@ die Implementierung verraten und damit das Information Hiding Prinzip nutzlos ge
 (define (area-of-square len)
   (sqr len))
 )
+
+Wenn dieses Programm ausgeführt wird, so werden die angegebenen Signaturen überprüft.
+Falls jedoch gegen die Signatur verstossen wird, so wie hier:
+
+@#reader scribble/comment-reader
+(racketblock
+ (: age Integer)
+ (define age "fortytwo")
+)
+
+so wird eine Signaturverletzung angezeigt.
+
+Bei Funktionen werden Signaturverletzungen erst angezeigt, wenn die Funktion aufgerufen wird. So ergibt beispielsweise
+
+@#reader scribble/comment-reader
+(racketblock
+(: area-of-square (Number -> Number))
+(define (area-of-square len)
+  "asdf")
+)
+für sich alleine noch keine Signaturverletzung. Ein Aufruf @racket[(area-of-square 5)] resultiert jedoch in einer Signaturverletzung.
+Dies gilt auch dann, wenn es ohne die Signaturen gar nicht zu einem Programmfehler gekommen wäre.
+
+Die vordefinierten Signaturen, die sie verwenden können, beinhalten @racket[Boolean] (für die boolschen Werte), @racket[Integer] (ganze Zahlen),
+@racket[Natural] (natürliche Zahlen), @racket[Number] (beliebige Zahlen),
+@racket[Rational] (rationale Zahlen), @racket[Real] (reale Zahlen) und @racket[String].
+
+Wir werden später noch Möglichkeiten einführen, um weitere und eigene Signaturen zu definieren und zu nutzen.
+
+Leider gibt es derzeit (Version 8.10) noch keine vordefinierte Signatur @racket[Image] für Bilder. Deshalb können formale
+Signaturen nicht verwendet werden, wenn Bilder Teil der Signatur sind. Als Workaround kann die Signatur
+@racket[Any] verwendet werden. Diese Signatur passt auf jeden Wert.
