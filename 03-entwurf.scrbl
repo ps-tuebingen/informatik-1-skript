@@ -579,9 +579,6 @@ dies wird damit zum Teil der Spezifikation, auf die sich Aufrufer verlassen kön
 Würde hingegen auf einen festen Ausgabestring getestet, so würde der Test zu viele Details über
 die Implementierung verraten und damit das Information Hiding Prinzip nutzlos gemacht.
 
-<<<<<<< HEAD
-@subsection[#:tag "signatures"]{Überprüfbare Signaturen}
-=======
 @section{Signaturen als Teil des Codes}
 
 Der Vorteil unsere Methode, Signaturen als semi-formalen Kommentar zu definieren, ist, dass sich diese Form des Programmentwurfs in
