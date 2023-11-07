@@ -85,6 +85,40 @@ Beispielsweise würde das Template für die @racket[traffic-light-next] Funktion
 Wie sie sehen, können sie einen großen Teil einer Funktionsdefinition quasi mechanisch generieren, indem Sie systematisch den
 Schritten aus dem Entwurfsrezept folgen.
 
+@section{Aufzählungstypen mit überprüfbaren Signaturen}
+
+Die Sprache für überprüfbare Signaturen in BSL erlaubt es uns, Aufzählungstypen zu definieren und ihnen einen Namen zu geben.
+Mit Hilfe von @racket[enum] kann ein Aufzählungstyp definiert und benutzt werden:
+@#reader scribble/comment-reader
+(racketblock
+(: traffic-light-next ((enum "red" "green" "yellow") -> (enum "red" "green" "yellow")))
+)
+
+Allerdings ist es, wie so oft in der Programmierung, sinnvoll, solchen wiederkehrenden Konzepten einen Namen geben. Mit
+Hilfe der @racket[signature] Form kann ein Name definiert werden, der im folgenden dann für die angegebene Signatur steht.
+
+@#reader scribble/comment-reader
+(racketblock
+(define TrafficLight (signature (enum "red" "green" "yellow")))
+; interp. each element of TrafficLight represents which colored
+; bulb is currently turned on
+)
+
+Mit Hilfe dieser Definition kann die @racket[traffic-light-next] Funktion dann wie folgt definiert werden.
+
+@#reader scribble/comment-reader
+(racketblock
+(: traffic-light-next (TrafficLight -> TrafficLight))
+; given state s, determine the next state of the traffic light
+(check-expect (traffic-light-next "red") "green")
+
+(define (traffic-light-next s)
+  (cond
+    [(string=? "red" s) "green"]
+    [(string=? "green" s) "yellow"]
+    [(string=? "yellow" s) "red"]))
+)
+
 @section{Intervalltypen}
 
 Betrachten Sie ein Programm, welches ein Ufo beim landen zeigen soll.
