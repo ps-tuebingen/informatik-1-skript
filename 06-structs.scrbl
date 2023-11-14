@@ -505,3 +505,32 @@ die Schritte des Entwurfsrezepts aus Abschnitt @secref{entwurfsrezept} wie folgt
              ausgeführt wurden. Die Codefärbung in DrRacket nach dem Testen unterstützt Sie dabei.}]
 
  
+@section{Formale Signaturen für Produkttypen}
+
+Auch für Produkttypen gibt es (leider etwas rudimentären) Support für formale Signaturen. Zu jeder
+Struktur @racketblock{mystruct} gibt es eine Signatur @racketblock{MystructOf}, die genau so viele
+Signaturen als Parameter erwartet wie @racketblock{mystruct} Felder hat.
+
+Beispiel:
+@#reader scribble/comment-reader
+(racketblock
+(define-struct pair [fst snd])
+ 
+(: add-pair ((PairOf Number Number) -> Number))
+(define (add-pair p)
+  (+ (pair-fst p) (pair-snd p)))
+)
+
+Mit Hilfe von @racketblock{signature} können wir auch formale Datendefinitionen für Produkttypen erstellen.
+
+Beispiel:
+@#reader scribble/comment-reader
+(racketblock
+(define Position (signature (PairOf Number Number)))
+; interp. x/y coordinates of a Position on the screen, from top left.
+
+(:origin Position)
+(define origin (make-pair 0 0))
+)
+
+Leider ist es derzeit nicht möglich, der Konstruktorfunktion selber eine formale Signatur zu geben.
