@@ -508,8 +508,8 @@ die Schritte des Entwurfsrezepts aus Abschnitt @secref{entwurfsrezept} wie folgt
 @section{Formale Signaturen für Produkttypen}
 
 Auch für Produkttypen gibt es (leider etwas rudimentären) Support für formale Signaturen. Zu jeder
-Struktur @racket{mystruct} gibt es eine Signatur @racket{MystructOf}, die genau so viele
-Signaturen als Parameter erwartet wie @racket{mystruct} Felder hat.
+Struktur @racket[mystruct] gibt es eine Signatur @racket[MystructOf], die genau so viele
+Signaturen als Parameter erwartet wie @racket[mystruct] Felder hat.
 
 Beispiel:
 @#reader scribble/comment-reader
@@ -521,7 +521,7 @@ Beispiel:
   (+ (pair-fst p) (pair-snd p)))
 )
 
-Mit Hilfe von @racket{signature} können wir auch formale Datendefinitionen für Produkttypen erstellen.
+Mit Hilfe von @racket[signature] können wir auch formale Datendefinitionen für Produkttypen erstellen.
 
 Beispiel:
 @#reader scribble/comment-reader
