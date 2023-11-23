@@ -283,13 +283,9 @@ das in DrRacket implementierte Verhalten, wie folgendes Beispiel illustriert:
 
 @ex[(cond [#true 42] [else #false])]
 
-Allerdings können wir auch dieses Verhalten kodieren. Mit Hilfe der Funktion
-@racketblock[
-(define (asBool b)
-  (if (boolean? b) b (error "question result is not true or false: " b)))]
-
-können wir nun @racket[(and e-1 e-2)] kodieren als @racket[(cond [e-1 (asBool e-2)] [else #false])] und @racket[(or e-1 e-2)] als
- @racket[(cond [e-1 #true] [else (asBool e-2)])]. Mehr als zwei Parameter von @racket[and] und @racket[or] kodieren wir durch
+Allerdings können wir auch dieses Verhalten kodieren indem wir die Kodierung leicht ändern:
+@racket[(and e-1 e-2)] wird transformiert zu @racket[(cond [e-1 (cond [e-2 #true] [#true #false])] [#true #false])].
+Mehr als zwei Parameter von @racket[and] und @racket[or] kodieren wir durch
 verschachtelte Aufrufe der zweistelligen Varianten, z.B. @racket[(and e-1 e-2 e-3)] als @racket[(and e-1 (and e-2 e-3))].
 
 Damit sieht die Grammatik unserer Kernsprache wie folgt aus. Die Grammatik für Werte @nonterm{v} bleibt unverändert.
