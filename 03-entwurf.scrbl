@@ -597,8 +597,8 @@ Schauen wir uns zwei Beispiele an, die von dieser Möglichkeit Gebrauch machen.
 
 @#reader scribble/comment-reader
 (racketblock
-(: age Integer)
-(define age 42)
+(: AGE Integer)
+(define AGE 42)
  
 (: area-of-square (Number -> Number))
 (define (area-of-square len)
@@ -610,8 +610,8 @@ Falls jedoch gegen die Signatur verstossen wird, so wie hier:
 
 @#reader scribble/comment-reader
 (racketblock
- (: age Integer)
- (define age "fortytwo")
+ (: AGE Integer)
+ (define AGE "fortytwo")
 )
 
 so wird eine Signaturverletzung angezeigt.

@@ -515,7 +515,7 @@ Beispiel:
 @#reader scribble/comment-reader
 (racketblock
 (define-struct pair [fst snd])
- 
+
 (: add-pair ((PairOf Number Number) -> Number))
 (define (add-pair p)
   (+ (pair-fst p) (pair-snd p)))
@@ -529,8 +529,8 @@ Beispiel:
 (define Position (signature (PairOf Number Number)))
 ; interp. x/y coordinates of a Position on the screen, from top left.
 
-(:origin Position)
-(define origin (make-pair 0 0))
+(: ORIGIN Position)
+(define ORIGIN (make-pair 0 0))
 )
 
 Leider ist es derzeit nicht möglich, der Konstruktorfunktion selber eine formale Signatur zu geben.
