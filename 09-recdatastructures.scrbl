@@ -267,7 +267,7 @@ den Anfang der Programmierung der Funktion, diesmal mit anderem Namen:
 
 @#reader scribble/comment-reader
 (racketblock
-; FamilyTree -> Boolean
+; FamilyTree String -> Boolean
 ; determines whether person p has an ancestor a
 (check-expect (person-has-ancestor-stupid Bob "Joe") #true)
 (check-expect (person-has-ancestor-stupid Bob "Emil") #false)
@@ -385,6 +385,34 @@ des @racket[make-person] Konstruktors ein:
             (promote (person-mother p) t))]
         [else p]))
 )
+@section{Formale Signaturen für rekursive Datentypen}
+Wir können formale Signaturen auch für rekursive Datentypen verwenden.
+Den äußeren Summentyp können wir über den Signaturkonstruktur @racket[mixed]
+abbilden. Wichtig an der formalen Signatur @racket[FamilyTree] ist, dass die
+Definition selber rekursiv ist.
+
+@#reader scribble/comment-reader
+(racketblock
+(define-struct person (name father mother))
+
+(define FamilyTree (signature
+   (mixed (enum #false)
+          (PersonOf String FamilyTree FamilyTree))))
+)
+
+
+Diese Datentyp kann nun wie gewohnt in Signaturen verwendet werden,
+beispielsweise:
+
+@#reader scribble/comment-reader
+(racketblock
+(: Bob FamilyTree)
+
+(: person-has-ancestor (FamilyTree String -> Boolean))
+(define (person-has-ancestor p a) ...)
+)
+
+
 
 @section{Listen}
 
