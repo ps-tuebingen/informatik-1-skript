@@ -396,12 +396,12 @@ Definition selber rekursiv ist.
 (define-struct person (name father mother))
 
 (define FamilyTree (signature
-   (mixed (enum #false)
+   (mixed False
           (PersonOf String FamilyTree FamilyTree))))
 )
 
 
-Diese Datentyp kann nun wie gewohnt in Signaturen verwendet werden,
+Dieser Datentyp kann nun wie gewohnt in Signaturen verwendet werden,
 beispielsweise:
 
 @#reader scribble/comment-reader
