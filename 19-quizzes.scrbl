@@ -24,3 +24,8 @@ einfacher weglassen kann.
 
 @subsection[#:tag "quiz-errors"]{Auftreten und Umgang mit Fehlern}
 @texquestions[#:key "errors"]
+
+@section{Bedeutung von BSL}
+
+@subsection[#:tag "quiz-semanticsbsl"]{Quiz zum gesamten Kapitel}
+@texquestions[#:key "semanticsbsl"]
