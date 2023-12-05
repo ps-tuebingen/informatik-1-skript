@@ -981,7 +981,7 @@ Wenn also @mv{e-1} und @mv{e-2} gleich sind und beide terminieren, dann ist der 
     @distractor{Legt fest, welche Reduktionsregeln gelten}
     @explanation{Für die Bedeutung eines Programms ist die Grammatik nicht zuständig.}
 
-    @solution{Zerlegt ein Programm in seine Teile}
+    @solution{Zerlegt ein Programm in seine Teilausdrücke}
     @explanation{Wie auch eine natürliche Grammatik z.B. einen Satz in Subjekt, Objekt und Prädikat aufteilt.}
   ]
   @question[
