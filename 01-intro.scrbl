@@ -124,7 +124,7 @@ Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie ve
 
 @questionnaire[#:key "intro" #:language "de"
   @question[
-    @q{Was ist die aktuelle Version von DrRacket?}
+    @q{Was ist die Version von DrRacket die in der Vorlesung verwendet wird?}
 
     @distractor{5.2}
 
@@ -140,7 +140,7 @@ Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie ve
     @distractor{Bayrische Schnaps-Lieferanten}
   ]
   @question[
-    @q{Welche der folgenden Optionen sind gültige BSL-Programme?}
+    @q{Welche der folgenden Varianten sind gültige BSL-Programme?}
 
     @solution{@racketblock[(+ 40 2)]}
     @distractor{@racketblock[40 + 2]}
@@ -373,7 +373,7 @@ Die zweite Funktionen setzt ein Bild in eine Szene:
 
 @questionnaire[#:key "types" #:language "de"
   @question[
-    @q{Wie nennen wir verschiedene Arten von Werten in der Informatik?}
+    @q{Welchen Begriff verwenden wir um verschiedene BSL Werte zu klassifizieren?}
 
     @distractor{Kategorien}
     @distractor{Objekte}
