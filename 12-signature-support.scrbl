@@ -264,19 +264,20 @@ fehleranfällig, auf diese Art Signaturen und Datendefinitionen zu überprüfen.
 Deshalb gibt es einige Sprachen, die die dynamische Prüfung von Signaturen
 und Datendefinitionen direkt und komfortabel unterstützen.
 
-Dies trifft beispielsweise auf die Sprache Racket zu, die auch von der DrRacket
-Umgebung unterstützt wird und die, bis auf kleine Abweichungen, die
-Beginning Student Language als Teilsprache unterstützt. In Racket
-können dynamische Prüfungen von Signaturen -- in dem Kontext auch @italic{Contracts}
-genannt -- an der Grenze zwischen Modulen definiert werden. Module sind abgeschlossene
+Wir haben bereits die Möglichkeit kennengelernt, mit der @racket[(: name signature-form)]
+Notation Signaturen dynamisch zu überprüfen. Diese Notation baut auf einem
+allgemeineren, mächtigem Konzept auf, nämlich dem der @italic{Contracts}. Diese
+wollen wir hier kurz vorstellen.
+
+Contracts werden an der Grenze zwischen Modulen definiert werden. Module sind abgeschlossene
 Programmeinheiten, die in Racket meistens mit Dateien assoziiert sind, also jede
 Datei ist ein Modul. 
 
 Hier sehen Sie die Definition eines Moduls welches die @racket[rest-after] Funktion
 von oben implementiert. In der @racket[provide] Klausel des Moduls wird dieser
 Funktion ein @italic{Contract}, also eine ausführbare Signatur, zugeordnet.
-Wir speichern das Modul in einer Datei "heinz.rkt", um zu illustrieren, dass vielleicht
-der Entwickler Heinz dieses Modul programmiert hat. Wie Sie sehen, hat Heinz
+Wir speichern das Modul in einer Datei "Joe.rkt", um zu illustrieren, dass vielleicht
+der Entwickler Joe dieses Modul programmiert hat. Wie Sie sehen, hat Joe
 den gleichen Fehler in die Implementierung eingebaut, den wir schon oben betrachtet haben.
 
 @; using modules instead of define/contract to get reasonable blame error messages
@@ -290,7 +291,7 @@ den gleichen Fehler in die Implementierung eingebaut, den wir schon oben betrach
 
 
 @racketmod[
-#:file "heinz.rkt"
+#:file "Joe.rkt"
 racket
 
 (provide
@@ -305,15 +306,15 @@ racket
 ]
 
 Betrachten Sie nun ein Modul vom Entwickler Elke, welche diese Funktion benutzen möchte und
-daher das Modul von Heinz über eine @racket[require] Klausel "importiert". Über diese Klausel
-wird deutlich gemacht, dass das Modul von Elke von dem Heinz Modul abhängt und dessen
+daher das Modul von Joe über eine @racket[require] Klausel "importiert". Über diese Klausel
+wird deutlich gemacht, dass das Modul von Elke von dem Joe Modul abhängt und dessen
 Funktionen verwenden möchte.
 
 @racketmod[
 #:file "elke.rkt"
 racket
 
-(require "heinz.rkt")
+(require "Joe.rkt")
 
 (rest-after "x" (list 1 2 3 4))
 ]
@@ -333,24 +334,24 @@ auszuführen, so erhalten wir folgende Fehlermeldung:
        number?
        (listof number?)
        (listof number?))
-  contract from: /Users/klaus/heinz.rkt
+  contract from: /Users/klaus/Joe.rkt
   blaming: /Users/klaus/elke.rkt
    (assuming the contract is correct)
-  at: /Users/klaus/heinz.rkt:3.24
+  at: /Users/klaus/Joe.rkt:3.24
 }
 
 Sie sehen, dass nicht nur der Aufruf der Funktion direkt als fehlerhaft erkannt wurde. Die
 Fehlermeldung sagt auch klar, wer an diesem Fehler schuld ist, nämlich Elke.
 
-Elke korrigiert also ihren Fehler. Nun kommt jedoch der Fehler, den Heinz in die Funktion
+Elke korrigiert also ihren Fehler. Nun kommt jedoch der Fehler, den Joe in die Funktion
 eingebaut hat, zum Tragen. Dieser Fehler wird jedoch sofort gefunden und es wird korrekt
-Heinz die Schuld daran zugewiesen.
+Joe die Schuld daran zugewiesen.
 
 @racketmod[
 #:file "elke.rkt"
 racket
 
-(require "heinz.rkt")
+(require "Joe.rkt")
 
 (rest-after 5 (list 1 2 3 4))
 ]
@@ -364,10 +365,10 @@ rest-after: broke its contract
        number?
        (listof number?)
        (listof number?))
-  contract from: /Users/klaus/heinz.rkt
-  blaming: /Users/klaus/heinz.rkt
+  contract from: /Users/klaus/Joe.rkt
+  blaming: /Users/klaus/Joe.rkt
    (assuming the contract is correct)
-  at: /Users/klaus/heinz.rkt:3.24
+  at: /Users/klaus/Joe.rkt:3.24
 }
 
 Wie diese Beispiele illustrieren, ist der Hauptvorteil von dynamisch überprüften Signaturen und Contracts,
