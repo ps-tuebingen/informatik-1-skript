@@ -96,7 +96,7 @@ im Beispiel das Ergebnis @racket[42] und nicht etwa @racket[5] oder @racket[10].
 
 Das vorletzte Pattern, @racket[(cons (posn 1 z) y)], illustriert, dass Patterns beliebig tief verschachtelt werden können.
 
-Im letzten Pattern, @racket[(? list?)], sehen wir, dass auch Prädikatsfunktionen von Listen und Strukturen verwendet
+Im letzten Pattern, @racket[(? cons?)], sehen wir, dass auch Prädikatsfunktionen von Listen und Strukturen verwendet
 werden können, um zu überprüfen, was für eine Art von Wert wir gerade haben. Diese Art von Pattern bietet sich an, wenn
 man nur wissen möchte, ob der Wert, auf dem wir matchen, zum Beispiel eine Liste oder eine @racket[posn] ist.
 
