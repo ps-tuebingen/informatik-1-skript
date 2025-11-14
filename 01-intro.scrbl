@@ -128,8 +128,8 @@ Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie ve
 
     @distractor{5.2}
 
-    @solution{8.10}
-    @explanation{Stand April 2022, zu sehen u.a. auf der Downloadseite @url{https://download.racket-lang.org/}}
+    @solution{8.18}
+    @explanation{Stand August 2025, zu sehen u.a. auf der Downloadseite @url{https://download.racket-lang.org/}}
 
     @distractor{9.0}
   ]
