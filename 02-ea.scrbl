@@ -58,7 +58,7 @@ ist nicht nur, dass man Schreibarbeit spart, sondern auch dass redundante Progra
 zu verstehen und zu warten sind: Wenn ich einen Algorithmus später ändern möchte, so muss ich
 in einem redundanten Programm erst alle Kopien dieses Algorithmus finden und jede davon ändern.
 Daher ist Programmieren niemals eine monotone repetitive Tätigkeit, denn wiederkehrende Muster
-können in Funktionsdefinitionen (und anderen Formen der Abstraktion die sie noch kennenlernen werden)
+können in Funktionsdefinitionen (und anderen Formen der Abstraktion, die sie noch kennenlernen werden)
 gekapselt und wiederverwendet werden.
 
 
@@ -83,7 +83,7 @@ der Funktion oder den @italic{Body} der Funktion.
 
 Funktionsaufrufe haben die Form:
 
-@racketblock[(FunctionName ArgumentExpression1 ArgumentExpression1 ...)]
+@racketblock[(FunctionName ArgumentExpression1 ArgumentExpression2 ...)]
 
 Ein Funktionsaufruf einer mit @racket[define] definierten (@italic{benutzerdefinierten})
 Funktion sieht also genau so aus wie
@@ -92,7 +92,7 @@ Dies ist kein Zufall. Dadurch, dass man nicht sehen kann, ob man gerade eine pri
 oder eine benutzerdefinierte Funktion aufruft, ist es leichter, die Programmiersprache
 selber zu erweitern oder zu verändern. Zum Beispiel kann aus einer primitiven Funktion
 eine benutzerdefinierte Funktion gemacht werden, oder ein Programmierer kann Erweiterungen
-definieren die so aussehen, als wäre die Sprache um primitive Funktionen erweitert worden.
+definieren, die so aussehen, als wäre die Sprache um primitive Funktionen erweitert worden.
 
 @section{Funktionen die Bilder produzieren}
 
@@ -139,7 +139,7 @@ heißt @racket[animate]. Die Auswertung des Ausdrucks
 
 @racketblock[(animate create-rocket-scence)]
 
-bewirkt, dass ein neues Fenster geöffnet wird in dem eine Animation zu sehen ist, die zeigt, wie sich die Rakete von 
+bewirkt, dass ein neues Fenster geöffnet wird, in dem eine Animation zu sehen ist, die zeigt, wie sich die Rakete von 
 oben nach unten bewegt und schließlich verschwindet. Wenn sie das Fenster schließen wird eine Zahl im Interaktionsbereich
 angezeigt; diese Zahl steht für die aktuelle Höhe der Rakete zu dem Zeitpunkt als das Fenster geschlossen wurde.
 
@@ -337,7 +337,7 @@ Zwei Spezialfälle konditionaler Ausdrücke sind so häufig, dass es in BSL eine
 Spezialfälle optimiert ist.
 
 Der erste Spezialfall ist der, dass man einen Zweig der Kondition haben möchte, der immer dann genommen wird, wenn alle anderen
-Zweige nicht anwendbar sind. In diesem Fall kann man statt der Kondition das Schlüsselword @racket[else] verwenden. Das Beispiel von oben könnten wir daher auch so formulieren:
+Zweige nicht anwendbar sind. In diesem Fall kann man statt der Kondition das Schlüsselwort @racket[else] verwenden. Das Beispiel von oben könnten wir daher auch so formulieren:
  
 @racketblock[
 (define (note punkte) 
@@ -658,7 +658,8 @@ bis auf einen Unterausdruck identisch sind, können wir die Kondition in den Aud
     MIDDLE 
     (if (<= height ROCKET-CENTER-TO-BOTTOM) 
         height 
-        ROCKET-CENTER-TO-BOTTOM) MTSCN))]
+        ROCKET-CENTER-TO-BOTTOM)
+    MTSCN))]
 
 @section[#:tag "semanticsofvardefs"]{Bedeutung von Funktions- und Konstantendefinitionen}
 
@@ -717,7 +718,8 @@ Papier vorherzusagen, welches die Reduktionsschritte sein werden und kontrollier
     MIDDLE 
     (if (<= height ROCKET-CENTER-TO-BOTTOM) 
         height 
-        ROCKET-CENTER-TO-BOTTOM) MTSCN))
+        ROCKET-CENTER-TO-BOTTOM)
+    MTSCN))
 (create-rocket-scene-v7 42)]
 
 Randnotiz: Zählen Sie einmal die Anzahl der Reduktionsschritte, die Sie pro Aufruf von @racket[create-rocket-scene-v7] zusätzlich benötigen (also wenn Sie
@@ -726,7 +728,7 @@ Wie kommt es zu den Unterschieden und was bedeuten sie?
 
 @section{Programmieren ist mehr als das Regelverstehen!}
 
-Ein guter Schachspieler muss die Regeln des Schachspiels verstehen. Aber nicht jeder, der die Schachregeln versteht ist auch ein guter Schachspieler.
+Ein guter Schachspieler muss die Regeln des Schachspiels verstehen. Aber nicht jeder, der die Schachregeln versteht, ist auch ein guter Schachspieler.
 Die Schachregeln verraten nichts darüber, wie man eine gute Partie Schach spielt. Das Verstehen der Regeln ist nur ein erster kleiner Schritt auf dem Weg dahin.
 
 Jeder Programmierer muss die "Mechanik" der Programmiersprache beherrschen: Was gibt es für Konstrukte in der Programmiersprache und was bedeuten sie?

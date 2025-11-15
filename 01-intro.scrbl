@@ -522,7 +522,7 @@ Wenn in BSL ein Laufzeitfehler auftritt, wird die Programmausführung abgebroche
  Fehlermeldung ausgegeben.
 
  Dieser Fehler ist ein Beispiel für einen @italic{Typfehler}: Die Funktion erwartet, dass ein Argument
- einen bestimmten Typ hat, diesem Fall 'Zahl', aber tatsächlich hat das Argument einen anderen
+ einen bestimmten Typ hat, in diesem Fall 'Zahl', aber tatsächlich hat das Argument einen anderen
  Typ, in diesem Fall 'String'.
 
  Ein anderer Fehler, der auftreten kann, ist der, dass die Anzahl der angegebenen Argumente nicht
