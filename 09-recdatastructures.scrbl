@@ -127,7 +127,7 @@ etwas aufwendiger:
 
 Sei @${\mathit{ft}_0} die leere Menge, @${\mathit{ft}_1} die Menge @${\{ \mathtt{\# false} \}}, @${\mathit{ft}_2} die Vereinigung
 aus  @${\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name #false #false)] für alle
-Strings @racket[name]. Im Allgemeinen sei $@{mathit{ft}_{i+1}} die Vereinigung aus  @${\{ \mathtt{\# false} \}} und der
+Strings @racket[name]. Im Allgemeinen sei $@{\mathit{ft}_{i+1}} die Vereinigung aus  @${\{ \mathtt{\# false} \}} und der
 Menge der @racket[(make-person name p1 p2)] für alle Strings @racket[name] sowie für alle @racket[p1] und
 alle @racket[p2] aus @${\mathit{ft}_i}. Beispielsweise ist @racket[Bob] ein Element von @${\mathit{ft}_5} (und 
 damit auch @${\mathit{ft}_6}, @${\mathit{ft}_7} usw.) aber nicht von @${\mathit{ft}_4}.
@@ -310,7 +310,7 @@ landen im zweiten Fall des konditionalen Ausdrucks, der keine rekursiven Ausdrü
 Wir können das Programm auch aus Sicht der Bedeutung der rekursiven Datentypdefinition betrachten. 
 Für jede Eingabe @racket[p] gibt es ein minimales i so dass @racket[p] in @${\mathit{ft}_i} ist.
 Für @racket[Bob] ist dieses i=5. Da die Werte der @racket[mother] und @racket[father] Felder von @racket[p] damit 
-in @${mathit{ft}_{i-1}} sind, ist klar, dass der Parameter @racket[p] bei allen rekursiven Aufrufen in @${mathit{ft}_{i-1}} ist.
+in @${\mathit{ft}_{i-1}} sind, ist klar, dass der Parameter @racket[p] bei allen rekursiven Aufrufen in @${\mathit{ft}_{i-1}} ist.
 Da das Programm offensichtlich für Werte aus @${\mathit{ft}_0} (im Beispiel die Menge @${\{ \mathtt{\# false} \}}) terminiert, ist
 klar, dass dann auch alle Aufrufe mit Werten aus @${\mathit{ft}_1} terminieren müssen, damit dann aber auch
 die Aufrufe mit Werten aus @${\mathit{ft}_2} und so weiter. Damit haben wir gezeigt, dass die Funktion
@@ -321,7 +321,7 @@ Dieses informell vorgetragene Argument aus dem vorherigen Absatz ist mathematisc
 Induktionsbeweis.
 
 Bei @racket[person-has-ancestor-stupid] ist die Lage anders, da im rekursiven Aufruf das Argument 
-eben nicht aus @${mathit{ft}_{i-1}} ist.
+eben nicht aus @${\mathit{ft}_{i-1}} ist.
 
 Die Schlussfolgerung aus diesen Überlegungen ist, dass Rekursion in Funktionen unproblematisch
 und wohldefiniert ist, solange sie der Struktur der Daten folgt. Da Werte rekursiver
@@ -875,7 +875,7 @@ von @racket[numKnownAncestors] zu @racket[numUnknownAncestors].
 
 Bei strukturell rekursiven Funktionen auf rekursiven Datentypen können wir jedoch ein weiteres, sehr mächtiges Beweisprinzip verwenden, nämlich das
 Prinzip der @italic{Induktion}. Betrachten Sie nochmal die Mengenkonstruktion der @${\mathit{ft}_i} aus @secref{rekursivedatentypen}. Wir wissen,
-dass der Typ FamilyTree die Vereinigung aller @${\mathit{ft}_i} ist. Desweiteren wissen wir, dass, wenn @racket[p] in $@{mathit{ft}_{i+1}} ist, dann sind
+dass der Typ FamilyTree die Vereinigung aller @${\mathit{ft}_i} ist. Desweiteren wissen wir, dass, wenn @racket[p] in $@{\mathit{ft}_{i+1}} ist, dann sind
 @racket[(person-father p)] und @racket[(person-mother p)] in @${\mathit{ft}_i}. Dies rechtfertigt die Verwendung des Beweisprinzips der Induktion:
 Wir zeigen die gewünschte Äquivalenz für den Basisfall i = 1, also @racket[p] = @racket[#false]. Dann zeigen wir die Äquivalenz für den Fall i = n+1, 
 unter der Annahme, dass die Äquivalenz bereits für i = n gilt. Anders ausgedrückt zeigen wir die Äquivalenz für den Fall 

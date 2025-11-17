@@ -989,12 +989,12 @@ Wenn also @mv{e-1} und @mv{e-2} gleich sind und beide terminieren, dann ist der 
 
     @distractor{Europäisches Bank Noten Format}
     @distractor{Elektronisches Befehls Namen Format}
-    @solution{Erweiterte Backus Naur Form}
+    @solution{Erweiterte Backus-Naur-Form}
     @explanation{Eine Notation zum Aufschreiben von Grammatiken}
 
   ]
   @question[
-    @q{Gegeben die Folgende Grammatik:
+    @q{Gegeben die folgende Grammatik:
       @BNF[(list @nonterm{LieblingsZahl} @BNF-alt[@nonterm{RundeZahl} @nonterm{Mystery}])
            (list @nonterm{RundeZahl} @BNF-alt[@litchar{0} @litchar{3} @litchar{6} @litchar{8} @litchar{9}])
            (list @nonterm{Mystery} @BNF-seq[@kleeneplus[@nonterm{Paar}] @litchar{7}])
