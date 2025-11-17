@@ -621,7 +621,7 @@ Programms in DrRacket ausführen zu können.
 Wir werden später mehr dazu sagen, wo, wie und wie ausführlich Programme kommentiert werden sollten.
 
 
-@section[#:tag "semanticsofexpressions"]{Bedeutung von BSL Ausdrücken}
+@section[#:tag "semanticsofexpressions"]{Bedeutung von BSL-Ausdrücken}
 
 
  Fassen wir nochmal den jetzigen Stand zusammen: Programmieren ist das Aufschreiben arithmetischer Ausdrücke,

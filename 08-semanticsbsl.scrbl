@@ -60,13 +60,13 @@ es allein aus diesem Grund wert macht, sie zu studieren.
 
 @section{Kontextfreie Grammatiken}
 
-Bisher haben wir nur informell beschrieben, wie BSL Programme aussehen. Mit Hilfe einer @italic{Grammatik} kann
+Bisher haben wir nur informell beschrieben, wie BSL-Programme aussehen. Mit Hilfe einer @italic{Grammatik} kann
 man diese informelle Beschreibung präzise und prägnant darstellen. Es gibt viele unterschiedliche Arten von Grammatiken.
 Im Bereich der Programmiersprachen verwendet man meistens sogenannte @italic{kontextfreie} Grammatiken. Diese
 und andere Grammatikformalismen werden in der Vorlesung "Theoretische Informatik" im Detail behandelt; wir werden
 Grammatiken hier nur soweit besprechen, wie es zum Verständnis der Definitionen erforderlich ist.
 
-Es gibt unterschiedliche Notationen für kontextfreie Grammatiken. Wir verwenden die sogenannte EBNF --- die Erweiterte Backus Naur Form.
+Es gibt unterschiedliche Notationen für kontextfreie Grammatiken. Wir verwenden die sogenannte EBNF --- die Erweiterte Backus-Naur-Form.
 
 @subsection{Beispiel einer kontextfreien Grammatik}
 Hier direkt ein Beispiel einer Grammatik für Zahlen:
@@ -87,9 +87,9 @@ Hier direkt ein Beispiel einer Grammatik für Zahlen:
   (list @nonterm{Ziffer}
         @BNF-alt[@litchar{0} @nonterm{ZifferNichtNull}])]
 
-Beispiele für Texte, die der @nonterm{Zahl} Definition dieser Grammatik entsprechen, sind: @litchar{0}, @litchar{420}, @litchar{-87}, @litchar{3.1416}, @litchar{-2.09900}.
+Beispiele für Texte, die der @nonterm{Zahl}-Definition dieser Grammatik entsprechen, sind: @litchar{0}, @litchar{420}, @litchar{-87}, @litchar{3.1416}, @litchar{-2.09900}.
 
-Beispiele für Texte, die nicht der @nonterm{Zahl} Definition dieser Grammatik entsprechen, sind: @litchar{007}, @litchar{-.65}, @litchar{13.}, @litchar{zwölf}, @litchar{111Nonsense222}.
+Beispiele für Texte, die nicht der @nonterm{Zahl}-Definition dieser Grammatik entsprechen, sind: @litchar{007}, @litchar{-.65}, @litchar{13.}, @litchar{zwölf}, @litchar{111Nonsense222}.
 
 Die mit spitzen Klammern markierten Bezeichner wie @nonterm{Zahl} heißen @italic{Nichtterminale};
 die farblich markierten Symbole wie @litchar{3} oder @litchar{.} heißen @italic{Terminalsymbole}. Eine Klausel wie die ersten beiden Zeilen der obigen Grammatik heißt @italic{Produktion}.
@@ -271,7 +271,7 @@ und Objektebene (eine beliebige EBNF Grammatik, die durch die Metagrammatik besc
 in der Metagrammatik @mv{::=} als Terminalsymbol verwendet; dies ist zu unterscheiden von der Verwendung des gleichen Symbols
 als Trenner zwischen linker und rechter Seite von Produktionen.
 
-Wir definieren die folgenden Nonterminale: @nonterm{G} für Grammatik, @nonterm{P} für Produktion, @nonterm{S} für Sequenz,  @nonterm{E} Expression
+Wir definieren die folgenden Nonterminale: @nonterm{G} für Grammatik, @nonterm{P} für Produktion, @nonterm{S} für Sequenz, @nonterm{E} Expression,
 @nonterm{I} für Item, @nonterm{V} für Nichtterminalsymbole (nicht explizit definiert)
 und @nonterm{T} für Terminalsymbole (nicht explizit definiert).
 
@@ -292,12 +292,12 @@ Tipp: Nehmen Sie als Übung eine kleine EBNF Grammatik und zeichnen den Ableitun
 Mit Hilfe der Metagrammatik können wir nun genau definieren, wie Ableitungsbäume erzeugt werden können.
 Um auch mit den + und * Operatoren umgehen zu können, ist es nötig, von Sequenzen von Ableitungsbäumen (SALB)
 zu sprechen. Eine SALB ist einfach eine geordnete Menge an Ableitungsbäumen. Bei Nichtterminalen wird
-diese Sequenz immer die Länge 1 haben, also es kommt am Ende wieder genau ein Ableitungsbaum heraus.
+diese Sequenz immer die Länge 1 haben, es kommt also am Ende wieder genau ein Ableitungsbaum heraus.
 
 Im folgenden stehe @mv{S} für eine beliebige Sequenz @nonterm{S}, @mv{E} für eine beliebige Expression @nonterm{E},
-@mv{I} für eine beliebiges Item @nonterm{I}, @mv{V} für eine beliebiges Nonterminal @nonterm{V},
-@mv{T} für eine beliebige Terminal @nonterm{T}, @mv{Z} für einen beliebigen Ableitungsbaum und @mv{B} für eine beliebige SALB. Wenn wir mehr dieser
-Platzhalter (auch genannt "Metavariablen", s.u.) benötigen, verwenden wir Indizes wie @mv{B-1}.
+@mv{I} für ein beliebiges Item @nonterm{I}, @mv{V} für ein beliebiges Nonterminal @nonterm{V},
+@mv{T} für ein beliebiges Terminal @nonterm{T}, @mv{Z} für einen beliebigen Ableitungsbaum und @mv{B} für eine beliebige SALB. Wenn wir mehr dieser
+Platzhalter (auch "Metavariablen" genannt, s.u.) benötigen, verwenden wir Indizes wie @mv{B-1}.
 Für SALB @mv{B-1} bis @mv{B-n} verwenden wir die Schreibweise @mv{B-1},...,@mv{B-n} zur Konkatenation der Sequenzen
 zu einer neuen SALB.
 
@@ -305,14 +305,14 @@ Für @mv{S}, @mv{E} und @mv{I} können wir nun die Konstruktion einer SALB wie f
 
 @itemlist[
 
-@item{Falls @mv{S} = @mv{E-1} ... @mv{E-n} und für alle i ist @mv{B-i} ein SALB von @mv{E-i}, so ist
- @mv{B-1},...,@mv{B-n} ein SALB für @mv{S}.}
-@item{Falls @mv{E} = @mv{I} und  @mv{B} ein SALB von @mv{I}, so ist
- @mv{B} ein SALB für @mv{E}.}
+@item{Falls @mv{S} = @mv{E-1} ... @mv{E-n} und für alle i ist @mv{B-i} eine SALB von @mv{E-i}, so ist
+ @mv{B-1},...,@mv{B-n} eine SALB für @mv{S}.}
+@item{Falls @mv{E} = @mv{I} und @mv{B} eine SALB von @mv{I}, so ist
+ @mv{B} eine SALB für @mv{E}.}
 @item{Falls @mv{E} = @kleeneplus{@mv{I}} oder @mv{E} = @kleenestar{@mv{I}}, dann ist für alle @mv{k} >= 1 (für +)
-  bzw. @mv{k} >= 0 (für *) @mv{B-1},...,@mv{B-k} ein SALB für @mv{E}, falls alle @mv{B-i} SALBs für @mv{I} sind.}
+  bzw. @mv{k} >= 0 (für *) @mv{B-1},...,@mv{B-k} eine SALB für @mv{E}, falls alle @mv{B-i} SALBs für @mv{I-i} sind.}
 @item{Falls @mv{I} = @mv{V} und @nonterm{V} ::= ... | S | ... ist eine Produktion der Grammatik und
-   @mv{B} = @mv{Z-1} ... @mv{Z-n} ist ein SALB für @mv{S}, so ist
+   @mv{B} = @mv{Z-1} ... @mv{Z-n} ist eine SALB für @mv{S}, so ist
 
 @mv{V} @linebreak[]
  @hspace[2] @mv{Z-1} @linebreak[]
@@ -320,10 +320,10 @@ Für @mv{S}, @mv{E} und @mv{I} können wir nun die Konstruktion einer SALB wie f
  @hspace[2] @mv{Z-n} @linebreak[]
 
 
-ein SALB (und ein ALB) für @mv{I}.}
-@item{Falls  @mv{I} = @mv{T} , dann ist @mv{T} ein SALB für @mv{I}.}
-@item{Falls  @mv{I} = @(litchar "{") @mv{S} @(litchar "}") und @mv{B} ist ein SALB für @mv{S} ,
-  dann ist @mv{B} ein SALB für @mv{I}.}
+eine SALB (und ein ALB) für @mv{I}.}
+@item{Falls  @mv{I} = @mv{T} , dann ist @mv{T} eine SALB für @mv{I}.}
+@item{Falls  @mv{I} = @(litchar "{") @mv{S} @(litchar "}") und @mv{B} ist eine SALB für @mv{S} ,
+  dann ist @mv{B} eine SALB für @mv{I}.}
  ]
 
 @section[#:tag "bsl-grammar"]{Syntax von BSL}
@@ -393,15 +393,15 @@ die man auch in BSL schreiben kann. Der einzige Unterschied ist, dass man an ein
 schreiben muss.
 
 Wir haben bereits ein intellektuelles Werkzeug kennengelernt, um Kernsprachenelemente von eher unwichtigem Beiwerk zu unterscheiden,
-nämlich den syntaktischen Zucker. Im Abschnitt @secref{kondsem} haben wir gesehen, dass es nicht notwendig ist, @racket[if] Ausdrücke
-und innerhalb von @racket[cond] Ausdrücken den @racket[else] Operator zu unterstützen, weil man diese Sprachfeatures leicht mit dem einfachen
-@racket[cond] Ausdruck simulieren kann. Die in @secref{kondsem} angegebenen Transformationen betrachten wir daher als die @italic{Definition}
+nämlich den syntaktischen Zucker. Im Abschnitt @secref{kondsem} haben wir gesehen, dass es nicht notwendig ist, @racket[if]-Ausdrücke
+und innerhalb von @racket[cond]-Ausdrücken den @racket[else]-Operator zu unterstützen, weil man diese Sprachfeatures leicht mit dem einfachen
+@racket[cond]-Ausdruck simulieren kann. Die in @secref{kondsem} angegebenen Transformationen betrachten wir daher als die @italic{Definition}
 dieser Sprachfeatures und betrachten daher im folgenden nur noch die Kernsprache, in die diese Transformationen abbilden.
 
-@margin-note{Recherchieren Sie, was die @italic{de Morgan'schen Regeln} sind, falls ihnen die Transformation nicht klar ist.}
+@margin-note{Recherchieren Sie, was die @italic{de Morgan'schen Regeln} sind, falls Ihnen die Transformation nicht klar ist.}
 Die Syntax oben enthält auch spezielle Syntax für die logischen Funktionen @racket[and] und @racket[or], weil deren Argumente anders ausgewertet
-werden als die Argumente normaler Funktionen. Allerdings ist es in unserer Kernsprache nicht nötig, die Funktionen zu betrachten, da @racket[or]
-und @racket[and] durch @racket[cond] ausgedrückt werden kann.
+werden als die Argumente normaler Funktionen. Allerdings ist es in unserer Kernsprache nicht nötig, diese Funktionen zu betrachten, da @racket[or]
+und @racket[and] durch @racket[cond] ausgedrückt werden können.
 
 Man könnte versuchen,  @racket[and] direkt durch einen @racket[cond] Ausdruck zu ersetzen: @racket[(and e-1 e-2)]
 wird transformiert zu @racket[(cond [e-1 e-2] [else #false])]. Zwar simuliert dies korrekt die Auswertungsreihenfolge, aber diese Transformation ist nicht adäquat für
@@ -458,7 +458,7 @@ Für Fortgeschrittene hier auch wieder ein Programm als Quiz:
 @bsltree[
  #:quiz #t   @; optional keyword argument, default is #f
  #:lang "de" @; optional keyword argument, default is "en"
- #'((cond [e1 #true] [else (asBool e2)]))
+ #'((cond [e1 #true] [#true (asBool e2)]))
 ]
 
 @margin-note{
@@ -506,7 +506,7 @@ Betrachten wir als Beispiel den Ausdruck @racket[(* (+ 1 2) (+ 3 4))]. Der Unter
 und kann zu @racket[3] ausgewertet werden. Gemäß der Kongruenzregel kann ich den Gesamtausdruck also zu @racket[(* 3 (+ 3 4))] reduzieren.
 
 Wir werden Auswertungspositionen und die Kongruenzregel durch einen @italic{Auswertungskontext} formalisieren. Ein Auswertungskontext ist
-eine Grammatik für Programme, die ein "Loch", @litchar{[]}, enthalten. In Bezug auf den DrRacket Stepper kann man den
+eine Grammatik für Programme, die ein "Loch", @litchar{[]}, enthalten. In Bezug auf den DrRacket-Stepper kann man den
 Auswertungskontext als den während einer Reduktion nicht farblich markierten Teil des Ausdrucks verstehen.
 Die Grammatik ist so strukturiert, dass jedes Element
 der definierten Sprache genau ein "Loch" enthält.
@@ -605,7 +605,7 @@ Hier können Sie das Ganze auch nochmal im interaktiven Stepper sehen (einige de
 
 @section{Bedeutung von Ausdrücken}
 Jeder Ausdruck wird in einer Umgebung @mv{env} ausgewertet, wie sie im vorherigen Abschnitt definiert wurde. Um die Notation nicht zu überladen,  werden wir @mv{env}
-nicht explizit zu jeder Reduktionsregel dazuschreiben sondern als implizit gegeben annehmen. Die Auswertung wird, wie aus
+nicht explizit zu jeder Reduktionsregel dazuschreiben, sondern als implizit gegeben annehmen. Die Auswertung wird, wie aus
 Abschnitt @secref{semanticsofexpressions} bekannt, in Form von Reduktionsregeln der Form @mv{e-1} @step @mv{e-2} definiert.
 Ein Ausdruck @mv{e} wird ausgewertet, indem er solange reduziert wird, bis ein Wert herauskommt: @mv{e} @step @mv{e-1} @step ... @step @mv{v}.
 
@@ -614,7 +614,7 @@ der kein Wert ist und der nicht weiter reduziert werden kann.
 
 
 @subsection{Bedeutung von Funktionsaufrufen}
-Funktionen werden unterschiedlich ausgeführt je nachdem ob der Funktionsname eine primitive Funktion oder eine in der Umgebung definierte Funktion ist.
+Funktionen werden unterschiedlich ausgeführt, je nachdem ob der Funktionsname eine primitive Funktion oder eine in der Umgebung definierte Funktion ist.
 Im ersten Fall wird die primitive Funktion auf den Argumenten ausgewertet. Ist dies erfolgreich, so kann auf das Result reduziert werden.
 Ist dies nicht erfolgreich, so kann der Ausdruck nicht reduziert werden.
 
@@ -661,7 +661,7 @@ Hier ein Beispiel dazu - man sieht auch das Verhalten, dass im Fehlerfall gestop
 Konditionale Ausdrücke werden ausgewertet, wie schon in @secref{kondsem} beschrieben. Gemäß
 der Definition des Auswertungskontextes wird stets nur der erste Bedingungsausdruck ausgewertet.
 Je nachdem ob dieser @racket[#true] oder @racket[#false] ergibt, wird auf den Ergebnisausdruck
-oder den um die fehlgeschlagene Bedingung gekürzten @racket[cond] Ausdruck reduziert:
+oder den um die fehlgeschlagene Bedingung gekürzten @racket[cond]-Ausdruck reduziert:
 
 @elem[#:style inbox-style]{
 @italic{(COND-True): }@BNF-seq[open @litchar{cond} lb @litchar{#true} @mv{e} rb "..." close] @step @mv{e}}
@@ -855,7 +855,7 @@ Beispiel:
 ; a Posn is a structure: (make-posn Number Number)
 )
 
-@racket[<make-posn 3 4 >] ist ein Element der definierten Teilmenge, aber @racket[<make-posn #true "x" >]
+@racket[<make-posn 3 4>] ist ein Element der definierten Teilmenge, aber @racket[<make-posn #true "x">]
 oder @racket[<make-posn <make-posn 3 4> 5>] sind es nicht.
 
 Eine Datendefinition beschreibt im Allgemeinen eine kohärente Teilmenge des Datenuniversums. Funktionen
@@ -867,7 +867,7 @@ und welche Ergebnisse sie produzieren.
 Wir hatten in Abschnitt @secref{semanticsofexpressions} vorgestellt, wie man auf Basis der Reduktionsregeln
 eine Äquivalenzrelation auf Ausdrücken definieren kann.
 Diese Äquivalenzen können zum Refactoring von Programmen verwendet
-werden - also Programmänderungen, die nicht die Bedeutung verändern aber die Struktur des Programms verbessern.
+werden --- also Programmänderungen, die nicht die Bedeutung verändern, aber die Struktur des Programms verbessern.
 Außerdem können sie verwendet werden, um Eigenschaften eines Programmes herzuleiten, zum Beispiel
 dass die Funktion @racket[overlaps-circle] aus dem vorherigen Kapitel kommutativ ist, also
 @racket[(overlaps-circle c1 c2)] @equiv @racket[(overlaps-circle c2 c1)].
@@ -899,7 +899,7 @@ dass überall "gleiches mit gleichem" ersetzt werden darf:
 
 Eine Äquivalenzsrelation sollte möglichst groß sein, damit wir so viele Äquivalenzen wie möglich zeigen können.
 Gleichzeitig sollte sie korrekt sein. Dies bedeutet, dass äquivalente Programme das gleiche Verhalten haben, also
-insbesondere -- sofern sie terminieren -- bei Auswertung den gleichen Wert ergeben.
+insbesondere --- sofern sie terminieren --- bei Auswertung den gleichen Wert ergeben.
 
 Wir definieren nun nach und nach die Regeln, die für die Äquivalenzrelation gelten sollen.
 Zunächst einmal sollte es tatsächlich eine Äquivalenzrelation --- also reflexiv, symmetrisch und transitiv --- sein:
@@ -922,7 +922,7 @@ Die Verknüpfung zur Auswertungsrelation wird durch diese Regel geschaffen: Redu
 @italic{(ERED): }Falls @mv{e-1} @step @mv{e-2} dann @mv{e-1} @equiv @mv{e-2}.
 }
 
-Damit wir auch "symbolisch" Funktionen auswerten können, erweitern wir die Regel für Funktionsaufrufe, so dass es
+Damit wir auch "symbolisch" Funktionen auswerten können, erweitern wir die Regel für Funktionsaufrufe, sodass es
 für die Bestimmung von Äquivalenzen nicht notwendig ist, die Argumente auszuwerten.
 
 @elem[#:style inbox-style]{
@@ -930,16 +930,16 @@ für die Bestimmung von Äquivalenzen nicht notwendig ist, die Argumente auszuwe
 dann @BNF-seq[open @mv{name} @mv{e-1} "..." @mv{e-n} close] @equiv @mv{e}[@mv{name-1} := @mv{e-1} ... @mv{name-n} := @mv{e-n}]}
 
 Bei der Konjunktion wissen wir, dass der Gesamtausdruck zu @racket[#false] auswertet (oder nicht terminiert), wenn mindestens
-eines der Argumente äquivalent zu @racket[#false] ist.
+eines der Argumente äquivalent @racket[#false] ist.
 
 @italic{(EAND): }@elem[#:style inbox-style]{@BNF-seq[open @litchar{and} "..." @litchar{#false} "..." close] @equiv @litchar{#false}}
 
 Außerdem können wir Wissen, das wir über die eingebauten Funktionen haben, beim Schließen mit Äquivalenzen nutzen. Beispielsweise wissen
-wir, dass @racket[(+ a b)] @equiv @racket[(+ b a)]. Wir fassen die Menge der Äquivalenzen, die für die eingebauten Funktionen gelten unter dem
+wir, dass @racket[(+ a b)] @equiv @racket[(+ b a)]. Wir fassen die Menge der Äquivalenzen, die für die eingebauten Funktionen gelten, unter dem
 Namen @italic{(EPRIM)} zusammen.
 
 
-Einen kleinen Hakenfuss gibt es allerdings doch noch. Man würde sich von einer Äquivalenzrelation für Programme wünschen, dass folgende Eigenschaft
+Einen kleinen Hakenfuß gibt es allerdings doch noch. Man würde sich von einer Äquivalenzrelation für Programme wünschen, dass folgende Eigenschaft
 gilt: Falls @mv{e-1} @equiv @mv{e-2} und @mv{e-1} @multistep @mv{v}, dann auch @mv{e-2} @multistep @mv{v}. Diese Eigenschaft gilt jedoch
 nicht, weil es sein kann, dass @mv{e-1} terminiert aber @mv{e-2} nicht.
 
@@ -958,7 +958,7 @@ berücksichtigen, dass die Äquivalenz nur unter der Voraussetzung gilt, dass di
 
 Es gilt jedoch folgende etwas schwächere Eigenschaft, die wir ohne Beweis aufführen:
 
-Falls @mv{e-1} @equiv @mv{e-2} und @mv{e-1} @multistep @mv{v-1} und @mv{e-2} @multistep @mv{v-2}, dann @mv{v1} = @mv{v2}.
+Falls @mv{e-1} @equiv @mv{e-2} und @mv{e-1} @multistep @mv{v-1} und @mv{e-2} @multistep @mv{v-2}, dann @mv{v-1} = @mv{v-2}.
 
 Wenn also @mv{e-1} und @mv{e-2} gleich sind und beide terminieren, dann ist der Wert, der herauskommt, gleich.
 
