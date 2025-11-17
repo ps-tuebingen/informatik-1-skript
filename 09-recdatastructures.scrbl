@@ -62,7 +62,7 @@ sehr ähnlich aus.
 
 Was können wir machen um mit diesem Problem umzugehen? Betrachten wir etwas genauer, was für Daten wir hier eigentlich
 modellieren wollen. Die Erkenntnis, die wir hier benötigen, ist, dass ein Stammbaum eine rekursive Struktur hat:
-Der Stammbaum einer Person besteht aus dem Namen der Person und dem Stammbaum seiner Mutter und dem Stammbaum seiner Eltern.
+Der Stammbaum einer Person besteht aus dem Namen der Person und dem Stammbaum ihrer Mutter und dem Stammbaum ihres Vaters.
 Ein Stammbaum hat also eine Eigenschaft, die man auch @italic{Selbstähnlichkeit} nennt: Ein Teil eines Ganzen hat die 
 gleiche Struktur wie das Ganze.
 
@@ -110,14 +110,14 @@ Hier ist ein Beispiel:
 @racketblock[
 (define Bob 
   (make-person "Bob" 
-               (make-person "Alice" #false #false)
                (make-person "Horst" 
                             (make-person "Joe" 
                                          #false
                                          (make-person "Rita" 
                                                       #false 
                                                       #false))
-                            #false)))]             
+                            #false)
+               (make-person "Alice" #false #false)))]
 
 
 Was bedeutet also so eine rekursive Datendefinition? Wir haben bisher Datentypen immer
@@ -125,15 +125,15 @@ als Mengen von Werten aus dem Datenuniversum interpretiert, und dies ist auch
 weiterhin möglich, nur die Konstruktion der Menge, die der Typ repräsentiert, ist nun
 etwas aufwendiger:
 
-Sei @${ft_0} die leere Menge, @${ft_1} die Menge @${\{ \mathtt{\# false} \}}, @${ft_2} die Vereinigung
+Sei @${\mathit{ft}_0} die leere Menge, @${\mathit{ft}_1} die Menge @${\{ \mathtt{\# false} \}}, @${\mathit{ft}_2} die Vereinigung
 aus  @${\{ \mathtt{\# false} \}} und der Menge der @racket[(make-person name #false #false)] für alle
 Strings @racket[name]. Im Allgemeinen sei ft@subscript{i+1} die Vereinigung aus  @${\{ \mathtt{\# false} \}} und der
 Menge der @racket[(make-person name p1 p2)] für alle Strings @racket[name] sowie für alle @racket[p1] und
-alle @racket[p2] aus ft@subscript{i}. Beispielsweise ist @racket[Bob] ein Element von ft@subscript{5} (und 
-damit auch ft@subscript{6}, ft@subscript{7} usw.) aber nicht von ft@subscript{4}.
+alle @racket[p2] aus @${\mathit{ft}_i}. Beispielsweise ist @racket[Bob] ein Element von @${\mathit{ft}_5} (und 
+damit auch @${\mathit{ft}_6}, @${\mathit{ft}_7} usw.) aber nicht von @${\mathit{ft}_4}.
 
-Dann ist die Bedeutung von @racket[FamilyTree], @${\mathit{ft}}, die Vereinigung aller dieser Mengen, also ft@subscript{0}
-vereinigt mit @${ft_1} vereinigt mit @${ft_2} vereinigt mit @${ft_3} vereinigt mit ... .
+Dann ist die Bedeutung von @racket[FamilyTree], @${\mathit{ft}}, die Vereinigung aller dieser Mengen, also @${\mathit{ft}_0}
+vereinigt mit @${\mathit{ft}_1} vereinigt mit @${\mathit{ft}_2} vereinigt mit @${\mathit{ft}_3} vereinigt mit ... .
 
 In mathematischer Schreibweise können wir die Konstruktion so zusammenfassen:
 
@@ -150,8 +150,8 @@ Es ist nicht schwer zu sehen, dass stets @${\mathit{ft}_i \subseteq \mathit{ft}_
 also stets die vorherige.
 
 Aus dieser Mengenkonstruktion wird klar, wieso rekursive Datentypen es ermöglichen, Daten beliebiger
-Größe zu repräsentieren: Jede Menge ft@subscript{i} enthält die Werte, deren maximale Tiefe in Baumdarstellung i ist.
-Da wir alle ft@subscript{i} miteinander vereinigen, ist die Tiefe (und damit auch die Größe) unbegrenzt.
+Größe zu repräsentieren: Jede Menge @${\mathit{ft}_i} enthält die Werte, deren maximale Tiefe in Baumdarstellung i ist.
+Da wir alle @${\mathit{ft}_i} miteinander vereinigen, ist die Tiefe (und damit auch die Größe) unbegrenzt.
 
 Diese Mengenkonstruktion kann für jeden rekursiven Datentyp definiert werden. Falls es mehrere rekursive
 Alternativen gibt, so ist die i-te Menge die Vereinigung der i-ten Mengen für jede Alternative. Gäbe es also
@@ -246,7 +246,7 @@ Zum Glück haben wir aber bereits eine Funktion, deren Aufgabe identisch mit der
 Die Struktur der Daten diktiert also die Struktur der Funktionen. Dort wo die Daten rekursiv sind, sind auch die Funktionen, die solche
 Daten verarbeiten, rekursiv.
 
-Die Vervollständigung des Templates ist nun eifach:
+Die Vervollständigung des Templates ist nun einfach:
 
 @#reader scribble/comment-reader
 (racketblock
@@ -290,7 +290,7 @@ zu programmieren. Also rufen wir doch einfach diese Funktion auf:
 
 Irgendwie scheint diese Lösung zu einfach zu sein. Ein Ausführen der Tests bestätigt den Verdacht.
 Allerdings schlagen die Tests nicht fehl, sondern die Ausführung der Tests terminiert nicht und
-wir müssen sie durch Drücken auf die "Stop" Taste abbrechen.
+wir müssen sie durch Drücken auf die "Stop"-Taste abbrechen.
 
 Wieso funktioniert @racket[person-has-ancestor] aber nicht @racket[person-has-ancestor-stupid]?
 
@@ -308,13 +308,13 @@ Tiefe hat, muss irgendwann @racket[(person-has-ancestor #false "Joe")] aufgerufe
 landen im zweiten Fall des konditionalen Ausdrucks, der keine rekursiven Ausdrücke mehr enthält.
 
 Wir können das Programm auch aus Sicht der Bedeutung der rekursiven Datentypdefinition betrachten. 
-Für jede Eingabe @racket[p] gibt es ein minimales i so dass @racket[p] in ft@subscript{i} ist.
+Für jede Eingabe @racket[p] gibt es ein minimales i so dass @racket[p] in @${\mathit{ft}_i} ist.
 Für @racket[Bob] ist dieses i=5. Da die Werte der @racket[mother] und @racket[father] Felder von @racket[p] damit 
-in @${ft_{i-1}} sind, ist klar, dass der @racket[p] Parameter bei allen rekursiven Aufrufe in @${ft_{i-1}} ist.
-Da das Programm offensichtlich für Werte aus @${ft_0} (im Beispiel die Menge {#false}) terminiert, ist
-klar, dass dann auch alle Aufrufe mit Werten aus @${ft_1} terminieren müssen, damit dann aber auch
-die Aufrufe mit Werten aus @${ft_2} und so weiter. Damit haben wir gezeigt, dass die Funktion
-für alle Werte aus @${ft_i} für ein beliebiges i wohldefiniert ist --- mit anderen Worten:
+in @${ft_{i-1}} sind, ist klar, dass der Parameter @racket[p] bei allen rekursiven Aufrufen in @${ft_{i-1}} ist.
+Da das Programm offensichtlich für Werte aus @${\mathit{ft}_0} (im Beispiel die Menge @${\{ \mathtt{\# false} \}}) terminiert, ist
+klar, dass dann auch alle Aufrufe mit Werten aus @${\mathit{ft}_1} terminieren müssen, damit dann aber auch
+die Aufrufe mit Werten aus @${\mathit{ft}_2} und so weiter. Damit haben wir gezeigt, dass die Funktion
+für alle Werte aus @${\mathit{ft}_i} für ein beliebiges i wohldefiniert ist --- mit anderen Worten:
 für alle Werte aus @racket[FamilyTree].
 
 Dieses informell vorgetragene Argument aus dem vorherigen Absatz ist mathematisch gesehen ein
@@ -346,11 +346,12 @@ Hier ist die Signatur, Aufgabenbeschreibung und ein Test für diese Funktion:
  (promote Bob "Dr. ")
  (make-person 
   "Dr. Bob" 
-  (make-person "Dr. Alice" #false #false) 
   (make-person 
-   "Dr. Horst" 
-   (make-person "Dr. Joe" #false 
-                (make-person "Dr. Rita" #false #false)) #false)))
+    "Dr. Horst" 
+    (make-person "Dr. Joe" #false 
+                 (make-person "Dr. Rita" #false #false))
+    #false)
+  (make-person "Dr. Alice" #false #false)))
  
 (define (promote p t) ...)
 )
@@ -416,7 +417,7 @@ beispielsweise:
 
 @section{Listen}
 
-Die @racket[FamilyTree] Datendefinition von oben steht für eine Menge von Bäumen, in denen 
+Die Datendefinition @racket[FamilyTree] von oben steht für eine Menge von Bäumen, in denen 
 jeder Knoten genau zwei ausgehende Kanten hat. Selbstverständlich können wir auch auf die
 gleiche Weise Bäume repräsentieren, die drei oder fünf ausgehende Kanten haben --- indem wir
 eine Alternative des Summentyps haben, in der der Datentyp drei bzw. fünfmal vorkommt.
@@ -540,7 +541,7 @@ Unser Beispiel von oben sieht bei Nutzung der eingebauten Listenfunktionen also 
         [else 0]))
 )
 
-@subsection{Die @racket[list] Funktion}
+@subsection{Die @racket[list]-Funktion}
 
 Es stellt sich schnell als etwas mühselig heraus, Listen mit Hilfe von @racket[cons] und @racket[empty] zu konstruieren.
 Aus diesem Grund gibt es etwas syntaktischen Zucker, um Listen komfortabler zu erzeugen: Die @racket[list] Funktion.
@@ -570,7 +571,7 @@ sollen wir separate Strukturen für jeden dieser Datentypen haben?
 
 Es ist sinnvoll, dass alle diese Datentypen die gleiche Struktur benutzen, nämlich in Form der eingebauten 
 Listenfunktionen. Hierfür gibt es zwei Gründe: Erstens wären all diese Strukturen sehr ähnlich und wir würden damit
-gegen das DRY Prinzip verstoßen. Zweitens gibt es eine ganze Reihe von Funktionen, die auf @italic{beliebigen}
+gegen das DRY-Prinzip verstoßen. Zweitens gibt es eine ganze Reihe von Funktionen, die auf @italic{beliebigen}
 Listen arbeiten, zum Beispiel eine Funktion @racket[second], die das zweite Listenelement einer Liste zurückgibt:
 
 @racketblock[
@@ -791,8 +792,8 @@ An dieser Stelle fassen wir zusammen, wie wir das Entwurfsrezept erweitern, um m
         Aufruf der Funktion, die Sie gerade implementieren, ins Template aufgenommen. Als Argument
         des rekursiven Aufrufs wird der Aufruf des Selektors, der den zur Datenrekursion gehörigen
         Wert extrahiert, ins Template mit aufgenommen. Wenn Sie beispielsweise eine Funktion
-        @racket[(define (f a-list-of-strings ...) ...)] auf Listen definieren, so sollte im @racket[cons?] 
-        Fall der Funktion der Aufruf @racket[(f (rest a-list-of-strings) ...)] stehen.}
+        @racket[(define (f a-list-of-strings ...) ...)] auf Listen definieren, so sollte im
+        @racket[cons?]-Fall der Funktion der Aufruf @racket[(f (rest a-list-of-strings) ...)] stehen.}
   @item{Beim Entwurf des Funktionsbodies starten wir mit den Fällen der Funktion, die nicht rekursiv sind.
         Diese Fälle nennt man auch die @italic{Basisfälle}, in Analogie zu Basisfällen bei Beweisen per Induktion.
         Die nicht-rekursiven Fälle sind typischerweise einfach und sollten sich direkt aus den Testfällen ergeben.
@@ -812,7 +813,7 @@ An dieser Stelle fassen wir zusammen, wie wir das Entwurfsrezept erweitern, um m
 @section{Refactoring von rekursiven Datentypen}
 Bezüglich der Datentyp-Refactorings aus @secref{refactoring-adt} ergeben sich neue
         Typisomorphien durch "inlining" bzw. Expansion von rekursiven Datendefinitionen. Beispielsweise ist in folgendem Beispiel
-        @racket[list-of-number] isomorph zu @racket[list-of-number2], denn letztere Definition ergibt sich aus der ersten
+        @racket[list-of-number] isomorph zu @racket[list-of-number2], denn letztere Definition ergibt sich aus der ersten,
         indem man die Rekursion einmal expandiert.
         
 @#reader scribble/comment-reader
@@ -866,19 +867,19 @@ Betrachten Sie die folgenden beiden Funktionen:
 Die Tests suggerieren, dass für alle Personen @racket[p] folgende Äquivalenz gilt: @racket[(+ (numKnownAncestors p) 1)] @equiv @racket[(numUnknownAncestors p)].
 Aber wie können wir zeigen, dass diese Eigenschaft tatsächlich stimmt?
 
-Das Schliessen durch Gleichungen, wie wir es in @secref{equationalreasoning} kennengelernt haben, reicht hierzu alleine nicht aus.
+Das Schließen durch Gleichungen, wie wir es in @secref{equationalreasoning} kennengelernt haben, reicht hierzu alleine nicht aus.
 Dadurch, dass die Funktionen rekursiv sind, können wir durch @italic{EFUN} immer größere Terme erzeugen, aber wir kommen niemals
 von @racket[numKnownAncestors] zu @racket[numUnknownAncestors].
 
 Bei strukturell rekursiven Funktionen auf rekursiven Datentypen können wir jedoch ein weiteres, sehr mächtiges Beweisprinzip verwenden, nämlich das
-Prinzip der @italic{Induktion}. Betrachten Sie nochmal die Mengenkonstruktion der ft@subscript{i} aus @secref{rekursivedatentypen}. Wir wissen,
-dass der Typ FamilyTree die Vereinigung aller ft@subscript{i} ist. Desweiteren wissen wir, dass, wenn @racket[p] in ft@subscript{i+1} ist, dann ist
-@racket[(person-father p)] und @racket[(person-mother p)] in ft@subscript{i}. Dies rechtfertigt die Verwendung des Beweisprinzips der Induktion:
+Prinzip der @italic{Induktion}. Betrachten Sie nochmal die Mengenkonstruktion der @${\mathit{ft}_i} aus @secref{rekursivedatentypen}. Wir wissen,
+dass der Typ FamilyTree die Vereinigung aller @${\mathit{ft}_i} ist. Desweiteren wissen wir, dass, wenn @racket[p] in ft@subscript{i+1} ist, dann sind
+@racket[(person-father p)] und @racket[(person-mother p)] in @${\mathit{ft}_i}. Dies rechtfertigt die Verwendung des Beweisprinzips der Induktion:
 Wir zeigen die gewünschte Äquivalenz für den Basisfall i = 1, also @racket[p] = @racket[#false]. Dann zeigen wir die Äquivalenz für den Fall i = n+1, 
-unter der Annahme, dass die Äquivalenz bereits für i = n gilt. Anders ausgedrückt zeigen wir für die Äquivalenz für den Fall 
+unter der Annahme, dass die Äquivalenz bereits für i = n gilt. Anders ausgedrückt zeigen wir die Äquivalenz für den Fall 
 @racket[p] = @racket[(make-person n p1 p2)] unter der Annahme, dass die Äquivalenz für @racket[p1] und @racket[p2] gilt.
 
-Typischerweise läßt man bei dieser Art von Induktionsbeweisen die Mengenkonstruktion mit ihren Indizes weg und "übersetzt" die Indizes direkt in die
+Typischerweise lässt man bei dieser Art von Induktionsbeweisen die Mengenkonstruktion mit ihren Indizes weg und "übersetzt" die Indizes direkt in die
 Datentyp-Notation. Dies bedeutet, dass man die gewünschte Aussage zunächst für die nicht-rekursiven Fälle des Datentyps zeigt, und dann im Induktionsschritt
 die Aussage für die rekursiven Fälle zeigt unter der Annahme, dass die Aussage für die Unterkomponenten des Datentyps bereits gilt. Diese Art
 des Induktionsbeweises nennt man auch @italic{strukturelle Induktion}.
@@ -886,7 +887,7 @@ des Induktionsbeweises nennt man auch @italic{strukturelle Induktion}.
 Wir wollen beweisen: @racket[(+ (numKnownAncestors p) 1)] @equiv @racket[(numUnknownAncestors p)] für alle Personen @racket[p].
 Betrachten wir zunächst den Basisfall @racket[p] = @racket[#false].
 
-Dann können wir schliessen:
+Dann können wir schließen:
 
 @racket[(+ (numKnownAncestors #false) 1)]
 
@@ -911,14 +912,14 @@ Dann können wir schliessen:
 
 @racket[1]
 
-Unter Nutzung von @italic{ETRANS} können wir damit @racket[(+ (numKnownAncestors #false) 1)] @equiv @racket[1] schliessen.
-Auf die gleiche Weise können wir schliessen: @racket[(numUnknownAncestors #false)] @equiv @racket[1]. Damit haben wir den Basisfall gezeigt.
+Unter Nutzung von @italic{ETRANS} können wir damit @racket[(+ (numKnownAncestors #false) 1)] @equiv @racket[1] schließen.
+Auf die gleiche Weise können wir schließen: @racket[(numUnknownAncestors #false)] @equiv @racket[1]. Damit haben wir den Basisfall gezeigt.
 
 Für den Induktionsschritt müssen wir die Äquivalenz für @racket[p] = @racket[(make-person n p1 p2)] zeigen und dürfen hierbei verwenden,
 dass die Aussage für @racket[p1] und @racket[p2] gilt, also @racket[(+ (numKnownAncestors p1) 1)] @equiv @racket[(numUnknownAncestors p1)]
 und @racket[(+ (numKnownAncestors p2) 1)] @equiv @racket[(numUnknownAncestors p2)].
 
-Wir können nun wie folgt schliessen:
+Wir können nun wie folgt schließen:
 
 @racket[(+ (numKnownAncestors (make-person n p1 p2)) 1)]
 

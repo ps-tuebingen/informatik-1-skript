@@ -589,7 +589,7 @@ Beispiel: Das Programm ist:
 
 Im ersten Schritt wird @racket[(define (f x) (+ x 1))] zur (leeren) Umgebung hinzugefügt. Die Konstantendefinition wird in der Umgebung
 @racket[(define (f x) (+ x 1))] ausgewertet zu @racket[(define c 6)] und dann dem Kontext hinzugefügt. Der Ausdruck @racket[(+ c 3)]
-wird schliesslich in der Umgebung
+wird schließlich in der Umgebung
 @racketblock[
 (define (f x) (+ x 1))
 (define c 6)]
@@ -862,7 +862,7 @@ Eine Datendefinition beschreibt im Allgemeinen eine kohärente Teilmenge des Dat
 können durch ihre Signatur deutlich machen, welche Werte des Datenuniversums sie als Argumente akzeptieren
 und welche Ergebnisse sie produzieren.
 
-@section[#:tag "equationalreasoning"]{Refactoring von Ausdrücken und Schliessen durch Gleichungen}
+@section[#:tag "equationalreasoning"]{Refactoring von Ausdrücken und Schließen durch Gleichungen}
 
 Wir hatten in Abschnitt @secref{semanticsofexpressions} vorgestellt, wie man auf Basis der Reduktionsregeln
 eine Äquivalenzrelation auf Ausdrücken definieren kann.
@@ -934,7 +934,7 @@ eines der Argumente äquivalent zu @racket[#false] ist.
 
 @italic{(EAND): }@elem[#:style inbox-style]{@BNF-seq[open @litchar{and} "..." @litchar{#false} "..." close] @equiv @litchar{#false}}
 
-Außerdem können wir Wissen, das wir über die eingebauten Funktionen haben, beim Schliessen mit Äquivalenzen nutzen. Beispielsweise wissen
+Außerdem können wir Wissen, das wir über die eingebauten Funktionen haben, beim Schließen mit Äquivalenzen nutzen. Beispielsweise wissen
 wir, dass @racket[(+ a b)] @equiv @racket[(+ b a)]. Wir fassen die Menge der Äquivalenzen, die für die eingebauten Funktionen gelten unter dem
 Namen @italic{(EPRIM)} zusammen.
 
