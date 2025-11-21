@@ -244,9 +244,9 @@ Ein konditionaler Ausdruck startet also mit einer öffnenden Klammer und dem Sch
 Danach folgen beliebig viele Zeilen, von denen jede zwei Ausdrücke beinhaltet. Der linke Ausdruck
 wird die @italic{Bedingung} oder @italic{Kondition} und der rechte das @italic{Resultat} genannt.
 
-Ein @racket[cond] Ausdruck wird wie folgt ausgewertet. DrRacket wertet zunächst die erste Bedingung
+Ein @racket[cond]-Ausdruck wird wie folgt ausgewertet. DrRacket wertet zunächst die erste Bedingung
 @racket[ConditionExpression1] aus. Ergibt diese Auswertung den Wert @racket[#true], so ist der Wert
-des gesamten @racket[cond] Ausdrucks der Wert von @racket[ResultExpression1]. Ergibt diese Auswertung
+des gesamten @racket[cond]-Ausdrucks der Wert von @racket[ResultExpression1]. Ergibt diese Auswertung
 hingegen den Wert @racket[#false], so wird mit der zweiten Zeile fortgefahren und genau so verfahren
 wie mit der ersten Zeile. Wenn es keine nächste Zeile mehr gibt --- also alle Bedingungen zu @racket[#false] ausgewertet wurden ---
 so wird mit einer Fehlermeldung abgebrochen. Ebenso ist es ein Fehler, wenn die Auswertung einer Bedingung nicht
@@ -350,7 +350,7 @@ Zweige nicht anwendbar sind. In diesem Fall kann man statt der Kondition das Sch
     [else 6]))
 ] 
 
-Die @racket[else] Klausel darf allerdings nur im letzten Zweig eines @racket[cond] Ausdrucks verwendet werden:
+Die @racket[else]-Klausel darf allerdings nur im letzten Zweig eines @racket[cond]-Ausdrucks verwendet werden:
 
 @interaction[#:eval (bsl-eval) 
 (cond [(> 3 2) 5]
@@ -358,7 +358,7 @@ Die @racket[else] Klausel darf allerdings nur im letzten Zweig eines @racket[con
       [(< 2 1) 13])]
 
       
-Der @racket[else] Zweig ist äquivalent zu einem Zweig mit der immer erfüllten Bedingung @racket[#true], daher ist im allgemeinen Fall
+Der @racket[else]-Zweig ist äquivalent zu einem Zweig mit der immer erfüllten Bedingung @racket[#true], daher ist im allgemeinen Fall
 die Bedeutung von
 
 @racketblock[
@@ -399,9 +399,9 @@ Ein @racket[if] Ausdruck ist syntaktischer Zucker; die Bedeutung wird durch die 
 (cond [CondExpression ThenExpression]
       [else ElseExpression])]
 
-Im Allgemeinen eignet sich @racket[if] für Situationen, in denen wir so etwas wie "entweder das eine oder das andere" sagen wollen. Die @racket[cond] Ausdrücke eignen sich dann, wenn man mehr als zwei Situationen unterscheiden möchten.
+Im Allgemeinen eignet sich @racket[if] für Situationen, in denen wir so etwas wie "entweder das eine oder das andere" sagen wollen. Die @racket[cond]-Ausdrücke eignen sich dann, wenn man mehr als zwei Situationen unterscheiden möchten.
 
-Obwohl es zunächst so aussieht, als sei @racket[if] ein Spezialfall von @racket[cond], kann man allerdings auch jeden @racket[cond] 
+Obwohl es zunächst so aussieht, als sei @racket[if] ein Spezialfall von @racket[cond], kann man allerdings auch jeden @racket[cond]-
 Ausdruck durch einen geschachtelten @racket[if] Ausdruck ersetzen. Beispielsweise kann die Funktion von oben auch so geschrieben werden:
 
 @racketblock[
@@ -418,7 +418,7 @@ Ausdruck durch einen geschachtelten @racket[if] Ausdruck ersetzen. Beispielsweis
                      5
                      6))))))]
                      
-In solchen Fällen ist offensichtlich das @racket[cond] Konstrukt besser geeignet, weil man keine tief geschachtelten Ausdrücke benötigt. Dennoch kann man festhalten, dass @racket[cond] und @racket[if] gleichmächtig sind, weil das eine in das andere
+In solchen Fällen ist offensichtlich das @racket[cond]-Konstrukt besser geeignet, weil man keine tief geschachtelten Ausdrücke benötigt. Dennoch kann man festhalten, dass @racket[cond] und @racket[if] gleichmächtig sind, weil das eine in das andere
 so transformiert werden kann, dass die Bedeutung gleich bleibt.
 
       

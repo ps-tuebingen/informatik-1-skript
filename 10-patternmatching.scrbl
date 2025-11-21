@@ -31,7 +31,7 @@ Beispielsweise haben Funktionen, die Listen verarbeiten, in der Regel diese Stru
 
 Mit @italic{Pattern Matching} können solche Funktionen mit deutlich reduziertem Aufwand definiert werden.
 Pattern Matching hat zwei Facetten: 1) Es definiert implizit eine Bedingung, analog zu den
-Bedingungen in den @racket[cond] Klauseln oben. 2) Es definiert Namen, die statt der Projektionen
+Bedingungen in den @racket[cond]-Klauseln oben. 2) Es definiert Namen, die statt der Projektionen
 (@racket[(first l)] und @racket[(rest l)] im Beispiel) verwendet werden können.
 
 Pattern Matching kann auf allen Arten von Summentypen verwendet werden. Insbesondere ist es nicht
@@ -43,7 +43,7 @@ Fügen Sie an Anfang ihres Programms daher diese Anweisung ein:
 
 @racketblock[(require 2htdp/abstraction)]
 
-Das folgende Beispiel zeigt, wie das @racket[match] Konstrukt verwendet werden kann.
+Das folgende Beispiel zeigt, wie das @racket[match]-Konstrukt verwendet werden kann.
 
 @; I use a new instance of isl-eval+ here because for an unknown reason stdeval produces a horrible error message on the (f 42) example
 @(define ex-evaluator (isl-eval+))
@@ -61,7 +61,7 @@ Das folgende Beispiel zeigt, wie das @racket[match] Konstrukt verwendet werden k
       [(cons (posn 1 z) y) z]
       [(? cons?) "nicht-leere Liste"]))]               
 
-Hier sind einige Beispiele, die das Verhalten des @racket[match] Konstrukts illustrieren.
+Hier sind einige Beispiele, die das Verhalten des @racket[match]-Konstrukts illustrieren.
 
              
 @interaction[#:eval ex-evaluator
@@ -77,13 +77,13 @@ Hier sind einige Beispiele, die das Verhalten des @racket[match] Konstrukts illu
 (f 42)]
 
 
-Jede Klausel in einem @racket[match] Ausdruck beginnt mit einem Pattern. Ein Pattern kann ein Literal sein, wie
+Jede Klausel in einem @racket[match]-Ausdruck beginnt mit einem Pattern. Ein Pattern kann ein Literal sein, wie
 in den ersten beiden Klauseln (@racket[7] und @racket["hey"]). In diesem Fall ist das Pattern lediglich eine
 implizite Bedingung: Wenn der Wert, der gematcht wird (im Beispiel @racket[x]), gleich dem Literal ist, dann ist der
 Wert des Gesamtausdrucks der der rechten Seite der Klausel (analog zu @racket[cond]). 
 
 Interessant wird Pattern Matching dadurch, dass auch auf Listen und andere algebraische Datentypen "gematcht" werden kann.
-In den Pattern dürfen Namen vorkommen (wie das @racket[y] in @racket[(list 1 y 3)] ; diese Variablen sind im Unterschied zu Strukturnamen oder Literalen keine 
+In den Pattern dürfen Namen vorkommen (wie das @racket[y] in @racket[(list 1 y 3)]); diese Variablen sind im Unterschied zu Strukturnamen oder Literalen keine 
 Bedingungen, sondern sie dienen zur Bindung der Namen an den entsprechenden Teil der Struktur.
 
 Allerdings können Namen zur Bedingung werden, wenn sie mehrfach im Pattern vorkommen. Im Beispiel oben ist dies der Fall
@@ -91,7 +91,7 @@ im Pattern @racket[(posn y y)]. Dieses Pattern matcht nur dann, wenn @racket[x] 
 Komponenten den gleichen Wert haben.
 
 Falls mehrere Pattern gleichzeitig matchen, so "gewinnt" stets das erste Pattern, welches passt (analog dazu wie auch bei @racket[cond] stets
-die erste Klausel, deren Kondition @racket[true] ergibt, "gewinnt"). Daher ergibt beispielsweise @racket[(f (make-posn 5 5))]
+die erste Klausel, deren Bedingung @racket[true] ergibt, "gewinnt"). Daher ergibt beispielsweise @racket[(f (make-posn 5 5))]
 im Beispiel das Ergebnis @racket[42] und nicht etwa @racket[5] oder @racket[10].
 
 Das vorletzte Pattern, @racket[(cons (posn 1 z) y)], illustriert, dass Patterns beliebig tief verschachtelt werden können.
@@ -130,7 +130,7 @@ aus @secref{rekursivedatentypen} umschreiben zu:
 Wir betrachten die Syntax, Bedeutung und Reduktion von Pattern Matching.
 
 @subsection{Syntax von Pattern Matching}
-Um die syntaktische Struktur der @racket[match] Ausdrücke zu definieren, erweitern wir die Grammatik für
+Um die syntaktische Struktur der @racket[match]-Ausdrücke zu definieren, erweitern wir die Grammatik für
 Ausdrücke aus @secref{bsl-grammar} wie folgt:
 
 @; The ? form actually allows arbitrary functions, but I'm restricting it to structure predicate functions to keep it first-order.
@@ -185,8 +185,8 @@ Das Matching eines Werts auf ein Pattern ist nun wie folgt definiert:
 
 
 Hierbei ist @${\oplus} ein Operator, der Substitutionen kombiniert. Das Ergebnis von @${\sigma_1 \oplus \sigma_2} ist
-"no match", falls @${\sigma_1} oder  @${\sigma_2} "no match" sind oder  @${\sigma_1} und  @${\sigma_2} beide ein Mapping für den gleichen Namen definieren  aber
-diese auf unterschiedliche Werte abgebildet werden.
+"no match", falls @${\sigma_1} oder  @${\sigma_2} "no match" sind oder  @${\sigma_1} und  @${\sigma_2} beide ein Mapping für den gleichen Namen definieren,
+aber diese auf unterschiedliche Werte abgebildet werden.
 
 @$${
 \begin{aligned}            
@@ -234,14 +234,14 @@ Patterns wie @racket[(posn x x)] wären dann nicht erlaubt.
 @subsection{Reduktion von Pattern Matching}
 
 Wir erweitern die Grammatik des Auswertungskontextes so, dass der Ausdruck, auf dem gematcht wird, zu einem Wert
-reduziert werden kann. Alle anderen Unterausdrücke des @racket[match] Ausdrucks werden nicht ausgewertet.
+reduziert werden kann. Alle anderen Unterausdrücke des @racket[match]-Ausdrucks werden nicht ausgewertet.
 
 @BNF[(list @nonterm{E} 
       @BNF-etc
       @BNF-seq[@litchar{(} @litchar{match} @nonterm{E} @kleeneplus[@BNF-group[@litchar{[}@nonterm{pattern} @nonterm{e} @litchar{]}]] @litchar{)}])]
 
 
-In der Reduktionsrelation verwenden wir nun die @${\mathit{match}} Funktion von oben, um zu entscheiden,
+In der Reduktionsrelation verwenden wir nun die @${\mathit{match}}-Funktion von oben, um zu entscheiden,
 ob ein Pattern matcht und um ggf. die durch das Pattern gebundenen Namen in dem dazugehörigen Ausdruck
 durch die entsprechenden Werte zu ersetzen.
 
@@ -277,6 +277,7 @@ Hier einige Beispiele:
 Die ersten beiden Beispiele illustrieren, dass es wichtig ist, die boolschen Konstanten als @racket[#true]
 und @racket[#false] zu schreiben, wenn sie in Pattern vorkommen. Wenn man stattdessen @racket[false]
 oder @racket[true] schreibt, so werden diese als Namen interpretiert, die durch das Pattern Matching gebunden werden.
+Genauso ist auch @racket[else] hier lediglich ein Name und hat keine spezielle Bedeutung wie das bei @racket[cond] der Fall ist.
 
 Die letzten beiden Beispiele zeigen, dass das gleiche Phänomen bei Listenliteralen auftritt. Schreiben Sie
 @racket[(list)] und nicht @racket[empty] wenn Sie auf die leere Liste matchen wollen.
