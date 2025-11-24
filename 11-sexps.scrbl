@@ -206,17 +206,17 @@ der Daten gemacht wird. Statt @racket[(make-posn 1 2)] kann man auch die S-Expre
 oder @racket['(posn (x 1) (y 2))]
 verwenden; statt
 
-@block[
+@racketblock[
 (make-person "Heinz" (make-person "Horst" false false) (make-person "Hilde" false false))]
 
 kann man auch die S-Expression
 
-@block[
+@racketblock[
 '(person "Heinz" (person "Horst" #false #false) (person "Hilde" #false #false))] 
 
 oder
 
-@block[
+@racketblock[
 '(person "Heinz" (father (person "Horst" (father #false) (mother #false)) (mother (person "Hilde" (father #false) (mother #f)))))]
 
 verwenden.
