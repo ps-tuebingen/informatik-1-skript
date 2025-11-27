@@ -888,7 +888,6 @@ Die Idee wird durch folgenden, allgemeineren Auswertungskontext ausgedrückt:
       @BNF-seq[open @nonterm{name} @kleenestar[@nonterm{e}] @nonterm{E} @kleenestar[@nonterm{e}]  close]
       @BNF-seq[open @litchar{cond} @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]] lb @nonterm{E} @nonterm{e} rb @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]]  close]
       @BNF-seq[open @litchar{cond} @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]] lb @nonterm{e} @nonterm{E} rb @kleenestar[@BNF-group[@BNF-seq[lb @nonterm{e} @nonterm{e} rb]]]  close]
-      @BNF-seq[open @litchar{and} @kleenestar[@nonterm{e}] @nonterm{E} @kleenestar[@nonterm{e}] close ]
 )]
 Zusammen mit der folgenden Kongruenzregel für unsere Äquivalenzrelation, drückt dieser Auswertungskontext aus,
 dass überall "gleiches mit gleichem" ersetzt werden darf:
@@ -928,11 +927,6 @@ für die Bestimmung von Äquivalenzen nicht notwendig ist, die Argumente auszuwe
 @elem[#:style inbox-style]{
 @italic{(EFUN): }Falls @BNF-seq[open @litchar{define} open @mv{name} @mv{name-1} "..." @mv{name-n} close @mv{e} close] in der Umgebung, @linebreak[]
 dann @BNF-seq[open @mv{name} @mv{e-1} "..." @mv{e-n} close] @equiv @mv{e}[@mv{name-1} := @mv{e-1} ... @mv{name-n} := @mv{e-n}]}
-
-Bei der Konjunktion wissen wir, dass der Gesamtausdruck zu @racket[#false] auswertet (oder nicht terminiert), wenn mindestens
-eines der Argumente äquivalent zu @racket[#false] ist.
-
-@italic{(EAND): }@elem[#:style inbox-style]{@BNF-seq[open @litchar{and} "..." @litchar{#false} "..." close] @equiv @litchar{#false}}
 
 Außerdem können wir Wissen, das wir über die eingebauten Funktionen haben, beim Schliessen mit Äquivalenzen nutzen. Beispielsweise wissen
 wir, dass @racket[(+ a b)] @equiv @racket[(+ b a)]. Wir fassen die Menge der Äquivalenzen, die für die eingebauten Funktionen gelten unter dem
