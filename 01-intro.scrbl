@@ -128,8 +128,8 @@ Links finden Sie auch eine Übersicht über die weiteren Operationen, die sie ve
 
     @distractor{5.2}
 
-    @solution{8.10}
-    @explanation{Stand April 2022, zu sehen u.a. auf der Downloadseite @url{https://download.racket-lang.org/}}
+    @solution{8.18}
+    @explanation{Stand August 2025, zu sehen u.a. auf der Downloadseite @url{https://download.racket-lang.org/}}
 
     @distractor{9.0}
   ]
@@ -522,7 +522,7 @@ Wenn in BSL ein Laufzeitfehler auftritt, wird die Programmausführung abgebroche
  Fehlermeldung ausgegeben.
 
  Dieser Fehler ist ein Beispiel für einen @italic{Typfehler}: Die Funktion erwartet, dass ein Argument
- einen bestimmten Typ hat, diesem Fall 'Zahl', aber tatsächlich hat das Argument einen anderen
+ einen bestimmten Typ hat, in diesem Fall 'Zahl', aber tatsächlich hat das Argument einen anderen
  Typ, in diesem Fall 'String'.
 
  Ein anderer Fehler, der auftreten kann, ist der, dass die Anzahl der angegebenen Argumente nicht
@@ -621,7 +621,7 @@ Programms in DrRacket ausführen zu können.
 Wir werden später mehr dazu sagen, wo, wie und wie ausführlich Programme kommentiert werden sollten.
 
 
-@section[#:tag "semanticsofexpressions"]{Bedeutung von BSL Ausdrücken}
+@section[#:tag "semanticsofexpressions"]{Bedeutung von BSL-Ausdrücken}
 
 
  Fassen wir nochmal den jetzigen Stand zusammen: Programmieren ist das Aufschreiben arithmetischer Ausdrücke,

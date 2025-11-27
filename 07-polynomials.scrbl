@@ -104,8 +104,8 @@ Beispiel:
         [(grectangle? shape) (point-inside-rectangle shape point)]))
 )
 
-In dieser Funktion fällt auf, dass in den Zweigen des @racket[cond] Ausdrucks Hilfsfunktionen aufgerufen werden, die wir noch implementieren
-müssen. Man könnte stattdessen die Implementation dieser Funktionen auch direkt in den @racket[cond] Ausdruck schreiben, aber wenn die
+In dieser Funktion fällt auf, dass in den Zweigen des @racket[cond]-Ausdrucks Hilfsfunktionen aufgerufen werden, die wir noch implementieren
+müssen. Man könnte stattdessen die Implementation dieser Funktionen auch direkt in den @racket[cond]-Ausdruck schreiben, aber wenn die
 Alternativen eines Summentyps Produkte sind, so werden diese Ausdrücke häufig so komplex, dass man sie besser in eigene Funktionen
 auslagern sollte. Außerdem ergeben sich durch die Auslagerung in separate Funktionen häufig Gelegenheiten zur Wiederverwendung dieser Funktionenen.
 
@@ -156,7 +156,7 @@ Auch hier haben wir wieder die Implementierung der einzelnen Fälle in Funktione
 in den beiden letzten Fällen die gleiche Funktion aufrufen, illustriert, dass diese Hilfsfunktionen die Wiederverwendung
 von Code fördern. Hier die Implementation der Hilfsfunktionen. 
 
-@margin-note{Wenn Sie Spass an Geometrie haben, ergänzen Sie die 
+@margin-note{Wenn Sie Spaß an Geometrie haben, ergänzen Sie die 
              Implementation von @racket[overlaps-rectangle-rectangle] und  @racket[overlaps-rectangle-circle]. }
 @#reader scribble/comment-reader
 (racketblock
@@ -184,7 +184,7 @@ Das Entwurfsrezept aus Abschnitt @secref{entwurfsrezept} ergänzen wir wie folgt
        @item{Wenn Sie eine Funktion programmieren möchten, die Informationen
              als Eingabe erhält oder als Ausgabe produziert, die man am besten
              durch ADTs repräsentiert, so sollten Sie vor dem Programmieren
-             dieser Funktion diesen ADT definieren (falls sie ihn nicht schon
+             dieser Funktion diesen ADT definieren (falls Sie ihn nicht schon
              im Kontext einer anderen Funktion definiert haben).
              
              Ein ADT ist dann sinnvoll, wenn in ihrer Problemstellung
@@ -209,25 +209,25 @@ Das Entwurfsrezept aus Abschnitt @secref{entwurfsrezept} ergänzen wir wie folgt
              und die Produkttypen in (einigen seiner) Alternativen.
              
              Falls wir als äußerstes einen Summentyp haben, so sollten wir zunächst in einem
-             @racket[cond] Ausdruck alle Fälle unterscheiden.
+             @racket[cond]-Ausdruck alle Fälle unterscheiden.
              
              Für alle Alternativen, die Produkttypen sind, sollte in der Regel eine Hilfsfunktion
-             definiert werden, die diesen Fall abdeckt. Diese Hilfsfunktion sollten sie in diesem Schritt auch nur
+             definiert werden, die diesen Fall abdeckt. Diese Hilfsfunktion sollten Sie in diesem Schritt auch nur
              (durch erneute Anwendung dieses Entwurfsrezepts) bis zum Template-Schritt implementieren.
              
              Nur wenn die Implementation
              dieses Falls wahrscheinlich sehr einfach ist, sollten die Selektoren für die Felder des Produkts
              in das Template mit aufgenommen werden.
              
-             Allerdings gibt es einen wichtigen Fall, in dem sie @italic{keinen} @racket[cond] Ausdruck
+             Allerdings gibt es einen wichtigen Fall, in dem Sie @italic{keinen} @racket[cond]-Ausdruck
              zur Unterscheidung der Alternativen ins Template aufnehmen sollten, nämlich dann, wenn es möglich
-             ist, die Funktion abstrakt zu formulieren --- sie also die Fälle nicht unterscheiden, sondern
+             ist, die Funktion abstrakt zu formulieren --- Sie also die Fälle nicht unterscheiden, sondern
              lediglich bereits existierende Funktionen aufrufen, die auch auf Basis des ADTs implementiert
              wurden. Als Beispiel haben wir die @racket[overlap/3] Funktion gesehen.}
-       @item{In diesem Schritt sollten sie aus dem Template ein lauffähiges Programm machen. Da sie im vorherigen
-             Schritt eventuell Templates für Hilfsfunktionen definiert haben, müssen sie auch diese Hilfsfunktionen
+       @item{In diesem Schritt sollten Sie aus dem Template ein lauffähiges Programm machen. Da Sie im vorherigen
+             Schritt eventuell Templates für Hilfsfunktionen definiert haben, müssen Sie auch diese Hilfsfunktionen
              nun implementieren.}
-       @item{Testen sie. Falls Tests fehlschlagen, gehen sie zurück zum vorherigen Schritt.}
+       @item{Testen Sie. Falls Tests fehlschlagen, gehen Sie zurück zum vorherigen Schritt.}
        @item{Überprüfen Sie beim Refactoring zusätzlich die neu definierten ADTs. Auch hier kann es Verstöße gegen 
              das DRY-Prinzip geben, z.B. wenn es große Gemeinsamkeiten zwischen ADTs gibt. Gibt es beispielsweise
              in mehreren Datentypen zwei Felder zur Repräsentation von Koordinaten, so bietet es sich an, stattdessen

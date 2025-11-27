@@ -86,7 +86,7 @@ Situation die richtige ist, ist ein wichtiges Thema in der Methodik der Software
 
 Wenn die Aufrufstruktur der Funktionen ein azyklischer Graph ist, so ergibt sich automatisch
 eine Schichtenstruktur, in der alle Funktionen in einer Schicht nur Funktionen aus darunter liegenden
-Schichten aufrufen. Eine noch stärkere Einschränkung ist die, dass Funktionen ausschliesslich
+Schichten aufrufen. Eine noch stärkere Einschränkung ist die, dass Funktionen ausschließlich
 Funktionen aus der Schicht direkt unter ihnen aufrufen dürfen. Diese Einschränkung ist allerdings
 sinnvoll, denn sie ermöglicht bei geschickter Wahl der Funktionen, eine Schicht zu verstehen ohne 
 alle darunter liegenden Schichten verstehen zu müssen. Diese Situation nennt man 
@@ -115,7 +115,7 @@ nicht die Kommentare "gewartet" werden und dementsprechend Dokumentation häufig
 Betrachten Sie folgende Problemstellung für ein zu erstellendes Programm:
 
 @italic{The owner of a movie theater has complete freedom in setting ticket prices. 
-The more he charges, the fewer the people who can afford tickets. In a recent experiment the owner determined 
+The more he charges, the fewer the people who can afford tickets. In a recent experiment, the owner determined 
 a precise relationship between the price of a ticket and average attendance. At a price of $5.00 per ticket, 
 120 people attend a performance. Decreasing the price by a dime ($.10) increases attendance by 15. Unfortunately, 
 the increased attendance also comes at an increased cost. Every performance costs the owner $180. Each attendee
@@ -154,7 +154,7 @@ und verwendet die bereits definierte @racket[attendees] Funktion:
    (+ 180 (* 0.04 (attendees ticket-price))))]
 
 
-Der Gewinn ist schliesslich die Differenz zwischen Umsatz und Kosten.
+Der Gewinn ist schließlich die Differenz zwischen Umsatz und Kosten.
 Da wir bereits Funktionen für die Berechnung von Umsatz und Kosten haben,
 muss diese Funktion all die Werte als Eingabe bekommen, die diese Funktionen
 benötigen --- in diesem Fall ist dies der Eintrittspreis:
@@ -286,7 +286,7 @@ als Zahl mit dem Wert @racket[5] und die zweite Information als String mit dem W
 
 Ein Datum wie die Zahl @racket[5] wiederum kann auf vielfältige Weise interpretiert werden. Beispielsweise kann, wie im
 Beispiel oben, die Länge eines Autos in Metern gemeint sein. Genauso kann sie aber auch als Temperatur in Grad Celsius, als
-Geldbetrag in Euro, oder als Endnote Ihrer Klausur in dieser Veranstaltung interpretiert werden (hoffentlich nicht :-).
+Geldbetrag in Euro, oder als Endnote Ihrer Klausur in dieser Veranstaltung interpretiert werden (hoffentlich nicht :-)).
 
 Da diese Beziehung zwischen Information und Daten so wichtig ist, werden wir Sie von nun an in Form spezieller Kommentare, die wir @italic{Datendefinitionen} 
 nennen, aufschreiben. Eine Datendefinition beschreibt eine Klasse von Daten durch einen sinnvollen Namen, der auf die Interpretation der Daten hinweist.
@@ -339,7 +339,7 @@ Auf Basis der gerade besprochenen Trennung zwischen Informationen und Daten kön
 als eine Abfolge von Schritten beschreiben.
 
 @itemlist[#:style 'ordered
-          @item{Definieren Sie wie Sie die für die Funktion relevanten Informationen (Eingabe und Ausgabe) als Daten repräsentieren.
+          @item{Definieren Sie, wie Sie die für die Funktion relevanten Informationen (Eingabe und Ausgabe) als Daten repräsentieren.
                 Formulieren Sie entsprechende Datendefinitionen (sofern nicht bereits vorhanden). Geben Sie für nicht-triviale 
                 Datendefinitionen einige interessante Beispiele für die Datendefinition an.}        
           @item{Schreiben Sie eine Signatur, eine Aufgabenbeschreibung, und einen Funktionskopf.
@@ -350,14 +350,14 @@ als eine Abfolge von Schritten beschreiben.
                             @para{@italic{; String -> Number}  }}
                           @item{Für eine Funktion die eine Temperatur und einen Boolschen Wert konsumiert und einen String produziert:
                             @para{@italic{; Temperature Boolean -> String}}
-                            Beachten Sie dass wir die vorherige Datendefinition für @italic{Temperature} verwendet haben.}]
+                            Beachten Sie, dass wir die vorherige Datendefinition für @italic{Temperature} verwendet haben.}]
                 
-                Eine @italic{Aufgabenbeschreibung} ist ein BSL Kommentar der den Zweck der Funktion @bold{in einer Zeile} zusammenfasst.
+                Eine @italic{Aufgabenbeschreibung} ist ein BSL Kommentar, der den Zweck der Funktion @bold{in einer Zeile} zusammenfasst.
                 Die Aufgabenbeschreibung ist die kürzestmögliche Antwort auf die Frage: @italic{Was berechnet die Funktion?}
-                Jeder Leser ihres Programms sollte verstehen, was eine Funktion berechnet ohne die Funktionsdefinition selbst lesen zu müssen.
+                Jeder Leser ihres Programms sollte verstehen, was eine Funktion berechnet, ohne die Funktionsdefinition selbst lesen zu müssen.
                 
                 Ein @italic{Funktionskopf}, manchmal auch @italic{Header} oder @italic{Stub} genannt, ist eine Funktionsdefinition,
-                die zur Signatur passt aber in der der Body der Funktion nur ein Dummy-Wert ist, zum Beispiel @racket[0] falls eine Zahl
+                die zur Signatur passt, aber in der der Body der Funktion nur ein Dummy-Wert ist, zum Beispiel @racket[0] falls eine Zahl
                 zurückgegeben werden soll oder @racket[(empty-scene 100 100)] falls ein Bild zurückgegeben werden soll. Beim Entwurf des
                 Funktionskopfs müssen trotzdem wichtige Entscheidungen getroffen werden, nämlich die Namen der Funktion und der Eingabeparameter
                 müssen bestimmt werden. Typischerweise sollten die Parameternamen einen Hinweis darauf geben, was für Informationen
@@ -566,7 +566,7 @@ Hier ist die Definition mit einer möglichen Spezifikation:
 
 Ein Beispiel für einen Aufrufer, der sich nicht an die Spezifikation hält und unzulässig an 
 die Implementation koppelt, wäre einer, der Folgetext für den Brief definiert, der sich
-auf Details des Textes wie Namen und Orte bezieht, die nicht in der Spezifikation gennant werden.
+auf Details des Textes wie Namen und Orte bezieht, die nicht in der Spezifikation genannt werden.
 
 Halten sich jedoch alle Aufrufer an das Geheimnisprinzip, so ist sichergestellt, dass sich
 die Implementation von @racket[body] weitgehend ändern läßt, solange es ein plausibler Text
@@ -581,15 +581,15 @@ die Implementierung verraten und damit das Information Hiding Prinzip nutzlos ge
 
 @section{Signaturen als Teil des Codes}
 
-Der Vorteil unsere Methode, Signaturen als semi-formalen Kommentar zu definieren, ist, dass sich diese Form des Programmentwurfs in
+Der Vorteil unserer Methode, Signaturen als semi-formalen Kommentar zu definieren, ist, dass sich diese Form des Programmentwurfs in
 fast jeder Programmiersprache einsetzen lässt. Allerdings haben diese Kommentare auch einige Nachteile.
 Dadurch, dass sie nicht automatisiert überprüfbar und lesbar sind, können sich Fehler einschleichen.
 Der Programmierer muss Disziplin aufbringen, um die Signaturen zu erstellen und bei Änderungen des Codes immer dem
-jeweils aktuellen Stand anzupassen. Wenn sich eine Definition nicht an die angegebene Signature hält, so fällt
+jeweils aktuellen Stand anzupassen. Wenn sich eine Definition nicht an die angegebene Signatur hält, so fällt
 dies zunächst nicht auf und es kann möglicherweise erst irgendwann zur Laufzeit zu einem Fehler kommen, von dem
 nicht unmittelbar klar ist, dass die Ursache in der Signaturverletzung liegt.
 
-In der neuesten Version von DrRacket (8.10) gibt es daher die Möglichkeit, formale Signaturen anzugeben, die
+In neueren Versionen von DrRacket (seit 8.9) gibt es daher die Möglichkeit, formale Signaturen anzugeben, die
 von DrRacket gelesen und zur Laufzeit überprüft werden könnnen.
 
 
@@ -606,7 +606,7 @@ Schauen wir uns zwei Beispiele an, die von dieser Möglichkeit Gebrauch machen.
 )
 
 Wenn dieses Programm ausgeführt wird, so werden die angegebenen Signaturen überprüft.
-Falls jedoch gegen die Signatur verstossen wird, so wie hier:
+Falls jedoch gegen die Signatur verstoßen wird, so wie hier:
 
 @#reader scribble/comment-reader
 (racketblock
@@ -629,10 +629,10 @@ Dies gilt auch dann, wenn es ohne die Signaturen gar nicht zu einem Programmfehl
 
 Die vordefinierten Signaturen, die sie verwenden können, beinhalten @racket[Boolean] (für die boolschen Werte), @racket[Integer] (ganze Zahlen),
 @racket[Natural] (natürliche Zahlen), @racket[Number] (beliebige Zahlen),
-@racket[Rational] (rationale Zahlen), @racket[Real] (reale Zahlen) und @racket[String].
+@racket[Rational] (rationale Zahlen), @racket[Real] (reelle Zahlen) und @racket[String].
 
 Wir werden später noch Möglichkeiten einführen, um weitere und eigene Signaturen zu definieren und zu nutzen.
 
-Leider gibt es derzeit (Version 8.10) noch keine vordefinierte Signatur @racket[Image] für Bilder. Deshalb können formale
+Leider gibt es derzeit (Version 8.18) noch keine vordefinierte Signatur @racket[Image] für Bilder. Deshalb können formale
 Signaturen nicht verwendet werden, wenn Bilder Teil der Signatur sind. Als Workaround kann die Signatur
 @racket[Any] verwendet werden. Diese Signatur passt auf jeden Wert.

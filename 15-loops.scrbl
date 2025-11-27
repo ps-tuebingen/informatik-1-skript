@@ -173,7 +173,7 @@ Sie sind wie folgt definiert:
 (define (filter f xs)
   (cond [(empty? xs) empty]
         [(cons? xs) (if (f (first xs))
-                        (cons (first xs) (filter1 f (rest xs)))
+                        (cons (first xs) (filter f (rest xs)))
                         (filter f (rest xs)))]))
 
 ; [X Y] (X -> (list-of Y)) (list-of X) -> (list-of Y)

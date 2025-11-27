@@ -19,7 +19,7 @@ mit der man einfache Listen kompakt notieren kann.
 Allerdings gibt es in BSL/ISL (und vielen anderen Sprachen) einen noch viel mächtigeren
 Mechanismus, nämlich @racket[quote] und @racket[unquote]. Diesen Mechanismus
 gibt es seit den 1950er Jahren in LISP, und noch heute eifern beispielsweise
-Template Sprachen wie Java Server Pages oder PHP diesem Vorbild nach.
+Template-Sprachen wie Java Server Pages oder PHP diesem Vorbild nach.
 
 Um mit @racket[quote] und @racket[unquote] zu arbeiten, ändern Sie bitte den
 Sprachlevel auf "Anfänger mit Listenabkürzungen" beziehungsweise "Beginning
@@ -27,7 +27,7 @@ Student with List Abbreviations".
 
 
 @section{Quote}
-Das @racket[quote] Konstrukt dient als kompakte Notation für große und verschachtelte Listen. 
+Das @racket[quote]-Konstrukt dient als kompakte Notation für große und verschachtelte Listen. 
 Beispielsweise können wir mit der Notation @tt{(quote (1 2 3))} die Liste @racket[(cons 1 (cons 2 (cons 3 empty)))] erzeugen.
 Dies ist noch nicht besonders eindrucksvoll, denn der Effekt ist der gleiche wie
 
@@ -71,7 +71,7 @@ Regel wird dieser Ausdruck wiederum transformiert zu @racket[(list 2 3)]. Insges
 Sie sehen, dass man mit @racket[quote] sehr effizient verschachtelte Listen (eine Form von Bäumen) erzeugen kann. Vielleicht fragen Sie sich,
 wieso wir nicht gleich von Anfang an @racket[quote] verwendet haben. Der Grund dafür ist, dass diese bequemen Wege,
 Listen zu erzeugen, verbergen, welche Struktur Listen haben. Insbesondere sollten Sie beim Entwurf von Programmen (und der Anwendung
-des Entwurfsrezepts) stehts vor Augen haben, dass Listen aus @racket[cons] und @racket[empty] zusammengesetzt sind.
+des Entwurfsrezepts) stets vor Augen haben, dass Listen aus @racket[cons] und @racket[empty] zusammengesetzt sind.
 
 @section{Symbole}
 Symbole sind eine Art von Werten die Sie bisher noch nicht kennen. Symbole dienen zur Repräsentation symbolischer Daten.
@@ -94,7 +94,7 @@ Hilfe von @racket[symbol=?]).
 
 @section{Quasiquote und Unquote}
 
-Der @racket[quote] Mechanismus birgt noch eine weitere Überraschung.
+Der @racket[quote]-Mechanismus birgt noch eine weitere Überraschung.
 Betrachten Sie das folgende Programm:
 
 @racketblock[
@@ -136,8 +136,8 @@ Aber natürlich funktioniert diese Funktion nicht wie gewünscht:
 
 @ex[(some-list 2)]
 
-Für solche Fälle bietet sich @racket[quasiquote] an. Das @racket[quasiquote]
-Konstrukt verhält sich zunächst mal wie @racket[quote], außer dass es
+Für solche Fälle bietet sich @racket[quasiquote] an. Das @racket[quasiquote]-Konstrukt
+verhält sich zunächst mal wie @racket[quote], außer dass es
 statt mit einem geraden Hochkomma  mit einem schrägen Hochkomma
 abgekürzt wird:
 
@@ -146,7 +146,7 @@ abgekürzt wird:
 
 Das besondere an @racket[quasiquote] ist, dass man damit innerhalb eines
 gequoteten Bereichs zurückspringen kann in die Programmiersprache. Diese
-Möglichkeit nennt sich "unquote" und wird durch das @racket[unquote] Konstrukt
+Möglichkeit nennt sich "unquote" und wird durch das @racket[unquote]-Konstrukt
 unterstützt. Auch @racket[unquote] hat eine Abkürzung, nämlich das Komma-Zeichen.
 
 @ex[`(1 2 ,(+ 3 4))]
@@ -163,15 +163,15 @@ einem zusätzlichen Fall: Wenn @racket[quasiquote] auf ein @racket[unquote] trif
 sich beide. Ein Ausdruck wie @racket[`,e] wird also transformiert zu @racket[e].
 
 @section[#:tag "sexps"]{S-Expressions}
-Betrachten Sie die @racket[person-has-ancestor] Funktion aus @secref{programmieren-rekdt}. Eine ähnliche Funktion
+Betrachten Sie die @racket[person-has-ancestor]-Funktion aus @secref{programmieren-rekdt}. Eine ähnliche Funktion
 lässt sich auch für viele andere baumartig organisierte Datentypen definieren, beispielsweise solche zur Repräsentation von
 Ordnerhierarchien in Dateisystemen oder zur Repräsentation der Hierarchie innerhalb einer Firma. 
 
-Natürlich könnten wir neben @racket[person-has-ancestor] nun auch noch @racket[file-has-enclosing-directory] 
-und @racket[employee-has-manager] implementieren, aber diese hätten eine sehr ähnliche Struktur wie @racket[person-has-ancestor].
+Natürlich könnten wir neben @racket[person-has-ancestor] nun auch noch @racket[directory-has-file] 
+und @racket[manager-has-employee] implementieren, aber diese hätten eine sehr ähnliche Struktur wie @racket[person-has-ancestor].
 Wir würden also gegen das DRY-Prinzip verstoßen.
 
-Es gibt eine ganze Reihe von Funktionen, die sich auf vielen baumartigen Datentypen definieren liessen: Die Tiefe eines Baumes berechnen, 
+Es gibt eine ganze Reihe von Funktionen, die sich auf vielen baumartigen Datentypen definieren ließen: Die Tiefe eines Baumes berechnen, 
 nach Vorkommen eines Strings suchen, alle "Knoten" des Baums finden, die ein Prädikat erfüllen, und so weiter.
 
 Um solche Funktionen generisch (also einmal für alle Datentypen) definieren zu können, brauchen wir die Möglichkeit,
@@ -179,7 +179,7 @@ Um solche Funktionen generisch (also einmal für alle Datentypen) definieren zu 
 wir bisher betrachtet haben, nicht.
 
 Eine der großen Innovationen der Programmiersprache LISP war die Idee eines universellen Datenformats: Ein Format, mit
-dem beliebige strukturierte Daten repräsentiert werden können, und zwar in solch einer Weise, dass das Datenformat
+dem beliebige strukturierte Daten repräsentiert werden können, und zwar in solch einer Weise, dass das Format der Daten selbst
 Teil der Daten ist und dementsprechend darüber abstrahiert werden kann. Diese Idee wird typischerweise alle paar Jahre
 wieder einmal neu erfunden; zur Zeit sind beispielsweise XML und JSON beliebte universelle Datenformate.
 
@@ -189,12 +189,12 @@ Hier ist eine Datendefinition, die dies genau beschreibt:
 @#reader scribble/comment-reader
 (racketblock
 ; An S-Expression is one of:
-; – a Number
+; - a Number
 ; - a String
 ; - a Symbol
 ; - a Boolean
 ; - an Image
-; – empty
+; - empty
 ; - a (list-of S-Expression)
 )
 
@@ -204,9 +204,21 @@ Dies sind keine S-Expressions: @racket[(make-posn 1 2)], @racket[(list (make-stu
 S-Expressions können als universelles Datenformat verwendet werden, indem die Strukturierung der Daten zum Teil
 der Daten gemacht wird. Statt @racket[(make-posn 1 2)] kann man auch die S-Expression @racket['(posn 1 2)] 
 oder @racket['(posn (x 1) (y 2))]
-verwenden; statt @racket[(make-person "Heinz" (make-person "Horst" false false) (make-person "Hilde" false false))]
-kann man auch die S-Expression @racket['(person "Heinz" (person "Horst" #false #false) (person "Hilde" #false #false))] 
-oder @racket['(person "Heinz" (father (person "Horst" (father #false) (mother #false)) (mother (person "Hilde" (father #false) (mother #f)))))]
+verwenden; statt
+
+@racketblock[
+(make-person "Heinz" (make-person "Horst" false false) (make-person "Hilde" false false))]
+
+kann man auch die S-Expression
+
+@racketblock[
+'(person "Heinz" (person "Horst" #false #false) (person "Hilde" #false #false))] 
+
+oder
+
+@racketblock[
+'(person "Heinz" (father (person "Horst" (father #false) (mother #false)) (mother (person "Hilde" (father #false) (mother #f)))))]
+
 verwenden.
 
 Der Vorteil der zweiten Variante ist, dass man beliebige strukturierte Daten auf diese Weise uniform ausdrücken kann

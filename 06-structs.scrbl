@@ -36,22 +36,22 @@ der Name 'Summentyp' aus dem letzten Kapitel, denn die Vereinigung von Mengen wi
 Mengen bezeichnet. In manchen Sprachen werden Strukturen auch @italic{Records} genannt.
 
 
-@section{Die @racket[posn] Struktur}
+@section{Die @racket[posn]-Struktur}
 
 Eine Position in einem Bild wird durch zwei Zahlen eindeutig identifiziert: Die
 Distanz vom linken Rand und die Distanz vom oberen Rand. Die erste Zahl nennt man die x-Koordinate
 und die zweite die y-Koordinate.
 
-In BSL werden solche Positionen mit Hilfe der @racket[posn] Struktur repräsentiert. 
+In BSL werden solche Positionen mit Hilfe der @racket[posn]-Struktur repräsentiert. 
 Eine @racket[posn] (Aussprache: Position) ist also @italic{ein} Wert, der @italic{zwei} Werte enthält.
 
 @margin-note{Im Deutschen wäre es eigentlich korrekt, von einem @italic{Exemplar} einer Struktur zu sprechen.
 Es hat sich jedoch eingebürgert, analog zum Wort @italic{instance} im Englischen von einer Instanz zu reden, deshalb
 werden auch wir diese sprachlich fragwürdige Terminologie verwenden.}
-Wir können eine @italic{Instanz} der @racket[posn] Struktur mit der Funktion @racket[make-posn] erzeugen.
+Wir können eine @italic{Instanz} der @racket[posn]-Struktur mit der Funktion @racket[make-posn] erzeugen.
 Die Signatur dieser Funktion ist @italic{Number Number -> Posn}.
 
-Beispiel: Diese drei Ausdrücke erzeugen jeweils eine Instanz der @racket[posn] Struktur.
+Beispiel: Diese drei Ausdrücke erzeugen jeweils eine Instanz der @racket[posn]-Struktur.
 
 @racketblock[
 (make-posn 3 4)
@@ -126,7 +126,7 @@ Im Allgemeinen hat eine Strukturdefinition diese Form:
 Das Schlüsselwort @racket[define-struct] bedeutet, dass hier eine Struktur definiert wird. Danach kommt
 der Name der Struktur. Danach folgen, eingeschlossen in Klammern, die Namen der @italic{Felder} der Struktur.
 
-Im Gegensatz zu einer normale Funktionsdefinition definiert man durch eine Strukturdefinition gleich einen
+Im Gegensatz zu einer normalen Funktionsdefinition definiert man durch eine Strukturdefinition gleich einen
 ganzen Satz an Funktionen, und zwar wie folgt:
 
 @itemize[
@@ -147,7 +147,7 @@ Der Rest des Programms kann diese Funktionen benutzen als wären sie primitive F
 @section{Verschachtelte Strukturen}
 Ein sich mit konstanter Geschwindigkeit bewegender Ball im zweidimensionalen Raum 
 kann durch zwei Eigenschaften beschrieben werden: Seinen Ort und die Geschwindigkeit und Richtung in die er sich bewegt. 
-Wir wissen bereits wie man den Ort eines Objekts im zweidimensionalen Raum beschreibt: Mit Hilfe der @racket[posn] Struktur.
+Wir wissen bereits wie man den Ort eines Objekts im zweidimensionalen Raum beschreibt: Mit Hilfe der @racket[posn]-Struktur.
 Es gibt verschiedene Möglichkeiten, die Geschwindigkeit und Richtung eines Objekts zu repräsentieren. Eine dieser
 Möglichkeiten ist die, einen Bewegungsvektor anzugeben, zum Beispiel in Form einer Strukturdefinition wie dieser:
 
@@ -180,7 +180,7 @@ Hier ist ein Beispiel für einen Ball in dieser Repräsentation:
 
 Allerdings geht in dieser Repräsentation die Zusammengehörigkeit der Felder verloren: Die ersten zwei Felder repräsentieren
 den Ort, die anderen zwei Felder die Bewegung. Eine praktische Konsequenz ist, dass es auch umständlich ist, Funktionen
-aufzurufen, die etwas mit Geschwindigkeiten und/oder Bewegungen machen aber nichts über Bälle wissen, wie zum Beispiel @racket[move]
+aufzurufen, die etwas mit Geschwindigkeiten und/oder Bewegungen machen, aber nichts über Bälle wissen, wie zum Beispiel @racket[move]
 oben, denn wir müssen die Daten erst immer manuell in die richtigen Strukturen verpacken. Um @racket[SOME-BALL] 
 mit Hilfe von @racket[move] zu bewegen, müssten wir Ausdrucke wie diesen schreiben:
 
@@ -484,7 +484,7 @@ die Schritte des Entwurfsrezepts aus Abschnitt @secref{entwurfsrezept} wie folgt
              zu entwerfen. Wenn eines der Felder einer Struktur, die Eingabeparameter ist, einen
              Summentypen hat, so sollten Testfälle für alle Alternativen vorliegen. Bei Intervallen
              sollten die Endpunkte der Intervalle getestet werden.}
-       @item{Eine Funktion die Instanzen von Strukturen als Eingabe erhält wird in vielen 
+       @item{Eine Funktion, die Instanzen von Strukturen als Eingabe erhält, wird in vielen 
              Fällen die Felder der Strukturinstanz lesen. Um Sie an diese Möglichkeit zu erinnern,
              sollte das Template für solche Funktionen die Selektorausdrücke (zum Beispiel 
              @racket[(posn-x param)] falls @racket[param] ein Parameter vom Typ @racket[Posn] ist)
@@ -494,10 +494,10 @@ die Schritte des Entwurfsrezepts aus Abschnitt @secref{entwurfsrezept} wie folgt
              @italic{nicht} Selektorausdrücke für die Felder dieser verschachtelten Strukturinstanz
              ins Template aufnehmen. Meistens ist es besser, die Funktionalität, die diese 
              Unterstruktur betrifft, in eine neue Hilfsfunktion auszulagern.}
-       @item{Benutzen Sie die Selektorausdrücke aus dem Template um die Funktion zu implementieren.
+       @item{Benutzen Sie die Selektorausdrücke aus dem Template, um die Funktion zu implementieren.
              Beachten Sie, dass Sie möglicherweise nicht die Werte aller Felder benötigen.}
        @item{Testen Sie, sobald Sie den Funktionsheader geschrieben haben. Überprüfen Sie, dass
-             zu diesem Zeitpunkt alle Tests fehlschlagen (bis auf die bei denen zufällig der eingesetzte
+             zu diesem Zeitpunkt alle Tests fehlschlagen (bis auf die, bei denen zufällig der eingesetzte
              Dummy-Wert richtig ist). Dieser Schritt ist wichtig, denn er bewahrt Sie vor Fehlern in
              den Tests und stellt sicher, dass ihre Tests auch wirklich eine nicht-triviale Eigenschaft testen.
              
