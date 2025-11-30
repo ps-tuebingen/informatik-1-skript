@@ -13,13 +13,13 @@ Listen spielen in funktionalen Sprachen eine wichtige Rolle, insbesondere
 in der Familie von Sprachen, die von LISP abstammen (wie Racket und BSL).
 
 Wenn man viel mit Listen arbeitet, ist es wichtig, eine effiziente Notation
-dafür zu haben. Sie haben bereits die @racket[list] Funktion kennengelernt,
+dafür zu haben. Sie haben bereits die @racket[list]-Funktion kennengelernt,
 mit der man einfache Listen kompakt notieren kann.
 
 Allerdings gibt es in BSL/ISL (und vielen anderen Sprachen) einen noch viel mächtigeren
 Mechanismus, nämlich @racket[quote] und @racket[unquote]. Diesen Mechanismus
 gibt es seit den 1950er Jahren in LISP, und noch heute eifern beispielsweise
-Template-Sprachen wie Java Server Pages oder PHP diesem Vorbild nach.
+Template-Sprachen wie Jakarta Server Pages (JSP) oder PHP diesem Vorbild nach.
 
 Um mit @racket[quote] und @racket[unquote] zu arbeiten, ändern Sie bitte den
 Sprachlevel auf "Anfänger mit Listenabkürzungen" beziehungsweise "Beginning
@@ -217,7 +217,7 @@ kann man auch die S-Expression
 oder
 
 @racketblock[
-'(person "Heinz" (father (person "Horst" (father #false) (mother #false)) (mother (person "Hilde" (father #false) (mother #f)))))]
+'(person (name "Heinz") (father (person (name "Horst") (father #false) (mother #false)) (mother (person (name "Hilde") (father #false) (mother #false)))))]
 
 verwenden.
 
@@ -265,7 +265,7 @@ einer dynamischen Webseite wie folgt aussehen:
 Die Funktion erzeugt die Repräsentation einer HTML-Seite, bei der die übergebenen Parameter an der gewünschten Stelle eingebaut werden.
 S-Expressions und Quasi-/Unquote führen zu einer besseren Lesbarkeit im Vergleich zur Variante der Funktion, die die Datenstruktur mit @racket[cons]
 und @racket[empty] oder @racket[list] zusammenbaut. Die erzeugte S-Expression ist zwar noch kein HTML, aber sie kann leicht zu HTML
-umgewandelt werden. In Racket gibt es zu diesem Zweck beispielsweise die @racket[xexpr->string] und @racket[xexpr->xml] Funktion der @hyperlink["http://docs.racket-lang.org/xml/index.html"]{XML Bibliothek}.
+umgewandelt werden. In Racket gibt es zu diesem Zweck beispielsweise die @racket[xexpr->string]- und @racket[xexpr->xml]-Funktionen der @hyperlink["http://docs.racket-lang.org/xml/index.html"]{XML-Bibliothek}.
 
 @ex[(require xml)]
 

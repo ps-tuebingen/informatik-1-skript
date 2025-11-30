@@ -100,7 +100,7 @@ Im letzten Pattern, @racket[(? cons?)], sehen wir, dass auch Prädikatsfunktione
 werden können, um zu überprüfen, was für eine Art von Wert wir gerade haben. Diese Art von Pattern bietet sich an, wenn
 man nur wissen möchte, ob der Wert, auf dem wir matchen, zum Beispiel eine Liste oder eine @racket[posn] ist.
 
-Pattern Matching ist in vielen Fällen eine sinnvolle Alternative zum Einsatz von @racket[cond] Ausdrücken.
+Pattern Matching ist in vielen Fällen eine sinnvolle Alternative zum Einsatz von @racket[cond]-Ausdrücken.
 Beispielsweise können wir mittels Pattern Matching die Funktion
 
 @racketblock[
