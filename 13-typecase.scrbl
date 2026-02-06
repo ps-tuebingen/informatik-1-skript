@@ -253,7 +253,7 @@ zurückgewiesen.
 @interaction[#:eval eval3 
 (define (calc2 e)
   (type-case Expression e
-    [addition (e1 e2) (- (calc2 e1) (calc2 e2))]))]
+    [addition (e1 e2) (+ (calc2 e1) (calc2 e2))]))]
 
 Der Preis für diese Vollständigkeitsüberprüfung ist, dass @racket[type-case] nur ein sehr eingeschränktes
 Pattern Matching erlaubt. Beispielsweise ist es nicht erlaubt, Literale, verschachtelte Pattern, oder
